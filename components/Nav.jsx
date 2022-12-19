@@ -55,34 +55,25 @@ const Nav = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    flex: 1,
     flexDirection: 'column',
+    alignContent: 'center',
+    width: '90%',
   },
 
   buttons: {
     flexDirection: 'row',
-
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
+    alignContent: 'stretch',
     marginVertical: 5,
-    width: '100%',
     height: 35,
-    backgroundColor: '#f1f1f2',
-    borderRadius: 50,
+    color: '#27242A',
   },
   navPressable: {
-    width: 100,
+    width: '30%',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
-  search: {
-    width: '100%',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  searchInput: {
     backgroundColor: '#f1f1f2',
+    borderRadius: 50,
   },
 });
 

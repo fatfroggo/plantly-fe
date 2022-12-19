@@ -18,13 +18,16 @@ const UserArea = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
     backgroundColor: '#F1F1F2',
     flex: 1,
-    alignItems: 'center',
     color: '#27242A',
   },
   userAreaHeader: {
     flex: 3,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%',
     backgroundColor: '#46B646',
   },
   userAreaBody: {

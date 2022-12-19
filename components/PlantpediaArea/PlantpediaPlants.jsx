@@ -1,41 +1,52 @@
-import data from '../../data/data.js';
 import { Text, View, StyleSheet, FlatList, StatusBar } from 'react-native';
-import Nav from '../Nav';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getPlants } from '../../api/api.js';
 
 const PlantpediaPlants = () => {
-  const [plantsData, setPlantsData] = useState(data);
+  const [plantsData, setPlantsData] = useState([]);
+
+  useEffect(() => {
+    getPlants.then(fetchedPlants => {
+      setPlantsData(fetchedPlants);
+    });
+  });
 
   return (
-    <FlatList
-      data={plantsData}
-      renderItem={itemData => {
-        return (
-          <View>
-            {' '}
-            style={styles.plantsListItem}
-            <Text>{itemData.item.Category}</Text>
-          </View>
-        );
-      }}
-      keyExtractor={(item, index) => {
-        return item.id;
-      }}
-    />
+    <View style={styles.container}>
+      <FlatList
+        numColumns={2}
+        data={plantsData}
+        renderItem={itemData => {
+          return (
+            <View style={styles.plantsListItem}>
+              <Text>{itemData.item.category}</Text>
+            </View>
+          );
+        }}
+        keyExtractor={(item, index) => {
+          return item.plant_id;
+        }}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 5,
     backgroundColor: '#7F9B91',
-    alignItems: 'center',
+    flexDirection: 'row',
   },
+  plantsList: { flex: 1 },
   header: { flex: 1.5, color: '#F1F1F2', paddingTop: StatusBar.currentHeight },
   headerText: { color: '#F1F1F2', fontSize: 40 },
   subHeadingText: { color: '#F1F1F2' },
-  plantsList: { flex: 8 },
-  plantsListItem: {},
+  plantsListItem: {
+    backgroundColor: '#F1F1F2',
+    borderRadius: 5,
+    flex: 1,
+    margin: 10,
+  },
 });
 
 export default PlantpediaPlants;
