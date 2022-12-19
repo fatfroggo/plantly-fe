@@ -1,34 +1,24 @@
 import { View, TextInput, StyleSheet, Pressable, Text } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { EvilIcons } from '@expo/vector-icons';
+import { getPlants } from '../api/api';
 
 const SearchBar = () => {
   const [search, setSearch] = useState('');
+  const [text, setText] = useState('');
+  const [plants, setPlants] = useState([]);
 
-  const searchFilterFunction = (text) => {
-    // Check if searched text is not blank
-    if (text) {
-      // Inserted text is not blank
-      // Filter the masterDataSource and update FilteredDataSource
-      const newData = masterDataSource.filter(
-        function (item) {
-          // Applying filter for the inserted text in search bar
-          const itemData = item.title
-              ? item.title.toUpperCase()
-              : ''.toUpperCase();
-          const textData = text.toUpperCase();
-          return itemData.indexOf(textData) > -1;
-        }
-      );
-      setFilteredDataSource(newData);
-      setSearch(text);
-    } else {
-      // Inserted text is blank
-      // Update FilteredDataSource with masterDataSource
-      setFilteredDataSource(masterDataSource);
-      setSearch(text);
-    }
-  };
+  useEffect(() => {
+    getPlants
+      .then(res => {
+        setPlants(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
+
+
 
   return (
     <View style={styles.container}>
@@ -68,6 +58,6 @@ const styles = StyleSheet.create({
   searchInput: {
     width: '90%',
     height: '100%',
-  }
+  },
 });
 export default SearchBar;
