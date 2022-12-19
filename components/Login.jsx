@@ -11,6 +11,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 
 const Login = ({ navigation }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handlePress = () => {
+    navigation.navigate('user area');
+  };
+
   return (
     <SafeAreaView style={styles.background}>
       <View style={styles.container}>
@@ -20,19 +27,20 @@ const Login = ({ navigation }) => {
         />
         <Text style={styles.plantly}>Plantly</Text>
         <View style={styles.usernameContainer}>
-          <TextInput style={styles.usernameInput} placeholder="Username" />
+          <TextInput
+            style={styles.usernameInput}
+            placeholder="Username"
+            onChangeText={text => setUsername(text)}
+          />
         </View>
         <View style={styles.usernameContainer}>
-          <TextInput style={styles.passwordInput} placeholder="Password" />
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Password"
+            onChangeText={text => setPassword(text)}
+          />
         </View>
-        <Pressable
-          style={styles.loginPressable}
-          onPress={() => {
-            {
-              navigation.navigate('user area');
-            }
-          }}
-        >
+        <Pressable style={styles.loginPressable} onPress={handlePress}>
           <Text style={styles.loginText}>Login</Text>
         </Pressable>
       </View>
