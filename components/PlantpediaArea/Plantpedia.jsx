@@ -10,7 +10,7 @@ const Plantpedia = () => {
         <Text style={styles.subHeadingText}>The encyclopedia of plants</Text>
       </View>
       <Nav />
-      <PlantPediaPlants/>
+      <PlantPediaPlants />
     </View>
   );
 };
@@ -21,9 +21,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#7F9B91',
     alignItems: 'center',
   },
-  header: { flex:1.5, color: '#F1F1F2', paddingTop: StatusBar.currentHeight },
+  header: {
+    flex: 1.5,
+    color: '#F1F1F2',
+    paddingTop: StatusBar.currentHeight,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
   headerText: { color: '#F1F1F2', fontSize: 40 },
-  subHeadingText: { color: '#F1F1F2' },
+  subHeadingText: { color: '#F1F1F2', marginBottom: 20 },
   plantsList: { flex: 8 },
 });
 

@@ -39,8 +39,7 @@ const PlantpediaPlants = () => {
               <View style={styles.plantItemImage}>
                 <Image
                   source={{ uri: itemData.item.picture_url }}
-                  height={100}
-                  width={100}
+                  style={{ height: '100%', width: '100%' }}
                 />
               </View>
             </View>
@@ -77,6 +76,7 @@ const styles = StyleSheet.create({
   },
   plantItemImage: {
     flex: 1,
+    borderWidth: 1,
   },
   plantItemInfo: {
     flex: 1,
