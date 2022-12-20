@@ -15,7 +15,10 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const handlePress = () => {
-    navigation.navigate('user area');
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'user area' }],
+    });
   };
 
   return (
