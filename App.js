@@ -6,6 +6,9 @@ import UserArea from "./components/UserArea/UserArea";
 import Plantpedia from "./components/PlantpediaArea/Plantpedia";
 import UserPlants from "./components/UserArea/UserPlants";
 
+import PlantpediaSinglePlant from './components/PlantpediaArea/PlantpediaSinglePlant';
+
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {

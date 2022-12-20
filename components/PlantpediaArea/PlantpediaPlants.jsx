@@ -5,18 +5,34 @@ import {
   FlatList,
   StatusBar,
   Image,
+  Pressable,
 } from 'react-native';
 import { useState, useEffect } from 'react';
 import { getPlants } from '../../api/api.js';
+import { useNavigation } from '@react-navigation/native';
 
-const PlantpediaPlants = () => {
+const PlantpediaPlants = ({ setPlantsList }) => {
+  const navigation = useNavigation();
   const [plantsData, setPlantsData] = useState([]);
+  const [pressed, setPressed] = useState(false);
+
+  const toggleIsPressed = () => {
+    setPressed(true);
+    console.log('pressed');
+    console.log(pressed);
+  };
 
   useEffect(() => {
-    getPlants.then(fetchedPlants => {
+    getPlants().then(fetchedPlants => {
       setPlantsData(fetchedPlants);
     });
-  });
+  }, []);
+
+  useEffect(() => {
+    if (pressed) {
+      setPlantsList(false);
+    }
+  }, [pressed]);
 
   return (
     <View style={styles.container}>
@@ -24,7 +40,7 @@ const PlantpediaPlants = () => {
         data={plantsData}
         renderItem={itemData => {
           return (
-            <View style={styles.plantsListItem}>
+            <Pressable onPress={toggleIsPressed} style={styles.plantsListItem}>
               <View style={styles.plantItemInfo}>
                 <View style={styles.namesContainer}>
                   <Text style={styles.commonName}>
@@ -42,7 +58,7 @@ const PlantpediaPlants = () => {
                   style={{ height: '100%', width: '100%' }}
                 />
               </View>
-            </View>
+            </Pressable>
           );
         }}
         keyExtractor={(item, index) => {
