@@ -10,7 +10,7 @@ const UserAreaHeader = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#46B646',
+    backgroundColor: '#2B8B30',
     alignSelf: 'stretch',
     justifyContent: 'flex-end',
     flex: 1,
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   headerText: {
-    color: '#F1F1F2',
+    color: '#ECEBE7',
     fontSize: 40,
   },
 });
