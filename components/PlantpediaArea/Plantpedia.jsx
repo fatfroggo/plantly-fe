@@ -75,24 +75,47 @@ const Plantpedia = () => {
           <ScrollView contentContainerStyle={styles.modalView}>
             <View style={styles.plantImage}>
               <Image
-                style={{ height: 100, width: 100, borderRadius: 20 }}
-                source={require('../../assets/test.png')}
+                style={{ height: '100%', width: 200, borderRadius: 20 }}
+                source={{ uri: singlePlantData?.picture_url }}
               />
             </View>
 
             <View style={styles.plantInfo}>
-              <Text style={styles.commonName}>{singlePlantData?.common_name}</Text>
-              <Text style={styles.latinName}>Scientific name</Text>
-              <Text>Plant info here</Text>
-
-              <View style={styles.buttonsContainer}>
-                <Pressable style={styles.pressable}>
-                  <Text>Add to my plants</Text>
-                </Pressable>
-                <Pressable style={styles.pressable} onPress={togglePressed}>
-                  <Text>Cancel</Text>
-                </Pressable>
-              </View>
+              <Text style={styles.commonName}>
+                {singlePlantData?.common_name}
+              </Text>
+              <Text style={styles.latinName}>
+                {singlePlantData?.latin_name}
+              </Text>
+              <Text
+                style={styles.infoText}
+              >{`Climate: ${singlePlantData?.climate}`}</Text>
+              <Text
+                style={styles.infoText}
+              >{`Origin: ${singlePlantData?.origin}`}</Text>
+              <Text
+                style={styles.infoText}
+              >{`Pruning: ${singlePlantData?.pruning}`}</Text>
+              <Text
+                style={styles.infoText}
+              >{`Watering: ${singlePlantData?.watering_advice}`}</Text>
+              <Text
+                style={styles.infoText}
+              >{`Light: ${singlePlantData?.light_preference}`}</Text>
+              <Text
+                style={styles.infoText}
+              >{`Max temperature: ${singlePlantData?.temp_max}`}</Text>
+              <Text
+                style={styles.infoText}
+              >{`Min temperature: ${singlePlantData?.temp_min}`}</Text>
+            </View>
+            <View style={styles.buttonsContainer}>
+              <Pressable style={styles.pressable}>
+                <Text>Add to my plants</Text>
+              </Pressable>
+              <Pressable style={styles.pressable} onPress={togglePressed}>
+                <Text>Cancel</Text>
+              </Pressable>
             </View>
           </ScrollView>
         </Modal>
@@ -122,7 +145,7 @@ const styles = StyleSheet.create({
     margin: 30,
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 10,
+    padding: 30,
     alignItems: 'center',
     shadowColor: '#000',
     shadowColor: '#000',
@@ -135,22 +158,26 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   plantImage: {
-    padding: 20,
+    borderWidth: 1,
+    paddingHorizontal: 20,
     borderRadius: 20,
+    flex: 1,
   },
   plantInfo: {
-    flex: 1,
-    alignItems: 'center',
+    flex: 2,
+    borderWidth: 1,
   },
   commonName: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 30,
   },
   latinName: {
-    fontSize: 15,
+    fontSize: 20,
     fontStyle: 'italic',
   },
+  infoText: { fontSize: 15, paddingVertical: 5 },
   buttonsContainer: {
+    borderWidth: 1,
     flexDirection: 'row',
   },
   pressable: {
