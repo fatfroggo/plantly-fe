@@ -1,22 +1,10 @@
-import { SafeAreaView } from 'react-native-safe-area-context';
-import SearchBar from './SearchBar';
-import {
-  Text,
-  Pressable,
-  StyleSheet,
-  StatusBar,
-  View,
-  TextInput,
-} from 'react-native';
-import { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from "react-native-safe-area-context";
+import SearchBar from "./SearchBar";
+import { Text, Pressable, StyleSheet, View } from "react-native";
 
-const Nav = () => {
-  const [search, setSearch] = useState('');
-  const navigation = useNavigation()
-  const updateSearch = search => {
-    setSearch(search);
-  };
+import { useState } from "react";
+
+const Nav = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
@@ -24,7 +12,7 @@ const Nav = () => {
         <Pressable
           style={styles.navPressable}
           onPress={() => {
-            navigation.navigate('home');
+            navigation.navigate("user area");
           }}
         >
           <Text>Home</Text>
@@ -33,7 +21,7 @@ const Nav = () => {
         <Pressable
           style={styles.navPressable}
           onPress={() => {
-            navigation.navigate('my-plants');
+            navigation.navigate("my-plants");
           }}
         >
           <Text>My Plants</Text>
@@ -42,7 +30,7 @@ const Nav = () => {
         <Pressable
           style={styles.navPressable}
           onPress={() => {
-            navigation.navigate('plantpedia');
+            navigation.navigate("plantpedia");
           }}
         >
           <Text>Plantpedia</Text>
@@ -55,24 +43,26 @@ const Nav = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
-    alignContent: 'center',
-    width: '90%',
+    flexDirection: "column",
+    alignitems: "center",
+    width: "100%",
+    marginVertical: 20,
+    paddingHorizontal: 10,
   },
 
   buttons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignContent: 'stretch',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignContent: "stretch",
     marginVertical: 5,
     height: 35,
-    color: '#1E2720'
+    color: "#1E2720",
   },
   navPressable: {
-    width: '30%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ECEBE7',
+    width: "30%",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ECEBE7",
     borderRadius: 50,
   },
 });
