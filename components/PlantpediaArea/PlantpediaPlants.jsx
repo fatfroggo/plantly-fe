@@ -11,15 +11,15 @@ import { useState, useEffect } from 'react';
 import { getPlants } from '../../api/api.js';
 import { useNavigation } from '@react-navigation/native';
 
-const PlantpediaPlants = ({ setPlantsList }) => {
+const PlantpediaPlants = ({setModalVisible}) => {
   const navigation = useNavigation();
   const [plantsData, setPlantsData] = useState([]);
   const [pressed, setPressed] = useState(false);
 
   const toggleIsPressed = () => {
-    setPressed(true);
-    console.log('pressed');
-    console.log(pressed);
+    setPressed(currValue => {
+      return !currValue
+    });
   };
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const PlantpediaPlants = ({ setPlantsList }) => {
 
   useEffect(() => {
     if (pressed) {
-      setPlantsList(false);
+      setModalVisible(true);
     }
   }, [pressed]);
 
