@@ -8,12 +8,12 @@ import {
   View,
   TextInput,
 } from 'react-native';
-
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
-const Nav = ({ navigation }) => {
+const Nav = () => {
   const [search, setSearch] = useState('');
-
+  const navigation = useNavigation()
   const updateSearch = search => {
     setSearch(search);
   };

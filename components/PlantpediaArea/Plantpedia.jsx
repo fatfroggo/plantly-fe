@@ -1,8 +1,12 @@
+import { useState } from 'react';
 import { Text, View, StyleSheet, StatusBar } from 'react-native';
 import Nav from '../Nav';
 import PlantPediaPlants from './PlantpediaPlants';
+import PlantpediaSinglePlant from './PlantpediaSinglePlant';
 
 const Plantpedia = () => {
+  const [plantsList, setPlantsList] = useState(true);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -10,7 +14,11 @@ const Plantpedia = () => {
         <Text style={styles.subHeadingText}>The encyclopedia of plants</Text>
       </View>
       <Nav />
-      <PlantPediaPlants />
+      {plantsList ? (
+        <PlantPediaPlants setPlantsList={setPlantsList} />
+      ) : (
+        <PlantpediaSinglePlant setPlantsList={setPlantsList} />
+      )}
     </View>
   );
 };

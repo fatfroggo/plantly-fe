@@ -6,6 +6,7 @@ import UserArea from './components/UserArea/UserArea';
 import Plantpedia from './components/PlantpediaArea/Plantpedia';
 import Homepage from './components/UserArea/Homepage';
 import UserPlants from './components/UserArea/UserPlants';
+import PlantpediaSinglePlant from './components/PlantpediaArea/PlantpediaSinglePlant';
 
 const Stack = createNativeStackNavigator();
 
