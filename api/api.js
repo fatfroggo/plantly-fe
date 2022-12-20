@@ -7,7 +7,7 @@ const plantsApi = axios.create({
 export const getPlants = () => {
   return plantsApi.get('/plants').then(plants => {
     return plants.data.plants;
-  }).catch(err=> console.log(err))
+  })
 };
 
 export const getPlantsByQuery = searchquery => {

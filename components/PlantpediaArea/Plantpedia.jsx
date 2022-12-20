@@ -7,13 +7,50 @@ import {
   Modal,
   Pressable,
   Image,
+  ScrollView,
 } from 'react-native';
 import Nav from '../Nav';
 import PlantPediaPlants from './PlantpediaPlants';
+import { getPlants } from '../../api/api.js';
 
 const Plantpedia = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [pressed, setPressed] = useState(false);
+  const [plantsData, setPlantsData] = useState([]);
+  const [singlePlantIndex, setSinglePlantIndex] = useState('1');
+  const [singlePlantData, setSinglePlantData] = useState({
+    category: 'Dracaena',
+    climate: 'Tropical',
+    common_name: 'Janet Craig',
+    latin_name: "Dracaena deremensis 'Janet Craig'",
+    light_preference: 'Strong light',
+    origin: 'Cultivar',
+    picture_url: 'http://www.tropicopia.com/house-plant/thumbnails/5556.jpg',
+    plant_id: 1,
+    pruning: 'If needed',
+    temp_max: 30,
+    temp_min: 10,
+    watering_advice: 'Keep moist between watering & Can dry between watering',
+  });
+
+  useEffect(() => {
+    console.log('first useEffect', singlePlantData);
+    getPlants().then(fetchedPlants => {
+      setPlantsData(fetchedPlants);
+      setIsLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log('second useEffect', singlePlantData);
+    setSinglePlantData(plantsData[singlePlantIndex]);
+  }, [singlePlantIndex]);
+
+  useEffect(() => {
+    console.log('third useEffect', singlePlantData);
+    pressed ? setModalVisible(true) : setModalVisible(false);
+  }, [pressed]);
 
   const togglePressed = () => {
     setPressed(currValue => {
@@ -21,9 +58,6 @@ const Plantpedia = () => {
     });
   };
 
-  useEffect(() => {
-    pressed ? setModalVisible(true) : setModalVisible(false);
-  }, [pressed]);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -31,32 +65,38 @@ const Plantpedia = () => {
         <Text style={styles.subHeadingText}>The encyclopedia of plants</Text>
       </View>
       <Nav />
-      <PlantPediaPlants setModalVisible={setModalVisible} />
-      <Modal visible={modalVisible} animationType="slide" transparent={true}>
-        <View style={styles.modalView}>
-          <View style={styles.plantImage}>
-            <Image
-              style={{ height: 100, width: 100, borderRadius: 20 }}
-              source={require('../../assets/test.png')}
-            />
-          </View>
-
-          <View style={styles.plantInfo}>
-            <Text style={styles.commonName}>Common name</Text>
-            <Text style={styles.latinName}>Scientific name</Text>
-            <Text>Plant info here</Text>
-
-            <View style={styles.buttonsContainer}>
-              <Pressable style={styles.pressable}>
-                <Text>Add to my plants</Text>
-              </Pressable>
-              <Pressable style={styles.pressable} onPress={togglePressed}>
-                <Text>Cancel</Text>
-              </Pressable>
+      <PlantPediaPlants
+        plantsData={plantsData}
+        setModalVisible={setModalVisible}
+        setSinglePlantIndex={setSinglePlantIndex}
+      />
+      {!isLoading && (
+        <Modal visible={modalVisible} animationType="slide" transparent={true}>
+          <ScrollView contentContainerStyle={styles.modalView}>
+            <View style={styles.plantImage}>
+              <Image
+                style={{ height: 100, width: 100, borderRadius: 20 }}
+                source={require('../../assets/test.png')}
+              />
             </View>
-          </View>
-        </View>
-      </Modal>
+
+            <View style={styles.plantInfo}>
+              <Text style={styles.commonName}>{singlePlantData?.common_name}</Text>
+              <Text style={styles.latinName}>Scientific name</Text>
+              <Text>Plant info here</Text>
+
+              <View style={styles.buttonsContainer}>
+                <Pressable style={styles.pressable}>
+                  <Text>Add to my plants</Text>
+                </Pressable>
+                <Pressable style={styles.pressable} onPress={togglePressed}>
+                  <Text>Cancel</Text>
+                </Pressable>
+              </View>
+            </View>
+          </ScrollView>
+        </Modal>
+      )}
     </View>
   );
 };
