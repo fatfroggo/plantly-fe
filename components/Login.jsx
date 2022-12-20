@@ -53,7 +53,7 @@ const Login = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#46B646',
+    backgroundColor: '#2b8b30',
     flex: 1,
     paddingTop: StatusBar.currentHeight,
     justifyContent: 'center',
@@ -67,28 +67,28 @@ const styles = StyleSheet.create({
     height: 200,
   },
   loginPressable: {
-    borderColor: '#F1F1F2',
+    borderColor: '#ECEBE7',
     borderWidth: 2,
     padding: 5,
     paddingHorizontal: 20,
     borderRadius: 8,
   },
   loginText: {
-    color: '#F1F1F2',
+    color: '#ECEBE7',
   },
   plantly: {
     fontSize: 30,
-    color: '#F1F1F2',
+    color: '#ECEBE7',
   },
   usernameContainer: {
-    backgroundColor: '#F1F1F2',
+    backgroundColor: '#ECEBE7',
     marginTop: 5,
     marginBottom: 10,
     borderRadius: 5,
   },
   usernameInput: { paddingVertical: 3, paddingHorizontal: 50 },
   passwordContainer: {
-    backgroundColor: '#F1F1F2',
+    backgroundColor: '#ECEBE7',
     marginBottom: 14,
     borderRadius: 5,
   },

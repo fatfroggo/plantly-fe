@@ -1,9 +1,15 @@
-import axios from 'axios';
+import axios from "axios";
 
 const plantsApi = axios.create({
-  baseURL: 'https://salmon-cuttlefish-hat.cyclic.app/api',
+  baseURL: "https://plantly.cyclic.app/api",
 });
 
-export const getPlants = plantsApi.get('/plants').then(plants => {
+export const getPlants = plantsApi.get("/plants").then((plants) => {
   return plants.data.plants;
 });
+
+export const getPlantsByQuery = (searchquery) => {
+  return plantsApi.get(`/plants/?q=${searchquery}`).then(({ data }) => {
+    return data;
+  });
+};

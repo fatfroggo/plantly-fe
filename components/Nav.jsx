@@ -66,13 +66,13 @@ const styles = StyleSheet.create({
     alignContent: 'stretch',
     marginVertical: 5,
     height: 35,
-    color: '#27242A',
+    color: '#1E2720'
   },
   navPressable: {
     width: '30%',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f1f1f2',
+    backgroundColor: '#ECEBE7',
     borderRadius: 50,
   },
 });
