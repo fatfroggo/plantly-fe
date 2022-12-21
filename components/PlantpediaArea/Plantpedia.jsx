@@ -13,7 +13,7 @@ import Nav from '../Nav';
 import PlantPediaPlants from './PlantpediaPlants';
 import { getPlants } from '../../api/api.js';
 
-const Plantpedia = () => {
+const Plantpedia = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [pressed, setPressed] = useState(false);
@@ -64,7 +64,7 @@ const Plantpedia = () => {
         <Text style={styles.headerText}>Plantpedia</Text>
         <Text style={styles.subHeadingText}>The encyclopedia of plants</Text>
       </View>
-      <Nav />
+      <Nav navigation={navigation} />
       <PlantPediaPlants
         plantsData={plantsData}
         setModalVisible={setModalVisible}
