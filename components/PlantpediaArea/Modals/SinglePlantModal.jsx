@@ -12,24 +12,14 @@ const SinglePlantModal = ({
   singlePlantData,
   setPressed,
   setAddPlantButtonPressed,
+  togglePressed,
+  toggleAddPlantButton,
 }) => {
-  const toggleAddPlantButton = () => {
-    setAddPlantButtonPressed(currValue => {
-      return !currValue;
-    });
-  };
-
-  const togglePressed = () => {
-    setPressed(currValue => {
-      return !currValue;
-    });
-  };
-
   return (
     <ScrollView contentContainerStyle={styles.modalView}>
       <View style={styles.plantImage}>
         <Image
-          style={{ height: '100%', width: 200, borderRadius: 20 }}
+          style={{ height: 200, width: 200, borderRadius: 20 }}
           source={{ uri: singlePlantData?.picture_url }}
         />
       </View>
@@ -102,6 +92,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 20,
     flex: 1,
+    paddingBottom: 30
   },
   plantInfo: {
     flex: 2,

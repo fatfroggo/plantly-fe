@@ -9,15 +9,45 @@ import {
   TextInput,
 } from 'react-native';
 
-const AddToMyPlantsModal = ({ username, plant_id }) => {
+const AddToMyPlantsModal = ({
+  username,
+  plant_id,
+  singlePlantData,
+  togglePressed,
+  cancelButton,
+}) => {
+  console.log(singlePlantData);
   const [lastWatered, setLastWatered] = useState('');
   const [nickname, setNickname] = useState('');
   const reqBody = { username, plant_id };
 
   return (
     <View style={styles.modalView}>
-      <TextInput placeholder="How many days ago was this plant last watered?" />
-      <TextInput placeholder="Plant nickname" />
+      <View style={styles.plantImage}>
+        <Image
+          style={{ width: 200, height:200, borderRadius: 20 }}
+          source={{ uri: singlePlantData?.picture_url }}
+        />
+      </View>
+
+      <View style={styles.plantInfo}>
+        <Text style={styles.commonName}>{singlePlantData?.common_name}</Text>
+        <Text style={styles.latinName}>{singlePlantData?.latin_name}</Text>
+      </View>
+      <View style={styles}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="How many days ago was this plant 
+      last watered?"
+        />
+
+        <TextInput style={styles.textInput} placeholder="Plant nickname" />
+      </View>
+      <View style={styles.buttonsContainer}>
+        <Pressable style={styles.pressable} onPress={cancelButton}>
+          <Text>Cancel</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -29,11 +59,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#7F9B91',
   },
-  safe: {
-    justifyContent: 'flex-end',
-    flex: 0.5,
-    color: '#1E2720',
-  },
+
   modalView: {
     flex: 1,
     margin: 30,
@@ -52,25 +78,23 @@ const styles = StyleSheet.create({
   },
 
   plantImage: {
+    flex: 3,
     paddingHorizontal: 20,
     borderRadius: 20,
     flex: 1,
+    borderWidth: 1,
   },
-  plantInfo: {
-    flex: 2,
-  },
+  plantInfo: { flex: 1, borderWidth:1 },
   commonName: {
     fontWeight: 'bold',
     fontSize: 30,
   },
   latinName: {
     fontSize: 20,
+    flex: 1,
     fontStyle: 'italic',
   },
-  infoText: {
-    fontSize: 15,
-    paddingVertical: 5,
-  },
+
   buttonsContainer: {
     borderWidth: 1,
     flexDirection: 'row',
@@ -80,5 +104,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 10,
     borderRadius: 5,
+  },
+  textInput: {
+    height: 30,
+    backgroundColor: 'grey',
+
+    borderColor: 'red',
+    borderWidth: 3,
   },
 });

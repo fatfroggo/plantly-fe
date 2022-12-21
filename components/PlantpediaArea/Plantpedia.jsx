@@ -54,6 +54,23 @@ const Plantpedia = ({ navigation }) => {
     pressed ? setModalVisible(true) : setModalVisible(false);
   }, [pressed]);
 
+  const togglePressed = () => {
+    setPressed(currValue => {
+      return !currValue;
+    });
+  };
+
+  const toggleAddPlantButton = () => {
+    setAddPlantButtonPressed(currValue => {
+      return !currValue;
+    });
+  };
+
+  const cancelButton = () => {
+    togglePressed();
+    toggleAddPlantButton();
+  };
+
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safe}>
@@ -82,13 +99,20 @@ const Plantpedia = ({ navigation }) => {
 
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
         {addPlantButtonPressed ? (
-          <AddToMyPlantsModal />
+          <AddToMyPlantsModal
+            singlePlantData={singlePlantData}
+            setPressed={setPressed}
+            togglePressed={togglePressed}
+            cancelButton={cancelButton}
+          />
         ) : (
           <SinglePlantModal
+            togglePressed={togglePressed}
             addPlantButtonPressed={addPlantButtonPressed}
             setAddPlantButtonPressed={setAddPlantButtonPressed}
             singlePlantData={singlePlantData}
             setPressed={setPressed}
+            toggleAddPlantButton={toggleAddPlantButton}
           />
         )}
       </Modal>
