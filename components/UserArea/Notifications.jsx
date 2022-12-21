@@ -8,7 +8,7 @@ const Notifications = () => {
   ];
   return (
     <View style={styles.container}>
-      <Text>Notifications</Text>
+      <Text style={styles.title}>Notifications</Text>
       <View style={styles.notifications}>
         {notifications.map((notification) => {
           return (
@@ -26,21 +26,26 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     flexDirection: "column",
-    borderRadius: 30,
-
+    borderRadius: 20,
+    padding: 20,
     backgroundColor: "#ECEBE7",
-    padding: 30,
+  },
+  title: {
+    fontSize: 25,
+    paddingLeft: 5,
+    paddingBottom: 20,
   },
   notifications: {
     flexDirection: "row",
-    borderColor: "red",
-    borderWidth: 3,
     justifyContent: "space-evenly",
     backgroundColor: "#ECEBE7",
   },
-  notification: {
+  plant: {
     width: "30%",
     height: "100%",
+    padding: 20,
+    borderColor: "red",
+    borderWidth: 3,
   },
 });
 export default Notifications;
