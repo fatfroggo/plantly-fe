@@ -3,14 +3,16 @@ import { useEffect, useState } from "react";
 import { getPlantById } from "../../api/api";
 
 const randomPlantGenerator = (id) => {
-  const [plant, setPlant] = useState([]);
+  const [plant, setPlant] = useState({});
   const [error, setError] = useState("");
 
   useEffect(() => {
     setError("");
     getPlantById(id)
       .then((res) => {
-        setPlant([res]);
+        if (res.common_name === "N/A") {
+          getPlantById(id);
+        } else setPlant(res);
       })
       .catch((err) => {
         console.log(err);
