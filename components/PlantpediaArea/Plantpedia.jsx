@@ -35,7 +35,6 @@ const Plantpedia = ({ navigation }) => {
   });
 
   useEffect(() => {
-    console.log('first useEffect', singlePlantData);
     getPlants().then(fetchedPlants => {
       setPlantsData(fetchedPlants);
       setIsLoading(false);
@@ -43,12 +42,10 @@ const Plantpedia = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    console.log('second useEffect', singlePlantData);
     setSinglePlantData(plantsData[singlePlantIndex]);
   }, [singlePlantIndex]);
 
   useEffect(() => {
-    console.log('third useEffect', singlePlantData);
     pressed ? setModalVisible(true) : setModalVisible(false);
   }, [pressed]);
 
@@ -69,6 +66,7 @@ const Plantpedia = ({ navigation }) => {
         plantsData={plantsData}
         setModalVisible={setModalVisible}
         setSinglePlantIndex={setSinglePlantIndex}
+        setPlantsData={setPlantsData}
       />
       {!isLoading && (
         <Modal visible={modalVisible} animationType="slide" transparent={true}>

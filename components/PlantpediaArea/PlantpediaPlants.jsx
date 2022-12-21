@@ -11,7 +11,7 @@ import { useState, useEffect } from 'react';
 import { getPlants } from '../../api/api.js';
 
 
-const PlantpediaPlants = ({ setModalVisible, setSinglePlantIndex, plantsData }) => {
+const PlantpediaPlants = ({ setModalVisible, setSinglePlantIndex, plantsData, setPlantsData }) => {
  
   const [pressed, setPressed] = useState(false);
 
