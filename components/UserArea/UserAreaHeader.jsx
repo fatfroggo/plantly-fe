@@ -5,23 +5,28 @@ const UserAreaHeader = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.userAreaHeader}>{props.header}</Text>
+      <Text style={styles.subHeader}>{props.subHeader}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    fontSize: 40,
-    paddingLeft: 10,
+    paddingHorizontal: 12,
+    justifyContent: "flex-end",
     color: "#ecebe7",
-    width: "100%",
-    paddingBottom: 10,
-    color: "#1E2720",
-    paddingTop: "30%",
     width: "100%",
     flex: 1,
   },
-  userAreaHeader: { fontSize: 40, color: "#ecebe7" },
+  userAreaHeader: {
+    fontSize: 43,
+    color: "#ecebe7",
+    fontWeight: "300",
+  },
+  subHeader: {
+    fontSize: 20,
+    color: "#ecebe7",
+  },
 });
 
 export default UserAreaHeader;

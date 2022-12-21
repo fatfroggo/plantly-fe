@@ -6,28 +6,26 @@ import {
   StatusBar,
   Image,
   Pressable,
-} from 'react-native';
-import { useState, useEffect } from 'react';
-import { getPlants } from '../../api/api.js';
+} from "react-native";
+import { useState, useEffect } from "react";
+import { getPlants } from "../../api/api.js";
+import { useNavigation } from "@react-navigation/native";
 
 const PlantpediaPlants = ({
   setModalVisible,
   setSinglePlantIndex,
   plantsData,
-  setPlantsData,
 }) => {
   const [pressed, setPressed] = useState(false);
 
-  const toggleIsPressed = (plantId) => {
-    
-    setSinglePlantIndex(plantId);
-    setPressed(currValue => {
-      return !currValue;
-    });
+  const toggleIsPressed = () => {
+    setPressed(true);
+    console.log("pressed");
+    console.log(pressed);
   };
 
   useEffect(() => {
-    getPlants().then(fetchedPlants => {
+    getPlants().then((fetchedPlants) => {
       setPlantsData(fetchedPlants);
     });
   }, []);
@@ -42,11 +40,11 @@ const PlantpediaPlants = ({
     <View style={styles.container}>
       <FlatList
         data={plantsData}
-        renderItem={itemData => {
+        renderItem={(itemData) => {
           return (
             <Pressable
               onPress={() => {
-                toggleIsPressed(itemData.item.plant_id);
+                toggleIsPressed(itemData.index);
               }}
               style={styles.plantsListItem}
             >
@@ -64,7 +62,7 @@ const PlantpediaPlants = ({
               <View style={styles.plantItemImage}>
                 <Image
                   source={{ uri: itemData.item.picture_url }}
-                  style={{ height: '100%', width: '100%' }}
+                  style={{ height: "100%", width: "100%" }}
                 />
               </View>
             </Pressable>
@@ -80,26 +78,25 @@ const PlantpediaPlants = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 5,
-    backgroundColor: '#7F9B91',
-    flexDirection: 'row',
+    flex: 1,
+    backgroundColor: "#7F9B91",
+    flexDirection: "row",
   },
-  plantsList: { flex: 1 },
-  header: { flex: 1.5, color: '#F1F1F2', paddingTop: StatusBar.currentHeight },
-  headerText: { color: '#F1F1F2', fontSize: 40 },
-  subHeadingText: { color: '#F1F1F2' },
   plantsListItem: {
-    backgroundColor: '#F1F1F2',
+    height: 200,
+    backgroundColor: "#F1F1F2",
     borderRadius: 20,
-    flexDirection: 'row',
+    flexDirection: "row",
     flex: 1,
     margin: 10,
     padding: 20,
   },
   namesContainer: {
+    flex: 1,
     paddingBottom: 20,
   },
   plantItemImage: {
+    height: "100%",
     flex: 1,
     borderWidth: 1,
   },
@@ -107,12 +104,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   commonName: {
-    fontWeight: 'bold',
+    flex: 2,
+    fontWeight: "bold",
     fontSize: 20,
   },
   latinName: {
+    flex: 1,
     fontSize: 15,
-    fontStyle: 'italic',
+    fontStyle: "italic",
   },
 });
 

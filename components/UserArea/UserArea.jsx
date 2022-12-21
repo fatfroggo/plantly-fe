@@ -24,7 +24,6 @@ const UserArea = ({ navigation }) => {
 
   const toggleIsPressed = () => {
     setPressed(true);
-    
   };
 
   useEffect(() => {
@@ -46,8 +45,8 @@ const UserArea = ({ navigation }) => {
           backgroundColor={styles.safe.backgroundColor}
         />
 
-        <UserAreaHeader header="Welcome User!" />
-        <Nav navigation={navigation} />
+        <UserAreaHeader header="Welcome User!" style={styles.safe} />
+        <Nav navigation={navigation} style={styles.safe} />
       </SafeAreaView>
 
       <View style={styles.userAreaBody}>
@@ -90,13 +89,9 @@ const styles = StyleSheet.create({
   },
   safe: {
     width: "100%",
-    flex: 0.6,
+    flex: 0.5,
     backgroundColor: "#2B8B30",
     color: "#1E2720",
-  },
-  headerText: {
-    color: "#F1F1F2",
-    fontSize: 40,
   },
   userAreaBody: {
     marginVertical: 10,
