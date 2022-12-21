@@ -10,15 +10,20 @@ import {
 import { useState, useEffect } from 'react';
 import { getPlants } from '../../api/api.js';
 
-
-const PlantpediaPlants = ({ setPlantsList }) => {
-  const [plantsData, setPlantsData] = useState([]);
+const PlantpediaPlants = ({
+  setModalVisible,
+  setSinglePlantIndex,
+  plantsData,
+  setPlantsData,
+}) => {
   const [pressed, setPressed] = useState(false);
 
-  const toggleIsPressed = () => {
-    setPressed(true);
-    console.log('pressed');
-    console.log(pressed);
+  const toggleIsPressed = (plantId) => {
+    
+    setSinglePlantIndex(plantId);
+    setPressed(currValue => {
+      return !currValue;
+    });
   };
 
   useEffect(() => {
@@ -41,7 +46,7 @@ const PlantpediaPlants = ({ setPlantsList }) => {
           return (
             <Pressable
               onPress={() => {
-                toggleIsPressed(itemData.index);
+                toggleIsPressed(itemData.item.plant_id);
               }}
               style={styles.plantsListItem}
             >
