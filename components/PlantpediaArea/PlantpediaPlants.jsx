@@ -3,18 +3,18 @@ import {
   View,
   StyleSheet,
   FlatList,
-  StatusBar,
   Image,
   Pressable,
 } from 'react-native';
 import { useState, useEffect } from 'react';
 import { getPlants } from '../../api/api.js';
-import { useNavigation } from '@react-navigation/native';
+
 
 const PlantpediaPlants = ({
   setModalVisible,
   setSinglePlantIndex,
   plantsData,
+  setPlantsData
 }) => {
   const [pressed, setPressed] = useState(false);
 

@@ -7,171 +7,22 @@ import {
   FlatList,
   Image,
   Pressable,
-} from "react-native";
-import Nav from "../Nav";
-import UserAreaHeader from "./UserAreaHeader";
-import Notifications from "./Notifications";
-import { useEffect, useState } from "react";
-import { getUserPlants } from "../../api/api";
+} from 'react-native';
+import Nav from '../Nav';
+import UserAreaHeader from './UserAreaHeader';
+import Notifications from './Notifications';
+import { useEffect, useState } from 'react';
+import { getUserPlants } from '../../api/api';
 
 const UserPlants = ({ navigation }) => {
   const [pressed, setPressed] = useState(false);
-  const [userPlantsData, setUserPlantsData] = useState([
-    {
-      plant_id: 1,
-      common_name: "Janet Craig",
-      latin_name: "Dracaena deremensis 'Janet Craig'",
-      category: "Dracaena",
-      climate: "Tropical",
-      origin: "Cultivar",
-      pruning: "If needed",
-      watering_advice: "Keep moist between watering & Can dry between watering",
-      light_preference: "Strong light",
-      picture_url: "http://www.tropicopia.com/house-plant/thumbnails/5556.jpg",
-      temp_max: 30,
-      temp_min: 10,
-    },
-    {
-      plant_id: 2,
-      common_name: "Lady palm",
-      latin_name: "Rhapis excelsa",
-      category: "Palm",
-      climate: "Subtropical",
-      origin: "China",
-      pruning: "Never",
-      watering_advice:
-        "Keep moist between watering & Must not dry between watering",
-      light_preference: "Strong light",
-      picture_url: "http://www.tropicopia.com/house-plant/thumbnails/5725.jpg",
-      temp_max: 30,
-      temp_min: 8,
-    },
-    {
-      plant_id: 3,
-      common_name: "Tailflower,Wax flower",
-      latin_name: "Anthurium X",
-      category: "Anthurium",
-      climate: "Tropical",
-      origin: "Cultivar",
-      pruning: "Never",
-      watering_advice: "Water when soil is half dry & Can dry between watering",
-      light_preference: "Strong light",
-      picture_url: "http://www.tropicopia.com/house-plant/thumbnails/5491.jpg",
-      temp_max: 22,
-      temp_min: 18,
-    },
-    {
-      plant_id: 4,
-      common_name: "Elephant ear",
-      latin_name: "Alocasia X amazonica",
-      category: "Other",
-      climate: "Tropical humid",
-      origin: "Hybrid",
-      pruning: "Never",
-      watering_advice:
-        "Keep moist between watering & Water when soil is half dry",
-      light_preference: "Strong light",
-      picture_url: "http://www.tropicopia.com/house-plant/thumbnails/5486.jpg",
-      temp_max: 28,
-      temp_min: 15,
-    },
-    {
-      plant_id: 5,
-      common_name: "Malaysian Dracaena",
-      latin_name: "Dracaena reflexa 'Song of Jamaica'",
-      category: "Dracaena",
-      climate: "Tropical",
-      origin: "Cultivar",
-      pruning: "If needed",
-      watering_advice:
-        "Keep moist between watering & Water when soil is half dry",
-      light_preference: "Strong light",
-      picture_url: "http://www.tropicopia.com/house-plant/thumbnails/5586.jpg",
-      temp_max: 30,
-      temp_min: 12,
-    },
-    {
-      plant_id: 6,
-      common_name: "Chinese Evergreen",
-      latin_name: "Aglaonema 'Jubilee'",
-      category: "Aglaonema",
-      climate: "Tropical",
-      origin: "Hybrid",
-      pruning: "If needed",
-      watering_advice:
-        "Keep moist between watering & Water when soil is half dry",
-      light_preference: "Strong light",
-      picture_url: "http://www.tropicopia.com/house-plant/thumbnails/5466.jpg",
-      temp_max: 28,
-      temp_min: 18,
-    },
-    {
-      plant_id: 7,
-      common_name: "Malaysian Dracaena",
-      latin_name: "Dracaena reflexa 'Song of Jamaica'",
-      category: "Dracaena",
-      climate: "Tropical",
-      origin: "Cultivar",
-      pruning: "If needed",
-      watering_advice:
-        "Keep moist between watering & Water when soil is half dry",
-      light_preference: "Strong light",
-      picture_url: "http://www.tropicopia.com/house-plant/thumbnails/5585.jpg",
-      temp_max: 30,
-      temp_min: 12,
-    },
-    {
-      plant_id: 8,
-      common_name: "Herringbone,Pink praying plant",
-      latin_name: "Maranta leuconeura erythroneura",
-      category: "Hanging",
-      climate: "Tropical",
-      origin: "Brazil",
-      pruning: "If needed",
-      watering_advice:
-        "Keep moist between watering & Water when soil is half dry",
-      light_preference: "Strong light",
-      picture_url: "http://www.tropicopia.com/house-plant/thumbnails/5657.jpg",
-      temp_max: 28,
-      temp_min: 12,
-    },
-    {
-      plant_id: 9,
-      common_name: "Guzmania",
-      latin_name: "Guzmenia 'Marjan'",
-      category: "Bromeliad",
-      climate: "Tropical",
-      origin: "Cultivar",
-      pruning: "Never",
-      watering_advice:
-        "Water when soil is half dry & Change water regularly in the cup",
-      light_preference: "Strong light",
-      picture_url: "http://www.tropicopia.com/house-plant/thumbnails/5632.jpg",
-      temp_max: 30,
-      temp_min: 10,
-    },
-    {
-      plant_id: 10,
-      common_name: "Chinese Evergreen",
-      latin_name: "Aglaonema 'Silver Queen'",
-      category: "Aglaonema",
-      climate: "Tropical",
-      origin: "Hybrid",
-      pruning: "If needed",
-      watering_advice:
-        "Keep moist between watering & Water when soil is half dry",
-      light_preference: "Strong light",
-      picture_url: "http://www.tropicopia.com/house-plant/thumbnails/5480.jpg",
-      temp_max: 28,
-      temp_min: 18,
-    },
-  ]);
+  const [userPlantsData, setUserPlantsData] = useState([]);
 
-  // useEffect(() => {
-  //   getUserPlants().then(plants => {
-  //     setUserPlantsData(plants);
-  //   });
-  // }, []);
+  useEffect(() => {
+    getUserPlants().then(plants => {
+            setUserPlantsData(plants);
+    });
+  }, []);
 
   const toggleIsPressed = () => {
     setPressed(true);
@@ -205,7 +56,7 @@ const UserPlants = ({ navigation }) => {
         <FlatList
           numColumns={2}
           data={userPlantsData}
-          renderItem={(itemData) => {
+          renderItem={itemData => {
             return (
               <Pressable style={styles.plantsListItem}>
                 <View style={styles.plantItemImage}>
@@ -235,15 +86,15 @@ const UserPlants = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#D9D9D9",
+    backgroundColor: '#D9D9D9',
     flex: 5,
   },
 
   safe: {
-    width: "100%",
+    width: '100%',
     flex: 0.5,
-    backgroundColor: "#2B8B30",
-    color: "#1E2720",
+    backgroundColor: '#2B8B30',
+    color: '#1E2720',
   },
 
   userAreaBody: {
@@ -252,15 +103,15 @@ const styles = StyleSheet.create({
   },
 
   filterAndSortByContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     marginVertical: 15,
   },
 
   button: {
-    backgroundColor: "#F1F1F2",
+    backgroundColor: '#F1F1F2',
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
     paddingVertical: 6,
     marginHorizontal: 10,
     borderRadius: 20,
@@ -268,24 +119,24 @@ const styles = StyleSheet.create({
 
   plantsList: { flex: 1 },
 
-  header: { flex: 1.5, color: "#F1F1F2", paddingTop: StatusBar.currentHeight },
+  header: { flex: 1.5, color: '#F1F1F2', paddingTop: StatusBar.currentHeight },
 
-  headerText: { color: "#F1F1F2", fontSize: 40 },
+  headerText: { color: '#F1F1F2', fontSize: 40 },
 
-  subHeadingText: { color: "#F1F1F2" },
+  subHeadingText: { color: '#F1F1F2' },
 
   plantsListItem: {
-    backgroundColor: "#F1F1F2",
+    backgroundColor: '#F1F1F2',
     borderRadius: 20,
-    flexDirection: "row",
+    flexDirection: 'row',
     flex: 1,
     margin: 5,
-    alignItems: "center",
+    alignItems: 'center',
     paddingVertical: 10,
     paddingRight: 5,
   },
 
-  plantItemImage: { alignItems: "center", paddingHorizontal: 10 },
+  plantItemImage: { alignItems: 'center', paddingHorizontal: 10 },
 
   plantItemInfo: {
     flex: 1,

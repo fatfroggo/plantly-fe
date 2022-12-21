@@ -34,7 +34,6 @@ const UserArea = ({ navigation }) => {
 
   const plant = randomPlantGenerator(randomId);
 
-  console.log(plant);
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safe}>
