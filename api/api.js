@@ -25,8 +25,17 @@ export const getPlantById = id => {
   });
 };
 
-// export const getUserPlants = () => {
-//   return plantsApi.get(`/myPlants/fatfroggo`).then(userPlants => {
-//     return userPlants.data.userPlants;
-//   });
-// };
+export const getUserPlants = () => {
+  return plantsApi.get(`/myplants/fatfroggo`).then(myPlants => {
+    return myPlants.data.myPlants;
+  });
+};
+
+export const postUserPlant = (username, plant_id, last_watered) => {
+  const postBody = { username, plant_id, last_watered };
+  return plantsApi
+    .post(`/myplants/${username}/${plant_id}`, postBody)
+    .then(({ data }) => {
+      return data;
+    })
+};
