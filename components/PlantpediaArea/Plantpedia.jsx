@@ -42,7 +42,7 @@ const Plantpedia = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    setSinglePlantData(plantsData[singlePlantIndex]);
+    setSinglePlantData(plantsData[singlePlantIndex - 1]);
   }, [singlePlantIndex]);
 
   useEffect(() => {

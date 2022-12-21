@@ -10,13 +10,17 @@ import {
 import { useState, useEffect } from 'react';
 import { getPlants } from '../../api/api.js';
 
-
-const PlantpediaPlants = ({ setModalVisible, setSinglePlantIndex, plantsData, setPlantsData }) => {
- 
+const PlantpediaPlants = ({
+  setModalVisible,
+  setSinglePlantIndex,
+  plantsData,
+  setPlantsData,
+}) => {
   const [pressed, setPressed] = useState(false);
 
-  const toggleIsPressed = plantIndex => {
-    setSinglePlantIndex(plantIndex);
+  const toggleIsPressed = (plantId) => {
+    
+    setSinglePlantIndex(plantId);
     setPressed(currValue => {
       return !currValue;
     });
@@ -38,11 +42,11 @@ const PlantpediaPlants = ({ setModalVisible, setSinglePlantIndex, plantsData, se
     <View style={styles.container}>
       <FlatList
         data={plantsData}
-        renderItem={(itemData, index) => {
+        renderItem={itemData => {
           return (
             <Pressable
               onPress={() => {
-                toggleIsPressed(itemData.index);
+                toggleIsPressed(itemData.item.plant_id);
               }}
               style={styles.plantsListItem}
             >
