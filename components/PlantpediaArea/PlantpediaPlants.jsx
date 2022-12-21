@@ -8,29 +8,24 @@ import {
   Pressable,
 } from 'react-native';
 import { useState, useEffect } from 'react';
-import { getPlants } from '../../api/api.js';
-import { useNavigation } from '@react-navigation/native';
 
-const PlantpediaPlants = ({ setPlantsList }) => {
-  const navigation = useNavigation();
-  const [plantsData, setPlantsData] = useState([]);
+
+const PlantpediaPlants = ({ setModalVisible, setSinglePlantIndex, plantsData}) => {
+ 
   const [pressed, setPressed] = useState(false);
 
-  const toggleIsPressed = () => {
-    setPressed(true);
-    console.log('pressed');
-    console.log(pressed);
+  const toggleIsPressed = plantIndex => {
+    setSinglePlantIndex(plantIndex);
+    setPressed(currValue => {
+      return !currValue;
+    });
   };
 
-  useEffect(() => {
-    getPlants().then(fetchedPlants => {
-      setPlantsData(fetchedPlants);
-    });
-  }, []);
+  
 
   useEffect(() => {
     if (pressed) {
-      setPlantsList(false);
+      setModalVisible(true);
     }
   }, [pressed]);
 
@@ -38,9 +33,14 @@ const PlantpediaPlants = ({ setPlantsList }) => {
     <View style={styles.container}>
       <FlatList
         data={plantsData}
-        renderItem={itemData => {
+        renderItem={(itemData, index) => {
           return (
-            <Pressable onPress={toggleIsPressed} style={styles.plantsListItem}>
+            <Pressable
+              onPress={() => {
+                toggleIsPressed(itemData.index);
+              }}
+              style={styles.plantsListItem}
+            >
               <View style={styles.plantItemInfo}>
                 <View style={styles.namesContainer}>
                   <Text style={styles.commonName}>
