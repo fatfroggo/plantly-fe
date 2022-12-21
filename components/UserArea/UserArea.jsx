@@ -23,8 +23,7 @@ const UserArea = ({ navigation }) => {
 
   const toggleIsPressed = () => {
     setPressed(true);
-    console.log("pressed");
-    console.log(pressed);
+    
   };
 
   useEffect(() => {

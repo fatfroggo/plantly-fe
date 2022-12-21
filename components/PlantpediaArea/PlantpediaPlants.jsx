@@ -11,14 +11,15 @@ import { useState, useEffect } from 'react';
 import { getPlants } from '../../api/api.js';
 
 
-const PlantpediaPlants = ({ setPlantsList }) => {
-  const [plantsData, setPlantsData] = useState([]);
+const PlantpediaPlants = ({ setModalVisible, setSinglePlantIndex, plantsData }) => {
+ 
   const [pressed, setPressed] = useState(false);
 
-  const toggleIsPressed = () => {
-    setPressed(true);
-    console.log('pressed');
-    console.log(pressed);
+  const toggleIsPressed = plantIndex => {
+    setSinglePlantIndex(plantIndex);
+    setPressed(currValue => {
+      return !currValue;
+    });
   };
 
   useEffect(() => {
@@ -37,7 +38,7 @@ const PlantpediaPlants = ({ setPlantsList }) => {
     <View style={styles.container}>
       <FlatList
         data={plantsData}
-        renderItem={itemData => {
+        renderItem={(itemData, index) => {
           return (
             <Pressable
               onPress={() => {
