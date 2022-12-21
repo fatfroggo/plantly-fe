@@ -5,7 +5,6 @@ import { Text, Pressable, StyleSheet, View } from "react-native";
 import { useState } from "react";
 
 const Nav = ({ navigation }) => {
-
   return (
     <View style={styles.container}>
       <View style={styles.buttons}>
@@ -46,7 +45,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignitems: "center",
     width: "100%",
-    marginVertical: 20,
     paddingHorizontal: 10,
   },
 
