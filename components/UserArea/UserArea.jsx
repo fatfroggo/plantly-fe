@@ -7,6 +7,7 @@ import {
   FlatList,
   Image,
   Pressable,
+  ScrollView,
 } from "react-native";
 import Nav from "../Nav";
 import UserAreaHeader from "./UserAreaHeader";
@@ -18,7 +19,7 @@ import randomPlantGenerator from "./RandomPlantGenerator";
 
 const UserArea = ({ navigation }) => {
   const [randomId, setRandomId] = useState();
-  const [pageData, setPageData] = useState([]);
+  // const [pageData, setPageData] = useState([]);
   const [pressed, setPressed] = useState(false);
 
   const toggleIsPressed = () => {
@@ -34,6 +35,7 @@ const UserArea = ({ navigation }) => {
 
   const plant = randomPlantGenerator(randomId);
 
+  console.log(plant);
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safe}>
@@ -41,51 +43,41 @@ const UserArea = ({ navigation }) => {
           animated={true}
           barStyle="light-content"
           showHideTransition="slide"
-          backgroundColor={styles.header.backgroundColor}
+          backgroundColor={styles.safe.backgroundColor}
         />
-        <View style={styles.header}>
-          <UserAreaHeader header="Welcome User!" style={styles.header} />
-          <Nav navigation={navigation} />
-        </View>
+
+        <UserAreaHeader header="Welcome User!" />
+        <Nav navigation={navigation} />
       </SafeAreaView>
+
       <View style={styles.userAreaBody}>
-        <Notifications style={styles.notifications} />
-        {typeof plant === "string" ? (
-          <Text>{plant}</Text>
-        ) : (
-          <FlatList
-            data={plant}
-            renderItem={(plantData) => {
-              <Pressable
-                onPress={toggleIsPressed}
-                style={styles.plantsListItem}
-              >
-                return (
-                <View style={styles.plantItemInfo}>
-                  <View style={styles.namesContainer}>
-                    <Text style={styles.commonName}>
-                      {plantData.item.common_name}
-                    </Text>
-                    <Text style={styles.latinName}>
-                      {plantData.item.latin_name}
-                    </Text>
+        <ScrollView>
+          <Notifications style={styles.notifications} />
+          <View style={styles.featuredPlant}>
+            {typeof plant === "string" ? (
+              <Text>{plant}</Text>
+            ) : (
+              <>
+                <Text style={styles.featuredPlantHeader}>Featured Plant</Text>
+                <Pressable onPress={toggleIsPressed} style={styles.pressable}>
+                  <View style={styles.textContainer}>
+                    <Text style={styles.commonName}>{plant.common_name}</Text>
+                    <Text style={styles.latinName}>{plant.latin_name}</Text>
+                    <View style={styles.imageContainer}>
+                      <Image
+                        source={{ uri: plant.picture_url }}
+                        style={{ height: "100%", width: "100%" }}
+                      />
+                      <Text
+                        style={styles.plantInfo}
+                      >{`Climate: ${plant.climate}`}</Text>
+                    </View>
                   </View>
-                  <Text>{`Climate: ${plantData.item.climate}`}</Text>
-                </View>
-                <View style={styles.plantItemImage}>
-                  <Image
-                    source={{ uri: plantData.item.picture_url }}
-                    style={{ height: "100%", width: "100%" }}
-                  />
-                </View>
-                );
-              </Pressable>;
-            }}
-            keyExtractor={(item, index) => {
-              return item.plant_id;
-            }}
-          />
-        )}
+                </Pressable>
+              </>
+            )}
+          </View>
+        </ScrollView>
       </View>
     </View>
   );
@@ -102,46 +94,56 @@ const styles = StyleSheet.create({
     backgroundColor: "#2B8B30",
     color: "#1E2720",
   },
-  plantsList: { flex: 1 },
-  header: { flex: 1.5, color: "#F1F1F2", paddingTop: StatusBar.currentHeight },
-  headerText: { color: "#F1F1F2", fontSize: 40 },
-  subHeadingText: { color: "#F1F1F2" },
-  plantsListItem: {
-    backgroundColor: "#F1F1F2",
-    borderRadius: 20,
-    flexDirection: "row",
-    flex: 1,
-    margin: 10,
-    padding: 20,
-  },
-  namesContainer: {
-    paddingBottom: 20,
-  },
-  plantItemImage: {
-    flex: 1,
-    borderWidth: 1,
-  },
-  plantItemInfo: {
-    flex: 1,
-  },
-  commonName: {
-    fontWeight: "bold",
-    fontSize: 20,
-  },
-  latinName: {
-    fontSize: 15,
-    fontStyle: "italic",
-  },
-  header: {
-    color: "#1E2720",
-    paddingTop: "30%",
-    width: "100%",
-    flex: 1,
+  headerText: {
+    color: "#F1F1F2",
+    fontSize: 40,
   },
   userAreaBody: {
+    marginVertical: 10,
     flex: 1,
-    marginVertical: 20,
-    marginHorizontal: 20,
+    marginHorizontal: 15,
+  },
+  pressable: {
+    flex: 1,
+    height: "100%",
+  },
+  featuredPlant: {
+    backgroundColor: "#F1F1F2",
+    borderRadius: 20,
+    height: 600,
+    flexDirection: "column",
+    marginTop: 10,
+    color: "black",
+    flex: 1,
+    padding: 10,
+  },
+  featuredPlantHeader: {
+    fontSize: 25,
+    paddingLeft: 15,
+    paddingTop: 10,
+  },
+  imageContainer: {
+    flex: 9,
+    width: "100%",
+    height: "100%",
+  },
+  plantInfo: {
+    paddingTop: 5,
+  },
+  textContainer: {
+    paddingTop: 20,
+    paddingHorizontal: 15,
+    flex: 0.9,
+  },
+  commonName: {
+    flex: 0.8,
+    fontWeight: "bold",
+    fontSize: 22,
+  },
+  latinName: {
+    flex: 0.6,
+    fontSize: 16,
+    fontStyle: "italic",
   },
 });
 

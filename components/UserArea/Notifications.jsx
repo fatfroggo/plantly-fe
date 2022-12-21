@@ -13,7 +13,7 @@ const Notifications = () => {
         {notifications.map((notification) => {
           return (
             <View style={styles.plant}>
-              <Text>{notification}</Text>
+              <Text key={notification + "n"}>{notification}</Text>
             </View>
           );
         })}
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "column",
     borderRadius: 20,
+    marginVertical: 10,
     padding: 20,
     backgroundColor: "#ECEBE7",
   },
