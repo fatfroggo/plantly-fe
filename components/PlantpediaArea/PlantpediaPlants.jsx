@@ -6,10 +6,10 @@ import {
   StatusBar,
   Image,
   Pressable,
-} from 'react-native';
-import { useState, useEffect } from 'react';
-import { getPlants } from '../../api/api.js';
-import { useNavigation } from '@react-navigation/native';
+} from "react-native";
+import { useState, useEffect } from "react";
+import { getPlants } from "../../api/api.js";
+import { useNavigation } from "@react-navigation/native";
 
 const PlantpediaPlants = ({ setPlantsList }) => {
   const navigation = useNavigation();
@@ -18,12 +18,12 @@ const PlantpediaPlants = ({ setPlantsList }) => {
 
   const toggleIsPressed = () => {
     setPressed(true);
-    console.log('pressed');
+    console.log("pressed");
     console.log(pressed);
   };
 
   useEffect(() => {
-    getPlants().then(fetchedPlants => {
+    getPlants().then((fetchedPlants) => {
       setPlantsData(fetchedPlants);
     });
   }, []);
@@ -38,7 +38,7 @@ const PlantpediaPlants = ({ setPlantsList }) => {
     <View style={styles.container}>
       <FlatList
         data={plantsData}
-        renderItem={itemData => {
+        renderItem={(itemData) => {
           return (
             <Pressable onPress={toggleIsPressed} style={styles.plantsListItem}>
               <View style={styles.plantItemInfo}>
@@ -55,7 +55,7 @@ const PlantpediaPlants = ({ setPlantsList }) => {
               <View style={styles.plantItemImage}>
                 <Image
                   source={{ uri: itemData.item.picture_url }}
-                  style={{ height: '100%', width: '100%' }}
+                  style={{ height: "100%", width: "100%" }}
                 />
               </View>
             </Pressable>
@@ -72,17 +72,17 @@ const PlantpediaPlants = ({ setPlantsList }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 5,
-    backgroundColor: '#7F9B91',
-    flexDirection: 'row',
+    backgroundColor: "#7F9B91",
+    flexDirection: "row",
   },
   plantsList: { flex: 1 },
-  header: { flex: 1.5, color: '#F1F1F2', paddingTop: StatusBar.currentHeight },
-  headerText: { color: '#F1F1F2', fontSize: 40 },
-  subHeadingText: { color: '#F1F1F2' },
+  header: { flex: 1.5, color: "#F1F1F2", paddingTop: StatusBar.currentHeight },
+  headerText: { color: "#F1F1F2", fontSize: 40 },
+  subHeadingText: { color: "#F1F1F2" },
   plantsListItem: {
-    backgroundColor: '#F1F1F2',
+    backgroundColor: "#F1F1F2",
     borderRadius: 20,
-    flexDirection: 'row',
+    flexDirection: "row",
     flex: 1,
     margin: 10,
     padding: 20,
@@ -98,12 +98,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   commonName: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 20,
   },
   latinName: {
     fontSize: 15,
-    fontStyle: 'italic',
+    fontStyle: "italic",
   },
 });
 

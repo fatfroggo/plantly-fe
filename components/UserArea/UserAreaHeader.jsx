@@ -12,9 +12,8 @@ const UserAreaHeader = (props) => {
 const styles = StyleSheet.create({
   userAreaHeader: {
     fontSize: 40,
+    paddingLeft: 10,
     color: "#ecebe7",
-    borderColor: "blue",
-    borderWidth: 3,
     width: "100%",
     paddingBottom: 10,
   },
