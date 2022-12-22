@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -6,7 +5,8 @@ import {
   Pressable,
   Image,
   ScrollView,
-} from "react-native";
+  Dimensions,
+} from 'react-native';
 
 const SinglePlantModal = ({
   singlePlantData,
@@ -16,39 +16,40 @@ const SinglePlantModal = ({
   toggleAddPlantButton,
 }) => {
   return (
-    <ScrollView contentContainerStyle={styles.modalView}>
+    <View style={styles.modalView}>
       <View style={styles.plantImage}>
         <Image
           style={{ height: 200, width: 200, borderRadius: 20 }}
           source={{ uri: singlePlantData?.picture_url }}
         />
       </View>
+      <Text style={styles.commonName}>{singlePlantData?.common_name}</Text>
+      <Text style={styles.latinName}>{singlePlantData?.latin_name}</Text>
+      <ScrollView
+        persistentScrollbar={true}
+        contentContainerStyle={styles.plantInfo}
+      >
+        <Text style={styles.subHeading}>Climate</Text>
+        <Text style={styles.infoText}>{singlePlantData?.climate}</Text>
 
-      <View style={styles.plantInfo}>
-        <Text style={styles.commonName}>{singlePlantData?.common_name}</Text>
-        <Text style={styles.latinName}>{singlePlantData?.latin_name}</Text>
-        <Text
-          style={styles.infoText}
-        >{`Climate: ${singlePlantData?.climate}`}</Text>
-        <Text
-          style={styles.infoText}
-        >{`Origin: ${singlePlantData?.origin}`}</Text>
-        <Text
-          style={styles.infoText}
-        >{`Pruning: ${singlePlantData?.pruning}`}</Text>
-        <Text
-          style={styles.infoText}
-        >{`Watering: ${singlePlantData?.watering_advice}`}</Text>
-        <Text
-          style={styles.infoText}
-        >{`Light: ${singlePlantData?.light_preference}`}</Text>
-        <Text
-          style={styles.infoText}
-        >{`Max temperature: ${singlePlantData?.temp_max}`}</Text>
-        <Text
-          style={styles.infoText}
-        >{`Min temperature: ${singlePlantData?.temp_min}`}</Text>
-      </View>
+        <Text style={styles.subHeading}>Origin</Text>
+        <Text style={styles.infoText}>{singlePlantData?.origin}</Text>
+
+        <Text style={styles.subHeading}>Pruning</Text>
+        <Text style={styles.infoText}>{singlePlantData?.pruning}</Text>
+
+        <Text style={styles.subHeading}>Watering</Text>
+        <Text style={styles.infoText}>{singlePlantData?.watering_advice}</Text>
+
+        <Text style={styles.subHeading}>Light</Text>
+        <Text style={styles.infoText}>{singlePlantData?.light_preference}</Text>
+
+        <Text style={styles.subHeading}>Max temperature</Text>
+        <Text style={styles.infoText}>{singlePlantData?.temp_max}</Text>
+
+        <Text style={styles.subHeading}>Min temperature</Text>
+        <Text style={styles.infoText}>{singlePlantData?.temp_min}</Text>
+      </ScrollView>
       <View style={styles.buttonsContainer}>
         <Pressable style={styles.pressable} onPress={toggleAddPlantButton}>
           <Text style={styles.pressableText}>Add to my plants</Text>
@@ -57,28 +58,29 @@ const SinglePlantModal = ({
           <Text style={styles.pressableText}>Cancel</Text>
         </Pressable>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#7F9B91",
+    backgroundColor: '#7F9B91',
   },
   safe: {
-    justifyContent: "center",
+    justifyContent: 'center',
     flex: 0.5,
-    color: "#1E2720",
+    color: '#1E2720',
   },
   modalView: {
     flex: 1,
-    margin: 30,
-    backgroundColor: "white",
+    marginHorizontal: Dimensions.get('window').width / 10,
+    marginVertical: Dimensions.get('window').height / 15,
+    backgroundColor: 'white',
     borderRadius: 20,
     padding: 30,
-    alignItems: "center",
-    shadowColor: "#000",
+    alignItems: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -91,36 +93,42 @@ const styles = StyleSheet.create({
   plantImage: {
     paddingHorizontal: 20,
     borderRadius: 20,
-    flex: 1,
-    paddingBottom: 30,
   },
-  plantInfo: {
-    flex: 2,
-  },
+  plantInfo: { paddingRight: 10 },
   commonName: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 30,
+    textAlign: 'center',
+    marginTop: 10,
   },
   latinName: {
-    fontSize: 20,
-    fontStyle: "italic",
+    fontSize: 18,
+    fontStyle: 'italic',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  subHeading: {
+    fontSize: 17,
+    fontWeight: 'bold',
   },
   infoText: {
-    fontSize: 15,
-    paddingVertical: 5,
+    fontSize: 17,
+    marginBottom: 15,
   },
   buttonsContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
+    marginTop: 20,
   },
   pressable: {
-    backgroundColor: "#7F9B91",
-    width: "40%",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#7F9B91',
+    width: '40%',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginHorizontal: 8,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 20,
   },
+  pressableText: { textAlign: 'center' },
 });
 
 export default SinglePlantModal;

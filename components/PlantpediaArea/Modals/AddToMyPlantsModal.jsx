@@ -7,26 +7,77 @@ import {
   Image,
   ScrollView,
   TextInput,
+  Dimensions,
+  Keyboard,
 } from 'react-native';
 import UserContext from '../../context/userContext';
 import { postUserPlant } from '../../../api/api';
 
 const AddToMyPlantsModal = ({ singlePlantData, cancelButton }) => {
   const { user, setUser } = useContext(UserContext);
-  
+
   const reqBody = { plant_id: singlePlantData.plant_id, username: user };
 
-const postPlant = () => {
-  postUserPlant(reqBody).then(() => {
-    console.log('success')
-  })
-}
+  const [keyboardShowing, setKeyboardShowing] = useState('');
+  const [modalStyle, setModalStyle] = useState('');
+
+  const postPlant = () => {
+    postUserPlant(reqBody);
+  };
+
+  Keyboard.addListener('keyboardDidShow', () => {
+    setKeyboardShowing('true');
+  });
+
+  Keyboard.addListener('keyboardDidHide', () => {
+    setKeyboardShowing('false');
+  });
+
+  useEffect(() => {
+    {
+      keyboardShowing
+        ? setModalStyle({
+            flex: 1,
+            marginHorizontal: Dimensions.get('window').width / 10,
+            marginVertical: Dimensions.get('window').height / 13.5,
+            backgroundColor: 'red',
+            borderRadius: 20,
+            padding: 30,
+            alignItems: 'center',
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4,
+            elevation: 5,
+          })
+        : setModalStyle({
+            flex: 1,
+            marginHorizontal: Dimensions.get('window').width / 10,
+            marginVertical: Dimensions.get('window').height / 4,
+            backgroundColor: 'white',
+            borderRadius: 20,
+            padding: 30,
+            alignItems: 'center',
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4,
+            elevation: 5,
+          });
+    }
+  }, [keyboardShowing]);
 
   return (
-    <View style={styles.modalView}>
+    <View style={modalStyle}>
       <View style={styles.plantImage}>
         <Image
-          style={{ width: 200, height: 200, borderRadius: 20 }}
+          style={{ width: 100, height: 100, borderRadius: 20 }}
           source={{ uri: singlePlantData?.picture_url }}
         />
       </View>
@@ -35,16 +86,7 @@ const postPlant = () => {
         <Text style={styles.commonName}>{singlePlantData?.common_name}</Text>
         <Text style={styles.latinName}>{singlePlantData?.latin_name}</Text>
       </View>
-      <View style={styles}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="How many days ago was this plant 
-      last watered?"
-          onChangeText={text => {
-            reqBody.last_watered = text;
-          }}
-        />
-
+      <View style={styles.textInputContainer}>
         <TextInput
           style={styles.textInput}
           placeholder="Plant nickname"
@@ -52,12 +94,19 @@ const postPlant = () => {
             reqBody.nickname = text;
           }}
         />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Days ago last watered"
+          onChangeText={text => {
+            reqBody.last_watered = text;
+          }}
+        />
       </View>
       <View style={styles.buttonsContainer}>
         <Pressable style={styles.pressable} onPress={cancelButton}>
           <Text>Cancel</Text>
         </Pressable>
-        <Pressable style={styles.pressable} onPress={postPlant} >
+        <Pressable style={styles.pressable} onPress={postPlant}>
           <Text>Submit</Text>
         </Pressable>
       </View>
@@ -73,43 +122,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#7F9B91',
   },
 
-  modalView: {
-    flex: 1,
-    margin: 30,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 30,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-
   plantImage: {
-    flex: 3,
     paddingHorizontal: 20,
     borderRadius: 20,
-    flex: 1,
-    borderWidth: 1,
+    marginBottom: 15,
   },
-  plantInfo: { flex: 1, borderWidth: 1 },
+  plantInfo: {},
   commonName: {
     fontWeight: 'bold',
-    fontSize: 30,
+    fontSize: 20,
+    textAlign: 'center',
   },
   latinName: {
-    fontSize: 20,
-    flex: 1,
+    fontSize: 15,
     fontStyle: 'italic',
+    textAlign: 'center',
+    marginBottom: 15,
   },
 
   buttonsContainer: {
-    borderWidth: 1,
     flexDirection: 'row',
   },
   pressable: {
@@ -118,11 +149,12 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
   },
+  textInputContainer: { marginBottom: 20, alignSelf: 'stretch' },
   textInput: {
-    height: 30,
-    backgroundColor: 'grey',
-
-    borderColor: 'red',
-    borderWidth: 3,
+    backgroundColor: '#84A293',
+    padding: 5,
+    borderRadius: 10,
+    marginBottom: 5,
+    alignItems: 'stretch',
   },
 });
