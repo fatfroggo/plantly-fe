@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Nav from '../Nav';
 import UserAreaHeader from './UserAreaHeader';
-import Notifications from './Notifications';
+
 import { useEffect, useState } from 'react';
 import { getUserPlants } from '../../api/api';
 
@@ -20,7 +20,7 @@ const UserPlants = ({ navigation }) => {
 
   useEffect(() => {
     getUserPlants().then(plants => {
-            setUserPlantsData(plants);
+      setUserPlantsData(plants);
     });
   }, []);
 
@@ -67,16 +67,18 @@ const UserPlants = ({ navigation }) => {
                 </View>
 
                 <View style={styles.plantItemInfo}>
-                  <Text>Nickname</Text>
+                  <Text>{itemData.item.nickname}</Text>
                   <Text style={styles.info}>{itemData.item.common_name}</Text>
-                  <Text style={styles.info}>Age</Text>
-                  <Text style={styles.info}>Watering status</Text>
+
+                  <Text
+                    style={styles.info}
+                  >{`Watered ${itemData.item.last_watered} day(s) ago`}</Text>
                 </View>
               </Pressable>
             );
           }}
           keyExtractor={(item, index) => {
-            return item.plant_id;
+            return item.my_plant_id;
           }}
         />
       </View>
