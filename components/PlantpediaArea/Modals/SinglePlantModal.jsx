@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
   },
+  pressableText: { textAlign: 'center' },
 });
 
 export default SinglePlantModal;
