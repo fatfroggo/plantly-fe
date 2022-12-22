@@ -15,9 +15,6 @@ const SinglePlantModal = ({
   togglePressed,
   toggleAddPlantButton,
 }) => {
-  const windowWidth = Dimensions.get('window').width;
-  const windowHeight = Dimensions.get('window').height;
-
   return (
     <View style={styles.modalView}>
       <View style={styles.plantImage}>
@@ -129,7 +126,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: 8,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 20,
   },
   pressableText: { textAlign: 'center' },
 });
