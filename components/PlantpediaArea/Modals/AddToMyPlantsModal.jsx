@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -7,7 +7,7 @@ import {
   Image,
   ScrollView,
   TextInput,
-} from 'react-native';
+} from "react-native";
 
 const AddToMyPlantsModal = ({
   username,
@@ -17,15 +17,15 @@ const AddToMyPlantsModal = ({
   cancelButton,
 }) => {
   console.log(singlePlantData);
-  const [lastWatered, setLastWatered] = useState('');
-  const [nickname, setNickname] = useState('');
+  const [lastWatered, setLastWatered] = useState("");
+  const [nickname, setNickname] = useState("");
   const reqBody = { username, plant_id };
 
   return (
     <View style={styles.modalView}>
       <View style={styles.plantImage}>
         <Image
-          style={{ width: 200, height:200, borderRadius: 20 }}
+          style={{ width: 200, height: 200, borderRadius: 20 }}
           source={{ uri: singlePlantData?.picture_url }}
         />
       </View>
@@ -57,17 +57,17 @@ export default AddToMyPlantsModal;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7F9B91',
+    backgroundColor: "#7F9B91",
   },
 
   modalView: {
     flex: 1,
     margin: 30,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 30,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -84,32 +84,32 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 1,
   },
-  plantInfo: { flex: 1, borderWidth:1 },
+  plantInfo: { flex: 1, borderWidth: 1 },
   commonName: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 30,
   },
   latinName: {
     fontSize: 20,
     flex: 1,
-    fontStyle: 'italic',
+    fontStyle: "italic",
   },
 
   buttonsContainer: {
     borderWidth: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   pressable: {
-    backgroundColor: '#7F9B91',
+    backgroundColor: "#7F9B91",
     marginHorizontal: 10,
     padding: 10,
     borderRadius: 5,
   },
   textInput: {
     height: 30,
-    backgroundColor: 'grey',
+    backgroundColor: "grey",
 
-    borderColor: 'red',
+    borderColor: "red",
     borderWidth: 3,
   },
 });
