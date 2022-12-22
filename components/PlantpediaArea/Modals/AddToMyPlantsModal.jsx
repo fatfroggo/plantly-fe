@@ -17,7 +17,9 @@ const AddToMyPlantsModal = ({ singlePlantData, cancelButton }) => {
   const reqBody = { plant_id: singlePlantData.plant_id, username: user };
 
 const postPlant = () => {
-  postUserPlant(reqBody)
+  postUserPlant(reqBody).then(() => {
+    console.log('success')
+  })
 }
 
   return (

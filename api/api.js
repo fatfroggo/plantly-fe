@@ -44,3 +44,7 @@ export const postUserPlant = ({
       return data;
     });
 };
+
+export const deleteUserPlant = (username, my_plant_id) => {
+  return plantsApi.delete(`/myplants/${username}/${my_plant_id}`);
+};

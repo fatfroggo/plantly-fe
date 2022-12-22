@@ -10,19 +10,31 @@ import {
 } from 'react-native';
 import Nav from '../Nav';
 import UserAreaHeader from './UserAreaHeader';
-
-import { useEffect, useState } from 'react';
-import { getUserPlants } from '../../api/api';
+import UserContext from '../context/userContext';
+import { useEffect, useState, useContext } from 'react';
+import { getUserPlants, deleteUserPlant } from '../../api/api';
 
 const UserPlants = ({ navigation }) => {
   const [pressed, setPressed] = useState(false);
   const [userPlantsData, setUserPlantsData] = useState([]);
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     getUserPlants().then(plants => {
       setUserPlantsData(plants);
     });
-  }, []);
+  }, [userPlantsData]);
+
+  const deletePlant = id => {
+    deleteUserPlant(user, id).then(() => {
+      setUserPlantsData(currPlants => {
+        const newPlants = currPlants.filter(plant => {
+          return plant.my_plant_id !== id;
+        });
+        return newPlants;
+      });
+    });
+  };
 
   const toggleIsPressed = () => {
     setPressed(true);
@@ -58,7 +70,12 @@ const UserPlants = ({ navigation }) => {
           data={userPlantsData}
           renderItem={itemData => {
             return (
-              <Pressable style={styles.plantsListItem}>
+              <Pressable
+                style={styles.plantsListItem}
+                onLongPress={() => {
+                  deletePlant(itemData.item.my_plant_id);
+                }}
+              >
                 <View style={styles.plantItemImage}>
                   <Image
                     source={{ uri: itemData.item.picture_url }}
@@ -131,7 +148,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F1F1F2',
     borderRadius: 20,
     flexDirection: 'row',
-    flex: 1,
+    flex: 0.5,
     margin: 5,
     alignItems: 'center',
     paddingVertical: 10,
