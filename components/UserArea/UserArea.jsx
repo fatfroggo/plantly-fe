@@ -12,15 +12,23 @@ import {
 import Nav from "../Nav";
 import UserAreaHeader from "./UserAreaHeader";
 import Notifications from "./Notifications";
-import { useEffect, useState } from "react";
-import { getPlantById, getPlants } from "../../api/api";
+import { useEffect, useState, useContext } from "react";
+import { getPlantById, getPlants, getUserPlants } from "../../api/api";
 
 import randomPlantGenerator from "./RandomPlantGenerator";
+import UserContext from "../context/userContext";
 
 const UserArea = ({ navigation }) => {
   const [randomId, setRandomId] = useState();
-  // const [pageData, setPageData] = useState([]);
   const [pressed, setPressed] = useState(false);
+  const [userPlantsData, setUserPlantsData] = useState([]);
+  const { user, setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    getUserPlants(user).then((plants) => {
+      setUserPlantsData(plants);
+    });
+  }, []);
 
   const toggleIsPressed = () => {
     setPressed(true);
@@ -45,12 +53,19 @@ const UserArea = ({ navigation }) => {
         />
 
         <UserAreaHeader header="Welcome User!" style={styles.safe} />
-        <Nav navigation={navigation} style={styles.safe} />
+        <Nav
+          navigation={navigation}
+          style={styles.safe}
+          userPlantsData={{ userPlantsData, setUserPlantsData }}
+        />
       </SafeAreaView>
 
       <View style={styles.userAreaBody}>
         <ScrollView>
-          <Notifications style={styles.notifications} />
+          <Notifications
+            style={styles.notifications}
+            userPlantsData={{ userPlantsData, setUserPlantsData }}
+          />
           <View style={styles.featuredPlant}>
             {typeof plant === "string" ? (
               <Text>{plant}</Text>
