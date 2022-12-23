@@ -7,6 +7,7 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
+import { dateToDays } from '../../utils/utils';
 
 const MyPlantModal = ({ singlePlantData, handleClose, modalLoading }) => {
   return modalLoading ? (
@@ -36,6 +37,14 @@ const MyPlantModal = ({ singlePlantData, handleClose, modalLoading }) => {
         persistentScrollbar={true}
         contentContainerStyle={styles.plantInfo}
       >
+        <Text style={styles.subHeading}>Nickname</Text>
+        <Text style={styles.infoText}>{singlePlantData?.nickname}</Text>
+
+        <Text style={styles.subHeading}>Last watered</Text>
+        <Text style={styles.infoText}>{`${dateToDays(
+          singlePlantData.last_watered_date
+        )} day(s) ago`}</Text>
+
         <Text style={styles.subHeading}>Climate</Text>
         <Text style={styles.infoText}>{singlePlantData?.climate}</Text>
 
