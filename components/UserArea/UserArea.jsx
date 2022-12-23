@@ -4,7 +4,6 @@ import {
   View,
   StatusBar,
   SafeAreaView,
-  FlatList,
   Image,
   Pressable,
   ScrollView,
@@ -13,15 +12,16 @@ import Nav from "../Nav";
 import UserAreaHeader from "./UserAreaHeader";
 import Notifications from "./Notifications";
 import { useEffect, useState, useContext } from "react";
-import { getPlantById, getPlants, getUserPlants } from "../../api/api";
+import { getPlants, getUserPlants } from "../../api/api";
 
 import randomPlantGenerator from "./RandomPlantGenerator";
 import UserContext from "../context/userContext";
+import UserPlantsContext from "../context/userPlantsContext";
 
 const UserArea = ({ navigation }) => {
   const [randomId, setRandomId] = useState();
   const [pressed, setPressed] = useState(false);
-  const [userPlantsData, setUserPlantsData] = useState([]);
+  const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
   const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {

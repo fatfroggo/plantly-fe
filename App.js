@@ -1,6 +1,5 @@
-import { StatusBar, StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { useContext, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./components/Login";
 import UserContext, { UserProvider } from "./components/context/userContext";
