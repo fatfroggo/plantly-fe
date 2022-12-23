@@ -1,18 +1,19 @@
-const { countDown, daysToDate } = require("../utils");
 
-beforeEach(() => {
-  jest.useFakeTimers().setSystemTime(new Date("2022-12-21"));
-});
-afterEach(() => {
-  jest.useRealTimers();
-});
+const { countDown, daysToDate, dateToDays } = require("../utils");
 
 const dayjs = require("dayjs");
 const customParseFormat = require("dayjs/plugin/customParseFormat");
 dayjs.extend(customParseFormat);
 
+  beforeAll(() => {
+    jest.useFakeTimers().setSystemTime(new Date("2022-12-21"));
+  });
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+  
 describe("daysToDate", () => {
-  test("should return correct date when passed a number argument", () => {
+  test("should return correct date format when passed a number of days", () => {
     const staticDate = dayjs("2022-12-22T15:38:43.308Z").format("YYYY/MM/DD");
 
     expect(daysToDate(7, staticDate)).toBe("2022/12/15");
@@ -22,21 +23,30 @@ describe("daysToDate", () => {
 
 describe("dateToDays", () => {
   test("returns the correct number of days since last watering", () => {
-    const date = dayjs("YYYY/MM/DD").format();
 
-    expect(dateToDays(date)).toBe(4);
+    const date = dayjs("2022/12/20").format();
+
+    expect(dateToDays(date)).toBe(1);
+
   });
 });
 
 describe("countDown", () => {
-  test("should return an object ", () => {
-    expect(typeof countDown()).toBe("object");
+  test("should return an number ", () => {
+    expect(typeof countDown()).toBe("number");
   });
-  test("should return correct number of days until next water if last watered date is less than the days between waterings", () => {
-    const timeLeft = {
-      days: 2,
-    };
-    expect(countDown(5, 3)).toEqual(timeLeft);
+
+  test("return correct number of days until next watering", () => {
+    const date = dayjs(daysToDate(3)).format();
+
+    expect(countDown(5, date)).toBe(2);
+    expect(countDown(8, date)).toBe(5);
+  });
+
+  test("return 0 if last watered date is more than the days between waterings", () => {
+    const date = dayjs(daysToDate(3)).format();
+
+    expect(countDown(5, date)).toEqual(2);
   });
 
   test("should return 0 days until next water if last watered date is more than the days between waterings", () => {
