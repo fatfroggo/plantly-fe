@@ -1,17 +1,8 @@
 import { useEffect, useState } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  StatusBar,
-  Modal,
-  Pressable,
-  Image,
-  ScrollView,
-} from 'react-native';
+import { Text, View, StyleSheet, StatusBar, Modal } from 'react-native';
 import Nav from '../Nav';
 import PlantPediaPlants from './PlantpediaPlants';
-import { getPlants } from '../../api/api.js';
+import { getPlants, getPlantById } from '../../api/api.js';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import UserAreaHeader from '../UserArea/UserAreaHeader';
 import SinglePlantModal from './Modals/SinglePlantModal';
@@ -19,10 +10,10 @@ import AddToMyPlantsModal from './Modals/AddToMyPlantsModal';
 
 const Plantpedia = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalLoading, setModalLoading] = useState(true);
   const [addPlantButtonPressed, setAddPlantButtonPressed] = useState(false);
   const [plantsData, setPlantsData] = useState([]);
   const [singlePlantData, setSinglePlantData] = useState({});
-  const [singlePlantId, setSinglePlantId] = useState('')
 
   useEffect(() => {
     getPlants().then(fetchedPlants => {
@@ -30,9 +21,13 @@ const Plantpedia = ({ navigation }) => {
     });
   }, []);
 
-  const handleAddToPlant = (plant_id) => {
+  const handleAddToPlant = plant_id => {
     setModalVisible(true);
-    setSinglePlantId(plant_id)
+    setModalLoading(true);
+    getPlantById(plant_id).then(plant => {
+      setSinglePlantData(plant);
+      setModalLoading(false);
+    });
   };
 
   const handleCancel = () => {
@@ -63,7 +58,6 @@ const Plantpedia = ({ navigation }) => {
         setModalVisible={setModalVisible}
         setPlantsData={setPlantsData}
         handleAddToPlant={handleAddToPlant}
-       
       />
 
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
@@ -78,9 +72,8 @@ const Plantpedia = ({ navigation }) => {
             setAddPlantButtonPressed={setAddPlantButtonPressed}
             singlePlantData={singlePlantData}
             handleCancel={handleCancel}
-            singlePlantId={singlePlantId}
             setSinglePlantData={setSinglePlantData}
-            modalVisible={modalVisible}
+            modalLoading={modalLoading}
           />
         )}
       </Modal>

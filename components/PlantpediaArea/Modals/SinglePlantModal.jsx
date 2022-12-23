@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -8,26 +7,14 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import { getPlantById } from '../../../api/api';
 
 const SinglePlantModal = ({
   singlePlantData,
   toggleAddPlantButton,
   handleCancel,
-  singlePlantId,
-  modalVisible,
-  setSinglePlantData
+  modalLoading,
 }) => {
-  const [modalLoading, setModalLoading] = useState(true);
-  useEffect(() => {
-    setModalLoading(true);
-    getPlantById(singlePlantId).then(plant => {
-      setSinglePlantData(plant);
-      setModalLoading(false);
-      console.log(modalVisible)
-    });
-  }, [modalVisible]);
-  modalLoading ? (
+  return modalLoading ? (
     <View style={styles.modalLoading}>
       <View
         style={{
@@ -154,7 +141,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   pressableText: { textAlign: 'center' },
-
   modalLoading: {
     flex: 1,
     justifyContent: 'center',
