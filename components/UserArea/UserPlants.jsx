@@ -13,58 +13,35 @@ import Nav from "../Nav";
 import UserAreaHeader from "./UserAreaHeader";
 import UserContext from "../context/userContext";
 import { useEffect, useState, useContext } from "react";
-import { getUserPlants, deleteUserPlant } from "../../api/api";
+import {
+  getUserPlants,
+  deleteUserPlant,
+  getUserPlantByMyPlantId,
+} from "../../api/api";
 import { dateToDays } from "../../utils/utils";
 import MyPlantModal from "./MyPlantModal";
 import dayjs from "dayjs";
-var relativeTime = require("dayjs/plugin/relativeTime");
+const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 
 const UserPlants = ({ navigation }) => {
   const [pressed, setPressed] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [userPlantsData, setUserPlantsData] = useState([]);
-  const [singlePlantIndex, setSinglePlantIndex] = useState("1");
-  const [singlePlantData, setSinglePlantData] = useState({
-    category: "Dracaena",
-    climate: "Tropical",
-    common_name: "Janet Craig",
-    latin_name: "Dracaena deremensis 'Janet Craig'",
-    light_preference: "Strong light",
-    origin: "Cultivar",
-    picture_url: "http://www.tropicopia.com/house-plant/thumbnails/5556.jpg",
-    plant_id: 1,
-    pruning: "If needed",
-    temp_max: 30,
-    temp_min: 10,
-    watering_advice: "Keep moist between watering & Can dry between watering",
-  });
+  const [singlePlantData, setSinglePlantData] = useState({});
   const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
-    setSinglePlantData(userPlantsData[singlePlantIndex - 1]);
-  }, [singlePlantIndex]);
-
-  useEffect(() => {
-    getUserPlants().then((plants) => {
+    getUserPlants().then(plants => {
       setUserPlantsData(plants);
     });
   }, []);
 
-  useEffect(() => {
-    pressed ? setModalVisible(true) : setModalVisible(false);
-  }, [pressed]);
-
-  const toggleIsPressed = (myPlantId) => {
-    setSinglePlantIndex(myPlantId);
-    setPressed((currValue) => {
-      return !currValue;
-    });
-  };
-
-  const togglePressed = () => {
-    setPressed((currValue) => {
-      return !currValue;
+  const handlePress = my_plant_id => {
+    getUserPlantByMyPlantId(user, my_plant_id).then(plant => {
+      console.log(plant)
+      setSinglePlantData(plant);
+      
     });
   };
 
@@ -112,7 +89,7 @@ const UserPlants = ({ navigation }) => {
               <Pressable
                 style={styles.plantsListItem}
                 onPress={() => {
-                  toggleIsPressed(itemData.item.my_plant_id);
+                  handlePress(itemData.item.my_plant_id);
                 }}
                 onLongPress={() => {
                   deletePlant(itemData.item.my_plant_id);
@@ -142,11 +119,7 @@ const UserPlants = ({ navigation }) => {
         />
       </View>
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
-        <MyPlantModal
-          singlePlantData={singlePlantData}
-          setPressed={setPressed}
-          togglePressed={togglePressed}
-        />
+        <MyPlantModal singlePlantData={singlePlantData} />
       </Modal>
     </View>
   );
