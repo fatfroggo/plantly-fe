@@ -1,35 +1,25 @@
 const dayjs = require("dayjs");
 const customParseFormat = require("dayjs/plugin/customParseFormat");
-dayjs.extend(customParseFormat);
+var relativeTime = require("dayjs/plugin/relativeTime");
+dayjs.extend(relativeTime, customParseFormat);
 
 const daysToDate = (lastWatered, date = dayjs()) => {
   return dayjs(date).subtract(lastWatered, "day").format("YYYY/MM/DD");
 };
 
-const dateToDays = (dateLastWatered) => {};
+const dateToDays = (dateLastWatered) => {
+  const todaysDate = dayjs();
+  return dayjs(todaysDate).diff(dateLastWatered, "day");
+};
 
 const countDown = (daysBetweenWaterings, dateLastWatered) => {
-  const daysSinceWatering = dayjs(dateLastWatered);
+  const daysSinceWater = dateToDays(dateLastWatered);
 
-  if (lastWatered > daysBetweenWaterings) {
-    return { days: 0 };
+  if (daysSinceWater >= daysBetweenWaterings) {
+    return 0;
   } else {
-    const nextWater = daysBetweenWaterings - lastWatered;
-
-    let nextWaterDate = new Date(
-      Date.now() + nextWater * 24 * 60 * 60 * 1000
-    ).getTime();
-
-    const difference = +new Date(nextWaterDate) - +new Date();
-    let timeLeft = {};
-
-    if (difference > 0) {
-      timeLeft = {
-        days: Math.floor(difference / (24 * 60 * 60 * 1000)),
-      };
-    }
-    return timeLeft;
+    return daysBetweenWaterings - daysSinceWater;
   }
 };
 
-module.exports = { countDown, daysToDate };
+module.exports = { countDown, daysToDate, dateToDays };
