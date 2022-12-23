@@ -8,13 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 
-const MyPlantModal = ({
-  singlePlantData,
-  setPressed,
-  setAddPlantButtonPressed,
-  togglePressed,
-  toggleAddPlantButton,
-}) => {
+const MyPlantModal = ({ singlePlantData }) => {
   return (
     <View style={styles.modalView}>
       <View style={styles.plantImage}>
