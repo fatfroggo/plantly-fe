@@ -11,19 +11,11 @@ import { getPlants } from '../../api/api.js';
 
 
 const PlantpediaPlants = ({
-  setModalVisible,
-  setSinglePlantIndex,
+  handleAddToPlant,
   plantsData,
   setPlantsData
 }) => {
-  const [pressed, setPressed] = useState(false);
 
-  const toggleIsPressed = plantId => {
-    setSinglePlantIndex(plantId);
-    setPressed(currValue => {
-      return !currValue;
-    });
-  };
 
   useEffect(() => {
     getPlants().then(fetchedPlants => {
@@ -31,11 +23,7 @@ const PlantpediaPlants = ({
     });
   }, []);
 
-  useEffect(() => {
-    if (pressed) {
-      setModalVisible(true);
-    }
-  }, [pressed]);
+  
 
   return (
     <View style={styles.container}>
@@ -45,7 +33,7 @@ const PlantpediaPlants = ({
           return (
             <Pressable
               onPress={() => {
-                toggleIsPressed(itemData.item.plant_id);
+                handleAddToPlant(itemData.item.plant_id);
               }}
               style={styles.plantsListItem}
             >

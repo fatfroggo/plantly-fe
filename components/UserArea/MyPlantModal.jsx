@@ -14,12 +14,10 @@ const MyPlantModal = ({ singlePlantData, handleClose, modalLoading }) => {
       <View
         style={{
           alignSelf: 'center',
-          backgroundColor: '#2b8b30',
-          borderRadius: 50,
         }}
       >
         <Image
-          source={require('../../assets/plant-logo.png')}
+          source={require('../../assets/loading.gif')}
           style={{ height: 200, width: 200 }}
         />
       </View>
