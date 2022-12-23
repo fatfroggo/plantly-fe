@@ -51,6 +51,6 @@ export const deleteUserPlant = (username, my_plant_id) => {
 
 export const getUserPlantByMyPlantId = (username, my_plant_id) => {
   return plantsApi.get(`/myplants/${username}/${my_plant_id}`).then(plant => {
-    return plant.data.plant;
+    return plant.data.myPlant;
   });
 };
