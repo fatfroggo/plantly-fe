@@ -8,54 +8,57 @@ import {
   Image,
   Pressable,
   Modal,
-} from "react-native";
-import Nav from "../Nav";
-import UserAreaHeader from "./UserAreaHeader";
-import UserContext from "../context/userContext";
-import { useEffect, useState, useContext } from "react";
+} from 'react-native';
+import Nav from '../Nav';
+import UserAreaHeader from './UserAreaHeader';
+import UserContext from '../context/userContext';
+import { useEffect, useState, useContext } from 'react';
 import {
   getUserPlants,
   deleteUserPlant,
   getUserPlantByMyPlantId,
-} from "../../api/api";
-import { dateToDays } from "../../utils/utils";
-import MyPlantModal from "./MyPlantModal";
-import dayjs from "dayjs";
-const relativeTime = require("dayjs/plugin/relativeTime");
+} from '../../api/api';
+import { dateToDays } from '../../utils/utils';
+import MyPlantModal from './MyPlantModal';
+import dayjs from 'dayjs';
+var relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 
 const UserPlants = ({ navigation }) => {
-  const [pressed, setPressed] = useState(false);
+  const [modalLoading, setModalLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [userPlantsData, setUserPlantsData] = useState([]);
   const [singlePlantData, setSinglePlantData] = useState({});
   const { user, setUser } = useContext(UserContext);
 
-  useEffect(() => {
-    getUserPlants().then(plants => {
-      setUserPlantsData(plants);
-    });
-  }, []);
-
   const handlePress = my_plant_id => {
+    setModalLoading(true);
+    setModalVisible(true);
     getUserPlantByMyPlantId(user, my_plant_id).then(plant => {
-      console.log(plant)
       setSinglePlantData(plant);
-      
+      setModalLoading(false);
     });
   };
 
-  const deletePlant = (id) => {
+  const handleClose = () => {
+    setModalVisible(false);
+  };
+
+  const deletePlant = id => {
     deleteUserPlant(user, id).then(() => {
-      setUserPlantsData((currPlants) => {
-        const newPlants = currPlants.filter((plant) => {
+      setUserPlantsData(currPlants => {
+        const newPlants = currPlants.filter(plant => {
           return plant.my_plant_id !== id;
         });
         return newPlants;
       });
     });
   };
-
+  useEffect(() => {
+    getUserPlants().then(plants => {
+      setUserPlantsData(plants);
+    });
+  }, []);
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safe}>
@@ -84,7 +87,7 @@ const UserPlants = ({ navigation }) => {
         <FlatList
           numColumns={2}
           data={userPlantsData}
-          renderItem={(itemData) => {
+          renderItem={itemData => {
             return (
               <Pressable
                 style={styles.plantsListItem}
@@ -119,7 +122,11 @@ const UserPlants = ({ navigation }) => {
         />
       </View>
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
-        <MyPlantModal singlePlantData={singlePlantData} />
+        <MyPlantModal
+          singlePlantData={singlePlantData}
+          handleClose={handleClose}
+          modalLoading={modalLoading}
+        />
       </Modal>
     </View>
   );
@@ -127,15 +134,15 @@ const UserPlants = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#D9D9D9",
+    backgroundColor: '#D9D9D9',
     flex: 5,
   },
 
   safe: {
-    width: "100%",
+    width: '100%',
     flex: 0.5,
-    backgroundColor: "#2B8B30",
-    color: "#1E2720",
+    backgroundColor: '#2B8B30',
+    color: '#1E2720',
   },
 
   userAreaBody: {
@@ -144,15 +151,15 @@ const styles = StyleSheet.create({
   },
 
   filterAndSortByContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     marginVertical: 15,
   },
 
   button: {
-    backgroundColor: "#F1F1F2",
+    backgroundColor: '#F1F1F2',
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
     paddingVertical: 6,
     marginHorizontal: 10,
     borderRadius: 20,
@@ -160,24 +167,24 @@ const styles = StyleSheet.create({
 
   plantsList: { flex: 1 },
 
-  header: { flex: 1.5, color: "#F1F1F2", paddingTop: StatusBar.currentHeight },
+  header: { flex: 1.5, color: '#F1F1F2', paddingTop: StatusBar.currentHeight },
 
-  headerText: { color: "#F1F1F2", fontSize: 40 },
+  headerText: { color: '#F1F1F2', fontSize: 40 },
 
-  subHeadingText: { color: "#F1F1F2" },
+  subHeadingText: { color: '#F1F1F2' },
 
   plantsListItem: {
-    backgroundColor: "#F1F1F2",
+    backgroundColor: '#F1F1F2',
     borderRadius: 20,
-    flexDirection: "row",
+    flexDirection: 'row',
     flex: 0.5,
     margin: 5,
-    alignItems: "center",
+    alignItems: 'center',
     paddingVertical: 10,
     paddingRight: 5,
   },
 
-  plantItemImage: { alignItems: "center", paddingHorizontal: 10 },
+  plantItemImage: { alignItems: 'center', paddingHorizontal: 10 },
 
   plantItemInfo: {
     flex: 1,

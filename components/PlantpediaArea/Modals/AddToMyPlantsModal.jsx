@@ -14,7 +14,7 @@ import UserContext from "../../context/userContext";
 import { postUserPlant } from "../../../api/api";
 import { daysToDate } from "../../../utils/utils";
 
-const AddToMyPlantsModal = ({ singlePlantData, cancelButton }) => {
+const AddToMyPlantsModal = ({ singlePlantData, handleCancel }) => {
   const { user, setUser } = useContext(UserContext);
 
   const reqBody = { plant_id: singlePlantData.plant_id, username: user };
@@ -105,7 +105,7 @@ const AddToMyPlantsModal = ({ singlePlantData, cancelButton }) => {
         />
       </View>
       <View style={styles.buttonsContainer}>
-        <Pressable style={styles.pressable} onPress={cancelButton}>
+        <Pressable style={styles.pressable} onPress={handleCancel}>
           <Text>Cancel</Text>
         </Pressable>
         <Pressable style={styles.pressable} onPress={postPlant}>
