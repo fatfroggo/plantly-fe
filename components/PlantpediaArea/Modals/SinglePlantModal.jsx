@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
   },
   modalView: {
     flex: 1,
-    marginHorizontal: Dimensions.get('window').width / 10,
-    marginVertical: Dimensions.get('window').height / 15,
+    marginHorizontal: '10%',
+    marginVertical: '30%',
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 30,
