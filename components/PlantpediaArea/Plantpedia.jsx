@@ -32,6 +32,7 @@ const Plantpedia = ({ navigation }) => {
 
   const handleCancel = () => {
     setModalVisible(false);
+    setAddPlantButtonPressed(false);
   };
 
   return (
