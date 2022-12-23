@@ -8,8 +8,23 @@ import {
   Dimensions,
 } from 'react-native';
 
-const MyPlantModal = ({ singlePlantData }) => {
-  return (
+const MyPlantModal = ({ singlePlantData, handleClose, modalLoading }) => {
+  return modalLoading ? (
+    <View style={styles.modalLoading}>
+      <View
+        style={{
+          alignSelf: 'center',
+          backgroundColor: '#2b8b30',
+          borderRadius: 50,
+        }}
+      >
+        <Image
+          source={require('../../assets/plant-logo.png')}
+          style={{ height: 200, width: 200 }}
+        />
+      </View>
+    </View>
+  ) : (
     <View style={styles.modalView}>
       <View style={styles.plantImage}>
         <Image
@@ -45,11 +60,10 @@ const MyPlantModal = ({ singlePlantData }) => {
         <Text style={styles.infoText}>{singlePlantData?.temp_min}</Text>
       </ScrollView>
       <View style={styles.buttonsContainer}>
-        <Pressable style={styles.pressable} onPress={toggleAddPlantButton}>
-          <Text style={styles.pressableText}>Add to my plants</Text>
-        </Pressable>
-        <Pressable style={styles.pressable} onPress={togglePressed}>
-          <Text style={styles.pressableText}>Cancel</Text>
+        <Pressable style={styles.pressable}>
+          <Text style={styles.pressableText} onPress={handleClose}>
+            Close
+          </Text>
         </Pressable>
       </View>
     </View>
@@ -123,6 +137,25 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   pressableText: { textAlign: 'center' },
+
+  modalLoading: {
+    flex: 1,
+    justifyContent: 'center',
+    marginHorizontal: Dimensions.get('window').width / 10,
+    marginVertical: Dimensions.get('window').height / 15,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 30,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
 });
 
 export default MyPlantModal;

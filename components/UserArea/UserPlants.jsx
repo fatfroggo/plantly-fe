@@ -21,26 +21,27 @@ import {
 import { dateToDays } from '../../utils/utils';
 import MyPlantModal from './MyPlantModal';
 import dayjs from 'dayjs';
-const relativeTime = require('dayjs/plugin/relativeTime');
+var relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 
 const UserPlants = ({ navigation }) => {
-  const [pressed, setPressed] = useState(false);
+  const [modalLoading, setModalLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [userPlantsData, setUserPlantsData] = useState([]);
   const [singlePlantData, setSinglePlantData] = useState({});
   const { user, setUser } = useContext(UserContext);
 
-  useEffect(() => {
-    getUserPlants().then(plants => {
-      setUserPlantsData(plants);
-    });
-  }, []);
-
   const handlePress = my_plant_id => {
+    setModalLoading(true);
+    setModalVisible(true);
     getUserPlantByMyPlantId(user, my_plant_id).then(plant => {
       setSinglePlantData(plant);
+      setModalLoading(false);
     });
+  };
+
+  const handleClose = () => {
+    setModalVisible(false);
   };
 
   const deletePlant = id => {
@@ -53,7 +54,11 @@ const UserPlants = ({ navigation }) => {
       });
     });
   };
-
+  useEffect(() => {
+    getUserPlants().then(plants => {
+      setUserPlantsData(plants);
+    });
+  }, []);
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safe}>
@@ -117,7 +122,11 @@ const UserPlants = ({ navigation }) => {
         />
       </View>
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
-        <MyPlantModal singlePlantData={singlePlantData} />
+        <MyPlantModal
+          singlePlantData={singlePlantData}
+          handleClose={handleClose}
+          modalLoading={modalLoading}
+        />
       </Modal>
     </View>
   );
