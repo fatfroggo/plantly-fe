@@ -10,9 +10,9 @@ import {
 
 const SinglePlantModal = ({
   singlePlantData,
-  toggleAddPlantButton,
   handleCancel,
   modalLoading,
+  setAddPlantButtonPressed
 }) => {
   return modalLoading ? (
     <View style={styles.modalLoading}>
@@ -63,7 +63,7 @@ const SinglePlantModal = ({
         <Text style={styles.infoText}>{singlePlantData?.temp_min}</Text>
       </ScrollView>
       <View style={styles.buttonsContainer}>
-        <Pressable style={styles.pressable} onPress={toggleAddPlantButton}>
+        <Pressable style={styles.pressable} onPress={setAddPlantButtonPressed}>
           <Text style={styles.pressableText}>Add to my plants</Text>
         </Pressable>
         <Pressable style={styles.pressable} onPress={handleCancel}>
