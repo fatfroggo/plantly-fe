@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
-import { Text, View, StyleSheet, StatusBar, Modal } from "react-native";
-import Nav from "../Nav";
-import PlantPediaPlants from "./PlantpediaPlants";
-import { getPlants, getPlantById } from "../../api/api.js";
-import { SafeAreaView } from "react-native-safe-area-context";
-import UserAreaHeader from "../UserArea/UserAreaHeader";
-import SinglePlantModal from "./Modals/SinglePlantModal";
-import AddToMyPlantsModal from "./Modals/AddToMyPlantsModal";
+
+import { useEffect, useState } from 'react';
+import { Text, View, StyleSheet, StatusBar, Modal } from 'react-native';
+import Nav from '../Nav';
+import PlantPediaPlants from './PlantpediaPlants';
+import { getPlants, getPlantById } from '../../api/api.js';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import UserAreaHeader from '../UserArea/UserAreaHeader';
+import SinglePlantModal from './Modals/SinglePlantModal';
+import AddToMyPlantsModal from './Modals/AddToMyPlantsModal';
+import ClimateSort from './ClimateSort';
+
 
 const Plantpedia = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -14,12 +17,15 @@ const Plantpedia = ({ navigation }) => {
   const [addPlantButtonPressed, setAddPlantButtonPressed] = useState(false);
   const [plantsData, setPlantsData] = useState([]);
   const [singlePlantData, setSinglePlantData] = useState({});
-
+  const [selectedClimate, setSelectedClimate] = useState(undefined)
+  
   useEffect(() => {
-    getPlants().then((fetchedPlants) => {
+
+    getPlants(selectedClimate).then(fetchedPlants => {
+
       setPlantsData(fetchedPlants);
     });
-  }, []);
+  }, [selectedClimate]);
 
   const handleAddToPlant = (plant_id) => {
     setModalVisible(true);
@@ -54,6 +60,7 @@ const Plantpedia = ({ navigation }) => {
         <Nav navigation={navigation} />
       </SafeAreaView>
 
+      <ClimateSort selectedClimate={selectedClimate} setSelectedClimate={setSelectedClimate}/>
       <PlantPediaPlants
         plantsData={plantsData}
         setModalVisible={setModalVisible}
