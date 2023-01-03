@@ -1,15 +1,15 @@
 import { View, TextInput, StyleSheet, Pressable, Text } from 'react-native';
 import { useState, useEffect } from 'react';
 import { EvilIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { TabRouter } from '@react-navigation/native';
 
-const SearchBar = () => {
-  const navigation = useNavigation();
-
-  const [searchText, setSearchText] = useState('');
+const PlantpediaSearchBar = ({ setSearchText, setPlantpediaSearch }) => {
+  const [plantpediaSearchText, setPlantpediaSearchText] = useState('');
+  
 
   const handleSearch = () => {
-    navigation.navigate('plantpedia', { searchText });
+    setPlantpediaSearch(true)
+    setSearchText(plantpediaSearchText);
   };
 
   return (
@@ -18,7 +18,7 @@ const SearchBar = () => {
         <TextInput
           style={styles.searchInput}
           placeholder="Search plants"
-          onChangeText={setSearchText}
+          onChangeText={setPlantpediaSearchText}
         />
         <Pressable onPress={handleSearch}>
           <EvilIcons name="search" size={24} color="#1E2720" />
@@ -52,4 +52,4 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 });
-export default SearchBar;
+export default PlantpediaSearchBar;
