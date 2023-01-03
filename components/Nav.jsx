@@ -31,6 +31,15 @@ const Nav = ({ navigation }) => {
         >
           <Text>Plantpedia</Text>
         </Pressable>
+
+        <Pressable
+          style={styles.navPressable}
+          onPress={() => {
+            navigation.navigate("forum");
+          }}
+        >
+          <Text>Forum</Text>
+        </Pressable>
       </View>
       <SearchBar />
     </View>

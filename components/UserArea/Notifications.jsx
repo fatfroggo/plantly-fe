@@ -46,7 +46,7 @@ const Notifications = () => {
                 style={{ height: 80, width: 80, borderRadius: 30 }}
                 source={{ uri: item.picture_url }}
               />
-              {console.log(item, "plant")}
+              {/* {console.log(item, "plant")} */}
               <Text style={styles.text}>{item.nickname}</Text>
               <Text style={styles.text}> 1 day until water</Text>
             </View>
