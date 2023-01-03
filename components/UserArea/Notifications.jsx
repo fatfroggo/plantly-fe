@@ -15,6 +15,7 @@ const Notifications = () => {
   //   setTimeout(() => {
   //     setTimeLeft(calculateTimeLeft());
   //   }, 1000);
+
   // });
 
   const countDownHandler = (plant) => {
