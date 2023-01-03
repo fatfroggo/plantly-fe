@@ -1,10 +1,8 @@
-
 import { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, StatusBar, Modal } from 'react-native';
+import { Text, View, StyleSheet, StatusBar, Modal, Image } from 'react-native';
 import PlantpediaNav from '../PlantpediaNav';
 import PlantPediaPlants from './PlantpediaPlants';
 import { getPlants, getPlantById, getPlantsByQuery } from '../../api/api.js';
-
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import UserAreaHeader from '../UserArea/UserAreaHeader';
@@ -13,8 +11,8 @@ import AddToMyPlantsModal from './Modals/AddToMyPlantsModal';
 
 import ClimateSort from './ClimateSort';
 
-
 const Plantpedia = ({ route, navigation }) => {
+  const [plantpediaLoading, setPlantpediaLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalLoading, setModalLoading] = useState(true);
@@ -25,17 +23,14 @@ const Plantpedia = ({ route, navigation }) => {
   const [isInvalidSearch, setIsInvalidSearch] = useState(false);
   const [invalidSearchText, setInvalidSearchText] = useState('');
   const [plantpediaSearch, setPlantpediaSearch] = useState(false);
-  const [selectedClimate, setSelectedClimate] = useState(undefined)
-  
+  const [selectedClimate, setSelectedClimate] = useState(undefined);
+
   useEffect(() => {
-
     getPlants(selectedClimate).then(fetchedPlants => {
-
       setPlantsData(fetchedPlants);
     });
   }, [selectedClimate]);
-  
-  
+
   useEffect(() => {
     if (route.params && !plantpediaSearch) {
       setPlantpediaSearch(false);
@@ -44,26 +39,31 @@ const Plantpedia = ({ route, navigation }) => {
       getPlantsByQuery(searchText)
         .then(fetchedPlants => {
           setPlantsData(fetchedPlants);
+          setPlantpediaLoading(false)
         })
         .catch(() => {
           setPlantpediaSearch(false);
           setIsInvalidSearch(true);
           setInvalidSearchText(searchText);
+          setPlantpediaLoading(false)
         });
     } else if (searchText.length > 0) {
       setIsInvalidSearch(false);
       getPlantsByQuery(searchText)
         .then(fetchedPlants => {
           setPlantsData(fetchedPlants);
+          setPlantpediaLoading(false)
         })
         .catch(() => {
           setIsInvalidSearch(true);
           setInvalidSearchText(searchText);
+          setPlantpediaLoading(false)
         });
     } else {
       setIsInvalidSearch(false);
       getPlants().then(fetchedPlants => {
         setPlantsData(fetchedPlants);
+        setPlantpediaLoading(false)
       });
     }
   }, [searchText]);
@@ -81,7 +81,7 @@ const Plantpedia = ({ route, navigation }) => {
     setModalVisible(false);
     setAddPlantButtonPressed(false);
   };
-  
+
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safe}>
@@ -106,15 +106,31 @@ const Plantpedia = ({ route, navigation }) => {
         />
       </SafeAreaView>
 
-      <ClimateSort selectedClimate={selectedClimate} setSelectedClimate={setSelectedClimate}/>
-      <PlantPediaPlants
-        plantsData={plantsData}
-        setModalVisible={setModalVisible}
-        setPlantsData={setPlantsData}
-        handleAddToPlant={handleAddToPlant}
-        isInvalidSearch={isInvalidSearch}
-        invalidSearchText={invalidSearchText}
+      <ClimateSort
+        selectedClimate={selectedClimate}
+        setSelectedClimate={setSelectedClimate}
       />
+      {plantpediaLoading ? (
+        <View
+          style={{
+            alignSelf: 'center',
+          }}
+        >
+          <Image
+            source={require('../../assets/loadingLight.gif')}
+            style={{ height: 200, width: 200 }}
+          />
+        </View>
+      ) : (
+        <PlantPediaPlants
+          plantsData={plantsData}
+          setModalVisible={setModalVisible}
+          setPlantsData={setPlantsData}
+          handleAddToPlant={handleAddToPlant}
+          isInvalidSearch={isInvalidSearch}
+          invalidSearchText={invalidSearchText}
+        />
+      )}
 
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
         {addPlantButtonPressed ? (

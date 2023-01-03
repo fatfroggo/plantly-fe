@@ -8,34 +8,35 @@ import {
   Image,
   Pressable,
   Modal,
-} from "react-native";
-import Nav from "../Nav";
-import UserAreaHeader from "./UserAreaHeader";
-import UserContext from "../context/userContext";
-import { useEffect, useState, useContext } from "react";
+} from 'react-native';
+import Nav from '../Nav';
+import UserAreaHeader from './UserAreaHeader';
+import UserContext from '../context/userContext';
+import { useEffect, useState, useContext } from 'react';
 import {
   getUserPlants,
   deleteUserPlant,
   getUserPlantByMyPlantId,
-} from "../../api/api";
+} from '../../api/api';
 
-import MyPlantModal from "./MyPlantModal";
-import dayjs from "dayjs";
-import UserPlantsContext from "../context/userPlantsContext";
-const relativeTime = require("dayjs/plugin/relativeTime");
+import MyPlantModal from './MyPlantModal';
+import dayjs from 'dayjs';
+import UserPlantsContext from '../context/userPlantsContext';
+const relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 
 const UserPlants = ({ navigation }) => {
+  const [userPlantsLoading, setUserPlantsLoading] = useState(true);
   const [modalLoading, setModalLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
   const [singlePlantData, setSinglePlantData] = useState({});
   const { user, setUser } = useContext(UserContext);
 
-  const handlePress = (my_plant_id) => {
+  const handlePress = my_plant_id => {
     setModalLoading(true);
     setModalVisible(true);
-    getUserPlantByMyPlantId(user, my_plant_id).then((plant) => {
+    getUserPlantByMyPlantId(user, my_plant_id).then(plant => {
       setSinglePlantData(plant);
       setModalLoading(false);
     });
@@ -45,10 +46,10 @@ const UserPlants = ({ navigation }) => {
     setModalVisible(false);
   };
 
-  const deletePlant = (id) => {
+  const deletePlant = id => {
     deleteUserPlant(user, id).then(() => {
-      setUserPlantsData((currPlants) => {
-        const newPlants = currPlants.filter((plant) => {
+      setUserPlantsData(currPlants => {
+        const newPlants = currPlants.filter(plant => {
           return plant.my_plant_id !== id;
         });
         return newPlants;
@@ -56,8 +57,9 @@ const UserPlants = ({ navigation }) => {
     });
   };
   useEffect(() => {
-    getUserPlants(user).then((plants) => {
+    getUserPlants(user).then(plants => {
       setUserPlantsData(plants);
+      setUserPlantsLoading(false);
     });
   }, []);
   return (
@@ -85,42 +87,55 @@ const UserPlants = ({ navigation }) => {
           </Pressable>
         </View>
 
-        <FlatList
-          numColumns={2}
-          data={userPlantsData}
-          renderItem={(itemData) => {
-            return (
-              <Pressable
-                style={styles.plantsListItem}
-                onPress={() => {
-                  handlePress(itemData.item.my_plant_id);
-                }}
-                onLongPress={() => {
-                  deletePlant(itemData.item.my_plant_id);
-                }}
-              >
-                <View style={styles.plantItemImage}>
-                  <Image
-                    source={{ uri: itemData.item.picture_url }}
-                    style={{ height: 50, width: 50, borderRadius: 100 }}
-                  />
-                </View>
+        {userPlantsLoading ? (
+          <View
+            style={{
+              alignSelf: 'center',
+            }}
+          >
+            <Image
+              source={require('../../assets/loading.gif')}
+              style={{ height: 200, width: 200 }}
+            />
+          </View>
+        ) : (
+          <FlatList
+            numColumns={2}
+            data={userPlantsData}
+            renderItem={itemData => {
+              return (
+                <Pressable
+                  style={styles.plantsListItem}
+                  onPress={() => {
+                    handlePress(itemData.item.my_plant_id);
+                  }}
+                  onLongPress={() => {
+                    deletePlant(itemData.item.my_plant_id);
+                  }}
+                >
+                  <View style={styles.plantItemImage}>
+                    <Image
+                      source={{ uri: itemData.item.picture_url }}
+                      style={{ height: 50, width: 50, borderRadius: 100 }}
+                    />
+                  </View>
 
-                <View style={styles.plantItemInfo}>
-                  <Text>{itemData.item.nickname}</Text>
-                  <Text style={styles.info}>{itemData.item.common_name}</Text>
+                  <View style={styles.plantItemInfo}>
+                    <Text>{itemData.item.nickname}</Text>
+                    <Text style={styles.info}>{itemData.item.common_name}</Text>
 
-                  <Text style={styles.info}>
-                    {dayjs(itemData.item.last_watered_date).fromNow()}
-                  </Text>
-                </View>
-              </Pressable>
-            );
-          }}
-          keyExtractor={(item, index) => {
-            return item.my_plant_id;
-          }}
-        />
+                    <Text style={styles.info}>
+                      {dayjs(itemData.item.last_watered_date).fromNow()}
+                    </Text>
+                  </View>
+                </Pressable>
+              );
+            }}
+            keyExtractor={(item, index) => {
+              return item.my_plant_id;
+            }}
+          />
+        )}
       </View>
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
         <MyPlantModal
@@ -135,15 +150,15 @@ const UserPlants = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#D9D9D9",
+    backgroundColor: '#D9D9D9',
     flex: 5,
   },
 
   safe: {
-    width: "100%",
+    width: '100%',
     flex: 0.5,
-    backgroundColor: "#2B8B30",
-    color: "#1E2720",
+    backgroundColor: '#2B8B30',
+    color: '#1E2720',
   },
 
   userAreaBody: {
@@ -152,15 +167,15 @@ const styles = StyleSheet.create({
   },
 
   filterAndSortByContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     marginVertical: 15,
   },
 
   button: {
-    backgroundColor: "#F1F1F2",
+    backgroundColor: '#F1F1F2',
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
     paddingVertical: 6,
     marginHorizontal: 10,
     borderRadius: 20,
@@ -168,24 +183,24 @@ const styles = StyleSheet.create({
 
   plantsList: { flex: 1 },
 
-  header: { flex: 1.5, color: "#F1F1F2", paddingTop: StatusBar.currentHeight },
+  header: { flex: 1.5, color: '#F1F1F2', paddingTop: StatusBar.currentHeight },
 
-  headerText: { color: "#F1F1F2", fontSize: 40 },
+  headerText: { color: '#F1F1F2', fontSize: 40 },
 
-  subHeadingText: { color: "#F1F1F2" },
+  subHeadingText: { color: '#F1F1F2' },
 
   plantsListItem: {
-    backgroundColor: "#F1F1F2",
+    backgroundColor: '#F1F1F2',
     borderRadius: 20,
-    flexDirection: "row",
+    flexDirection: 'row',
     flex: 0.5,
     margin: 5,
-    alignItems: "center",
+    alignItems: 'center',
     paddingVertical: 10,
     paddingRight: 5,
   },
 
-  plantItemImage: { alignItems: "center", paddingHorizontal: 10 },
+  plantItemImage: { alignItems: 'center', paddingHorizontal: 10 },
 
   plantItemInfo: {
     flex: 1,

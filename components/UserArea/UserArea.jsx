@@ -20,6 +20,8 @@ import UserPlantsContext from '../context/userPlantsContext';
 const UserArea = ({ navigation }) => {
   const [pressed, setPressed] = useState(false);
   const [featuredPlant, setFeaturedPlant] = useState({});
+  const [featuredPlantLoading, setFeaturedPlantLoading] = useState(true);
+  const [notificationsLoading, setNotificationsLoading] = useState(true);
   const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
   const { user, setUser } = useContext(UserContext);
 
@@ -34,6 +36,7 @@ const UserArea = ({ navigation }) => {
       const randomId = Math.floor(Math.random() * res.length);
       const randomPlant = res.filter(plant => plant.plant_id === randomId);
       setFeaturedPlant(randomPlant[0]);
+      setFeaturedPlantLoading(false)
     });
   }, []);
 
@@ -64,6 +67,18 @@ const UserArea = ({ navigation }) => {
           <Notifications />
           <View style={styles.featuredPlant}>
             <Text style={styles.featuredPlantHeader}>Featured Plant</Text>
+            {featuredPlantLoading ?
+            <View
+              style={{
+                alignSelf: 'center',
+              }}
+            >
+              <Image
+                source={require('../../assets/loading.gif')}
+                style={{ height: 200, width: 200 }}
+              />
+            </View>
+            :
             <Pressable onPress={toggleIsPressed} style={styles.pressable}>
               <View style={styles.textContainer}>
                 <Text style={styles.commonName}>
@@ -82,7 +97,7 @@ const UserArea = ({ navigation }) => {
                   >{`Climate: ${featuredPlant?.climate}`}</Text>
                 </View>
               </View>
-            </Pressable>
+            </Pressable>}
           </View>
         </ScrollView>
       </View>
@@ -105,21 +120,21 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     flex: 1,
     marginHorizontal: 15,
-  
   },
   pressable: {
     flex: 1,
     height: '100%',
   },
-  featuredPlant: { alignItems:'center',
+  featuredPlant: {
+    alignItems: 'center',
     backgroundColor: '#F1F1F2',
     borderRadius: 20,
     paddingBottom: 20,
     flexDirection: 'column',
     marginTop: 10,
     color: 'black',
-    flex:1,
-    
+    flex: 1,
+
     padding: 10,
   },
   featuredPlantHeader: {
@@ -131,11 +146,11 @@ const styles = StyleSheet.create({
     flex: 9,
     width: '100%',
     height: '100%',
-    alignItems:'center'
+    alignItems: 'center',
   },
   plantInfo: {
     paddingTop: 5,
-    textAlign:'center',
+    textAlign: 'center',
   },
   textContainer: {
     paddingTop: 20,
@@ -143,13 +158,13 @@ const styles = StyleSheet.create({
     flex: 0.9,
   },
   commonName: {
-    textAlign:'center',
+    textAlign: 'center',
     flex: 0.8,
     fontWeight: 'bold',
     fontSize: 22,
   },
   latinName: {
-    textAlign:'center',
+    textAlign: 'center',
     flex: 0.6,
     fontSize: 16,
     fontStyle: 'italic',
