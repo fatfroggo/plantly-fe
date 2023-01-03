@@ -1,12 +1,18 @@
+
 import { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, StatusBar, Modal } from 'react-native';
 import PlantpediaNav from '../PlantpediaNav';
 import PlantPediaPlants from './PlantpediaPlants';
 import { getPlants, getPlantById, getPlantsByQuery } from '../../api/api.js';
+
+
 import { SafeAreaView } from 'react-native-safe-area-context';
 import UserAreaHeader from '../UserArea/UserAreaHeader';
 import SinglePlantModal from './Modals/SinglePlantModal';
 import AddToMyPlantsModal from './Modals/AddToMyPlantsModal';
+
+import ClimateSort from './ClimateSort';
+
 
 const Plantpedia = ({ route, navigation }) => {
   const [searchText, setSearchText] = useState('');
@@ -15,10 +21,21 @@ const Plantpedia = ({ route, navigation }) => {
   const [addPlantButtonPressed, setAddPlantButtonPressed] = useState(false);
   const [plantsData, setPlantsData] = useState([]);
   const [singlePlantData, setSinglePlantData] = useState({});
+
   const [isInvalidSearch, setIsInvalidSearch] = useState(false);
   const [invalidSearchText, setInvalidSearchText] = useState('');
   const [plantpediaSearch, setPlantpediaSearch] = useState(false);
+  const [selectedClimate, setSelectedClimate] = useState(undefined)
+  
+  useEffect(() => {
 
+    getPlants(selectedClimate).then(fetchedPlants => {
+
+      setPlantsData(fetchedPlants);
+    });
+  }, [selectedClimate]);
+  
+  
   useEffect(() => {
     if (route.params && !plantpediaSearch) {
       setPlantpediaSearch(false);
@@ -89,6 +106,7 @@ const Plantpedia = ({ route, navigation }) => {
         />
       </SafeAreaView>
 
+      <ClimateSort selectedClimate={selectedClimate} setSelectedClimate={setSelectedClimate}/>
       <PlantPediaPlants
         plantsData={plantsData}
         setModalVisible={setModalVisible}
