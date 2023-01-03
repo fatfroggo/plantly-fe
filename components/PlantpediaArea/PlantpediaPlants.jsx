@@ -5,22 +5,25 @@ import {
   FlatList,
   Image,
   Pressable,
-} from "react-native";
-import { useState, useEffect } from "react";
-import { getPlants } from "../../api/api.js";
+} from 'react-native';
 
-const PlantpediaPlants = ({ handleAddToPlant, plantsData, setPlantsData }) => {
-  useEffect(() => {
-    getPlants().then((fetchedPlants) => {
-      setPlantsData(fetchedPlants);
-    });
-  }, []);
-
-  return (
+const PlantpediaPlants = ({
+  handleAddToPlant,
+  plantsData,
+  isInvalidSearch,
+  invalidSearchText,
+}) => {
+  return isInvalidSearch ? (
+    <View style={styles.container}>
+      <Text style={styles.invalid}>
+        Oops! No plants found with the name '{invalidSearchText}'
+      </Text>
+    </View>
+  ) : (
     <View style={styles.container}>
       <FlatList
         data={plantsData}
-        renderItem={(itemData) => {
+        renderItem={itemData => {
           return (
             <Pressable
               onPress={() => {
@@ -42,7 +45,7 @@ const PlantpediaPlants = ({ handleAddToPlant, plantsData, setPlantsData }) => {
               <View style={styles.plantItemImage}>
                 <Image
                   source={{ uri: itemData.item.picture_url }}
-                  style={{ height: "100%", width: "100%" }}
+                  style={{ height: '100%', width: '100%' }}
                 />
               </View>
             </Pressable>
@@ -59,14 +62,19 @@ const PlantpediaPlants = ({ handleAddToPlant, plantsData, setPlantsData }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#7F9B91",
-    flexDirection: "row",
+    backgroundColor: '#7F9B91',
+    flexDirection: 'row',
+  },
+
+  invalid: {
+    fontSize: 25,
+    padding: 20,
   },
   plantsListItem: {
     height: 200,
-    backgroundColor: "#F1F1F2",
+    backgroundColor: '#F1F1F2',
     borderRadius: 20,
-    flexDirection: "row",
+    flexDirection: 'row',
     flex: 1,
     margin: 10,
     padding: 20,
@@ -76,7 +84,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   plantItemImage: {
-    height: "100%",
+    height: '100%',
     flex: 1,
     borderWidth: 1,
   },
@@ -85,13 +93,13 @@ const styles = StyleSheet.create({
   },
   commonName: {
     flex: 2,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 20,
   },
   latinName: {
     flex: 1,
     fontSize: 15,
-    fontStyle: "italic",
+    fontStyle: 'italic',
   },
 });
 
