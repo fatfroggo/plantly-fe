@@ -4,9 +4,9 @@ const plantsApi = axios.create({
   baseURL: "https://plantly-api.onrender.com/api/",
 });
 
-export const getPlants = () => {
+export const getPlants = (climate) => {
   return plantsApi
-    .get("/plants")
+    .get("/plants", { params: { climate: climate }})
     .then((plants) => {
       return plants.data.plants;
     })
