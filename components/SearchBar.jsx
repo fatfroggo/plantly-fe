@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    paddingVertical: 5,
   },
 
   search: {
@@ -46,9 +47,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     height: 35,
-    paddingHorizontal: 15,
-    marginBottom: 10,
-    paddingVertical: 5,
+    paddingHorizontal: 13,
     borderRadius: 40,
     backgroundColor: "#ECEBE7",
   },
