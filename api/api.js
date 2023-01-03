@@ -14,8 +14,8 @@ export const getPlants = (climate) => {
 };
 
 export const getPlantsByQuery = (searchquery) => {
-  return plantsApi.get(`/plants/?q=${searchquery}`).then(({ data }) => {
-    return data;
+  return plantsApi.get(`/plants/?common_name=${searchquery}`).then(({ data }) => {
+    return data.plants;
   });
 };
 

@@ -61,11 +61,11 @@ const Notifications = () => {
                 style={{ height: 80, width: 80, borderRadius: 30 }}
                 source={{ uri: item.picture_url }}
               />
-
+              {console.log(item, "plant")}
               <Text style={styles.text}>{item.nickname}</Text>
             </Pressable>
           )}
-          keyExtractor={(item) => item.plant_id + "notif"}
+          keyExtractor={(item) => item.my_plant_id}
           horizontal={true}
         />
       </View>
