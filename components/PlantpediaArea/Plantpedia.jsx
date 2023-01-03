@@ -137,6 +137,7 @@ const Plantpedia = ({ route, navigation }) => {
           <AddToMyPlantsModal
             singlePlantData={singlePlantData}
             handleCancel={handleCancel}
+            setModalVisible={setModalVisible}
           />
         ) : (
           <SinglePlantModal
