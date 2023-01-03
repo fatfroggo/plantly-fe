@@ -111,8 +111,7 @@ const styles = StyleSheet.create({
     width: 150,
     alignItems: "center",
     padding: 10,
-    borderColor: "red",
-    borderWidth: 3,
+    
   },
 });
 export default Notifications;
