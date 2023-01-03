@@ -1,5 +1,4 @@
 import { Text, View, StyleSheet, StatusBar } from "react-native";
-import Nav from "../Nav";
 
 const UserAreaHeader = (props) => {
   return (
@@ -12,7 +11,7 @@ const UserAreaHeader = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 12,
+    paddingHorizontal: 15,
     justifyContent: "flex-end",
     color: "#ecebe7",
     width: "100%",

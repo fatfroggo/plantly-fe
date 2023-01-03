@@ -52,7 +52,7 @@ const UserArea = ({ navigation }) => {
           backgroundColor={styles.safe.backgroundColor}
         />
 
-        <UserAreaHeader header="Welcome User!" style={styles.safe} />
+        <UserAreaHeader header={`Welcome ${user}!`} style={styles.safe} />
         <Nav
           navigation={navigation}
           style={styles.safe}
@@ -62,10 +62,7 @@ const UserArea = ({ navigation }) => {
 
       <View style={styles.userAreaBody}>
         <ScrollView>
-          <Notifications
-            style={styles.notifications}
-            userPlantsData={{ userPlantsData, setUserPlantsData }}
-          />
+          <Notifications />
           <View style={styles.featuredPlant}>
             {typeof plant === "string" ? (
               <Text>{plant}</Text>
