@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, StatusBar, Modal } from 'react-native';
-import Nav from '../Nav';
-import PlantPediaPlants from './PlantpediaPlants';
-import { getPlants, getPlantById } from '../../api/api.js';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import UserAreaHeader from '../UserArea/UserAreaHeader';
-import SinglePlantModal from './Modals/SinglePlantModal';
-import AddToMyPlantsModal from './Modals/AddToMyPlantsModal';
+import { useEffect, useState } from "react";
+import { Text, View, StyleSheet, StatusBar, Modal } from "react-native";
+import Nav from "../Nav";
+import PlantPediaPlants from "./PlantpediaPlants";
+import { getPlants, getPlantById } from "../../api/api.js";
+import { SafeAreaView } from "react-native-safe-area-context";
+import UserAreaHeader from "../UserArea/UserAreaHeader";
+import SinglePlantModal from "./Modals/SinglePlantModal";
+import AddToMyPlantsModal from "./Modals/AddToMyPlantsModal";
 
 const Plantpedia = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -16,15 +16,15 @@ const Plantpedia = ({ navigation }) => {
   const [singlePlantData, setSinglePlantData] = useState({});
 
   useEffect(() => {
-    getPlants().then(fetchedPlants => {
+    getPlants().then((fetchedPlants) => {
       setPlantsData(fetchedPlants);
     });
   }, []);
 
-  const handleAddToPlant = plant_id => {
+  const handleAddToPlant = (plant_id) => {
     setModalVisible(true);
     setModalLoading(true);
-    getPlantById(plant_id).then(plant => {
+    getPlantById(plant_id).then((plant) => {
       setSinglePlantData(plant);
       setModalLoading(false);
     });
@@ -85,21 +85,21 @@ const Plantpedia = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7F9B91',
+    backgroundColor: "#7F9B91",
   },
   safe: {
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
     flex: 0.5,
-    color: '#1E2720',
+    color: "#1E2720",
   },
   modalView: {
     flex: 1,
     margin: 0,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 30,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -118,12 +118,12 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   commonName: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 30,
   },
   latinName: {
     fontSize: 20,
-    fontStyle: 'italic',
+    fontStyle: "italic",
   },
   infoText: {
     fontSize: 15,
@@ -131,10 +131,10 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     borderWidth: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   pressable: {
-    backgroundColor: '#7F9B91',
+    backgroundColor: "#7F9B91",
     marginHorizontal: 10,
     padding: 10,
     borderRadius: 5,

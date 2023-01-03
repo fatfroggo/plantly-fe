@@ -1,8 +1,5 @@
-import { SafeAreaView } from "react-native-safe-area-context";
 import SearchBar from "./SearchBar";
 import { Text, Pressable, StyleSheet, View } from "react-native";
-
-import { useState } from "react";
 
 const Nav = ({ navigation }) => {
   return (
@@ -45,7 +42,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignitems: "center",
     width: "100%",
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
   },
 
   buttons: {
