@@ -3,40 +3,15 @@ import {
   View,
   StyleSheet,
   Pressable,
-  useState,
   Image,
   ScrollView,
   Dimensions,
 } from "react-native";
-import { dateToDays } from "../../utils/utils";
+import { countDown, dateToDays } from "../../utils/utils";
+import { useState } from "react";
+import LastWatered from "./LastWatered";
 
 const MyPlantModal = ({ singlePlantData, handleClose, modalLoading }) => {
-  const timeToWater = (plant) => {
-    const [timeLeft, setTimeLeft] = useState(0);
-    setTimeLeft(
-      countDown(plant.time_between_watering, plant.last_watered_date)
-    );
-    if (timeLeft === 0) {
-      return (
-        <View style={styles.text}>
-          <Text style={styles.timeLeft0}>Needs Water</Text>
-        </View>
-      );
-    } else if (timeLeft <= 2) {
-      return (
-        <View style={styles.text}>
-          <Text style={styles.timeLeft2}>{timeLeft} days</Text>
-        </View>
-      );
-    } else if (timeleft <= 3) {
-      return (
-        <View style={styles.text}>
-          <Text style={styles.timeLeft3}>{timeLeft} days</Text>
-        </View>
-      );
-    }
-  };
-
   return modalLoading ? (
     <View style={styles.modalLoading}>
       <View
@@ -58,17 +33,15 @@ const MyPlantModal = ({ singlePlantData, handleClose, modalLoading }) => {
           source={{ uri: singlePlantData?.picture_url }}
         />
       </View>
-      <Text style={styles.commonName}>{singlePlantData?.common_name}</Text>
-      <Text style={styles.latinName}>{singlePlantData?.latin_name}</Text>
+      <Text style={styles.commonName}>{singlePlantData?.nickname}</Text>
+      <Text style={styles.latinName}>{singlePlantData?.common_name}</Text>
+      <LastWatered plant={singlePlantData} />
       <ScrollView
         persistentScrollbar={true}
         contentContainerStyle={styles.plantInfo}
       >
-        <Text style={styles.subHeading}>Nickname</Text>
-        <Text style={styles.infoText}>{singlePlantData?.nickname}</Text>
-
-        <Text style={styles.subHeading}>Days until next water</Text>
-        <Text style={styles.infoText}>{timeToWater(singlePlantData)}</Text>
+        <Text style={styles.subHeading}>Latin Name</Text>
+        <Text style={styles.infoText}>{singlePlantData?.latin_name}</Text>
 
         <Text style={styles.subHeading}>Climate</Text>
         <Text style={styles.infoText}>{singlePlantData?.climate}</Text>
