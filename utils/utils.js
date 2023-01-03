@@ -1,16 +1,16 @@
-const dayjs = require("dayjs");
-const customParseFormat = require("dayjs/plugin/customParseFormat");
+const dayjs = require('dayjs');
+const customParseFormat = require('dayjs/plugin/customParseFormat');
 
-var relativeTime = require("dayjs/plugin/relativeTime");
+var relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime, customParseFormat);
 
 const daysToDate = (lastWatered, date = dayjs()) => {
-  return dayjs(date).subtract(lastWatered, "day").format("YYYY/MM/DD");
+  return dayjs(date).subtract(lastWatered, 'day').format('YYYY/MM/DD');
 };
 
-const dateToDays = (dateLastWatered) => {
+const dateToDays = dateLastWatered => {
   const todaysDate = dayjs();
-  return dayjs(todaysDate).diff(dateLastWatered, "day");
+  return dayjs(todaysDate).diff(dateLastWatered, 'day');
 };
 
 const countDown = (daysBetweenWaterings, dateLastWatered) => {

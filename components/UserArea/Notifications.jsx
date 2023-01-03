@@ -83,11 +83,9 @@ const styles = StyleSheet.create({
   plant: {
     height: "100%",
     width: 150,
-    // textAlign: "center",
     alignItems: "center",
     padding: 10,
-    borderColor: "red",
-    borderWidth: 3,
+    
   },
 });
 export default Notifications;
