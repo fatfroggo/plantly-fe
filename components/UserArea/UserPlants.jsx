@@ -76,14 +76,14 @@ const UserPlants = ({ navigation }) => {
       </SafeAreaView>
 
       <View style={styles.userAreaBody}>
-        <View style={styles.filterAndSortByContainer}>
+        {/* <View style={styles.filterAndSortByContainer}>
           <Pressable style={styles.button}>
             <Text>Filter</Text>
           </Pressable>
           <Pressable style={styles.button}>
             <Text>Sort by</Text>
           </Pressable>
-        </View>
+        </View> */}
 
         <FlatList
           numColumns={2}
