@@ -12,15 +12,21 @@ import { getUserPlants, getUserPlantByMyPlantId } from "../../api/api";
 import UserPlantsContext from "../context/userPlantsContext";
 import UserContext from "../context/userContext";
 import Plantpedia from "../PlantpediaArea/Plantpedia";
+import { countDown } from "../../utils/utils";
 import MyPlantModal from "./MyPlantModal";
 
+const useStatusHandler = (item) => {
+  const [timeLeft, setTimeLeft] = useState(0);
+  setTimeLeft(countDown(item.time_between_watering, item.last_watered_date));
+  return timeLeft;
+};
+
 const Notifications = () => {
-  const { user, setUser } = useContext(UserContext);
   const [modalLoading, setModalLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
-  const [singlePlantData, setSinglePlantData] = useState({});
   const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
-  const [currPlant, setCurrPlant] = useState(userPlantsData[0]);
+  const [singlePlantData, setSinglePlantData] = useState({});
+  const { user, setUser } = useContext(UserContext);
 
   const handlePress = (my_plant_id) => {
     setModalLoading(true);
@@ -34,7 +40,6 @@ const Notifications = () => {
   const handleClose = () => {
     setModalVisible(false);
   };
-
   const myItemSeparator = () => {
     return (
       <View
@@ -61,7 +66,7 @@ const Notifications = () => {
                 style={{ height: 80, width: 80, borderRadius: 30 }}
                 source={{ uri: item.picture_url }}
               />
-              {console.log(item, "plant")}
+
               <Text style={styles.text}>{item.nickname}</Text>
             </Pressable>
           )}
@@ -69,6 +74,7 @@ const Notifications = () => {
           horizontal={true}
         />
       </View>
+
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
         <MyPlantModal
           singlePlantData={singlePlantData}
@@ -103,21 +109,10 @@ const styles = StyleSheet.create({
   plant: {
     height: "100%",
     width: 150,
-    // textAlign: "center",
     alignItems: "center",
     padding: 10,
     borderColor: "red",
     borderWidth: 3,
-  },
-
-  timeLeft0: {
-    color: "red",
-  },
-  timeLeft2: {
-    color: "amber",
-  },
-  timeLeft3: {
-    color: "green",
   },
 });
 export default Notifications;
