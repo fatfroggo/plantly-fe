@@ -1,28 +1,38 @@
-import { View, Text, StyleSheet, Image, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  Modal,
+  Pressable,
+} from "react-native";
 import { useState, useEffect, useContext } from "react";
-import { getUserPlants } from "../../api/api";
+import { getUserPlants, getUserPlantByMyPlantId } from "../../api/api";
 import UserPlantsContext from "../context/userPlantsContext";
 import UserContext from "../context/userContext";
 import Plantpedia from "../PlantpediaArea/Plantpedia";
-import { countDown } from "../../utils/utils";
+import MyPlantModal from "./MyPlantModal";
 
 const Notifications = () => {
   const { user, setUser } = useContext(UserContext);
+  const [modalLoading, setModalLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [singlePlantData, setSinglePlantData] = useState({});
   const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
-  // const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [currPlant, setCurrPlant] = useState(userPlantsData[0]);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setTimeLeft(calculateTimeLeft());
-  //   }, 1000);
+  const handlePress = (my_plant_id) => {
+    setModalLoading(true);
+    setModalVisible(true);
+    getUserPlantByMyPlantId(user, my_plant_id).then((plant) => {
+      setSinglePlantData(plant);
+      setModalLoading(false);
+    });
+  };
 
-  // });
-
-  const countDownHandler = (plant) => {
-    const days = countDown(
-      plant.time_between_watering,
-      plant.last_watered_date
-    );
+  const handleClose = () => {
+    setModalVisible(false);
   };
 
   const myItemSeparator = () => {
@@ -41,20 +51,31 @@ const Notifications = () => {
           data={userPlantsData}
           ItemSeparatorComponent={myItemSeparator}
           renderItem={({ item }) => (
-            <View style={styles.plant}>
+            <Pressable
+              style={styles.plant}
+              onPress={() => {
+                handlePress(item.my_plant_id);
+              }}
+            >
               <Image
                 style={{ height: 80, width: 80, borderRadius: 30 }}
                 source={{ uri: item.picture_url }}
               />
-              {console.log(item, "plant")}
+
               <Text style={styles.text}>{item.nickname}</Text>
-              <Text style={styles.text}> 1 day until water</Text>
-            </View>
+            </Pressable>
           )}
-          keyExtractor={(item) => item.plant_id}
+          keyExtractor={(item) => item.plant_id + "notif"}
           horizontal={true}
         />
       </View>
+      <Modal visible={modalVisible} animationType="slide" transparent={true}>
+        <MyPlantModal
+          singlePlantData={singlePlantData}
+          handleClose={handleClose}
+          modalLoading={modalLoading}
+        />
+      </Modal>
     </View>
   );
 };
@@ -87,6 +108,16 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: "red",
     borderWidth: 3,
+  },
+
+  timeLeft0: {
+    color: "red",
+  },
+  timeLeft2: {
+    color: "amber",
+  },
+  timeLeft3: {
+    color: "green",
   },
 });
 export default Notifications;
