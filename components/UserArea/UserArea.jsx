@@ -63,32 +63,26 @@ const UserArea = ({ navigation }) => {
         <ScrollView>
           <Notifications />
           <View style={styles.featuredPlant}>
-            {typeof plant === 'string' ? (
-              <Text>{plant}</Text>
-            ) : (
-              <>
-                <Text style={styles.featuredPlantHeader}>Featured Plant</Text>
-                <Pressable onPress={toggleIsPressed} style={styles.pressable}>
-                  <View style={styles.textContainer}>
-                    <Text style={styles.commonName}>
-                      {featuredPlant?.common_name}
-                    </Text>
-                    <Text style={styles.latinName}>
-                      {featuredPlant?.latin_name}
-                    </Text>
-                    <View style={styles?.imageContainer}>
-                      <Image
-                        source={{ uri: featuredPlant?.picture_url }}
-                        style={{ height: '100%', width: '100%' }}
-                      />
-                      <Text
-                        style={styles.plantInfo}
-                      >{`Climate: ${featuredPlant?.climate}`}</Text>
-                    </View>
-                  </View>
-                </Pressable>
-              </>
-            )}
+            <Text style={styles.featuredPlantHeader}>Featured Plant</Text>
+            <Pressable onPress={toggleIsPressed} style={styles.pressable}>
+              <View style={styles.textContainer}>
+                <Text style={styles.commonName}>
+                  {featuredPlant?.common_name}
+                </Text>
+                <Text style={styles.latinName}>
+                  {featuredPlant?.latin_name}
+                </Text>
+                <View style={styles?.imageContainer}>
+                  <Image
+                    source={{ uri: featuredPlant?.picture_url }}
+                    style={{ height: 200, width: 200 }}
+                  />
+                  <Text
+                    style={styles.plantInfo}
+                  >{`Climate: ${featuredPlant?.climate}`}</Text>
+                </View>
+              </View>
+            </Pressable>
           </View>
         </ScrollView>
       </View>
@@ -111,19 +105,21 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     flex: 1,
     marginHorizontal: 15,
+  
   },
   pressable: {
     flex: 1,
     height: '100%',
   },
-  featuredPlant: {
+  featuredPlant: { alignItems:'center',
     backgroundColor: '#F1F1F2',
     borderRadius: 20,
-    height: 600,
+    paddingBottom: 20,
     flexDirection: 'column',
     marginTop: 10,
     color: 'black',
-    flex: 1,
+    flex:1,
+    
     padding: 10,
   },
   featuredPlantHeader: {
@@ -135,9 +131,11 @@ const styles = StyleSheet.create({
     flex: 9,
     width: '100%',
     height: '100%',
+    alignItems:'center'
   },
   plantInfo: {
     paddingTop: 5,
+    textAlign:'center',
   },
   textContainer: {
     paddingTop: 20,
@@ -145,11 +143,13 @@ const styles = StyleSheet.create({
     flex: 0.9,
   },
   commonName: {
+    textAlign:'center',
     flex: 0.8,
     fontWeight: 'bold',
     fontSize: 22,
   },
   latinName: {
+    textAlign:'center',
     flex: 0.6,
     fontSize: 16,
     fontStyle: 'italic',
