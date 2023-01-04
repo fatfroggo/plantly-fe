@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   timeLeft3: {
     // fontSize: 12,
-    color: "#ECEBE7",
+    color: "#2b8b30",
   },
 });
 export default LastWatered;

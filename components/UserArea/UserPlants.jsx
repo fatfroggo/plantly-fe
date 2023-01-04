@@ -23,6 +23,7 @@ import MyPlantModal from "./MyPlantModal";
 import dayjs from "dayjs";
 import UserPlantsContext from "../context/userPlantsContext";
 import LastWatered from "./LastWatered";
+import { dateToDays } from "../../utils/utils";
 const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 
@@ -33,6 +34,7 @@ const UserPlants = ({ navigation }) => {
   const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
   const [singlePlantData, setSinglePlantData] = useState({});
   const { user, setUser } = useContext(UserContext);
+  const [wateredToday, setWateredToday] = useState(false);
 
   const handlePress = (my_plant_id) => {
     setModalLoading(true);
@@ -62,7 +64,7 @@ const UserPlants = ({ navigation }) => {
       setUserPlantsData(plants);
       setUserPlantsLoading(false);
     });
-  }, []);
+  }, [singlePlantData.last_watered_date]);
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safe}>
@@ -126,9 +128,13 @@ const UserPlants = ({ navigation }) => {
                     <Text style={styles.plantItemHeader}>{item.nickname}</Text>
                     <Text style={styles.info}>{item.common_name}</Text>
                     <LastWatered plant={item} style={styles.plantItemInfo} />
-                    <Text style={styles.lastWatered}>
-                      Watered: {dayjs(item.last_watered_date).fromNow()}
-                    </Text>
+                    {dateToDays(item.last_watered_date) === 0 ? (
+                      <Text style={styles.lastWatered}> Watered: Today</Text>
+                    ) : (
+                      <Text style={styles.lastWatered}>
+                        Watered: {dateToDays(item.last_watered_date)} days ago
+                      </Text>
+                    )}
                   </View>
                 </Pressable>
               );
@@ -141,10 +147,13 @@ const UserPlants = ({ navigation }) => {
       </View>
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
         <MyPlantModal
+          modalVisible={modalVisible}
           setModalVisible={setModalVisible}
           singlePlantData={singlePlantData}
           handleClose={handleClose}
           modalLoading={modalLoading}
+          setModalLoading={setModalLoading}
+          setWateredToday={setWateredToday}
         />
       </Modal>
     </View>

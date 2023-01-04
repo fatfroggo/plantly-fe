@@ -14,8 +14,7 @@ import UserContext from "../context/userContext";
 import MyPlantModal from "./MyPlantModal";
 import LastWatered from "./LastWatered";
 
-const Notifications = () => {
-  const [modalLoading, setModalLoading] = useState(true);
+const Notifications = ({ modalLoading, setModalLoading }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
   const [singlePlantData, setSinglePlantData] = useState({});
@@ -53,7 +52,6 @@ const Notifications = () => {
                 style={{ height: 80, width: 80, borderRadius: 30 }}
                 source={{ uri: item.picture_url }}
               />
-              {/* {console.log(item, "plant")} */}
               <Text style={styles.text}>{item.nickname}</Text>
               <LastWatered style={styles.watered} plant={item} />
             </Pressable>
@@ -66,8 +64,10 @@ const Notifications = () => {
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
         <MyPlantModal
           singlePlantData={singlePlantData}
-          handleClose={handleClose}
+          setModalVisible={setModalVisible}
           modalLoading={modalLoading}
+          setModalLoading={setModalLoading}
+          handleClose={handleClose}
         />
       </Modal>
     </View>
