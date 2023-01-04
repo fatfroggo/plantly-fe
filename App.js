@@ -9,7 +9,7 @@ import UserPlants from "./components/UserArea/UserPlants";
 import UserPlantsContext, {
   UserPlantsProvider,
 } from "./components/context/userPlantsContext";
-import Forum from "./components/Forum";
+import ForumPage from "./components/ForumPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,7 +24,7 @@ export default function App() {
               <Stack.Screen name="user area" component={UserArea} />
               <Stack.Screen name="plantpedia" component={Plantpedia} />
               <Stack.Screen name="my-plants" component={UserPlants} />
-              <Stack.Screen name="forum" component={Forum} />
+              <Stack.Screen name="forum" component={ForumPage} />
             </Stack.Navigator>
           </NavigationContainer>
         </UserPlantsProvider>
