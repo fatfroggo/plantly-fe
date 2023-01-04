@@ -22,10 +22,12 @@ import {
 import MyPlantModal from "./MyPlantModal";
 import dayjs from "dayjs";
 import UserPlantsContext from "../context/userPlantsContext";
+import LastWatered from "./LastWatered";
 const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 
 const UserPlants = ({ navigation }) => {
+  const [userPlantsLoading, setUserPlantsLoading] = useState(true);
   const [modalLoading, setModalLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
@@ -58,6 +60,7 @@ const UserPlants = ({ navigation }) => {
   useEffect(() => {
     getUserPlants(user).then((plants) => {
       setUserPlantsData(plants);
+      setUserPlantsLoading(false);
     });
   }, []);
   return (
@@ -76,51 +79,65 @@ const UserPlants = ({ navigation }) => {
       </SafeAreaView>
 
       <View style={styles.userAreaBody}>
-        <View style={styles.filterAndSortByContainer}>
+        {/* <View style={styles.filterAndSortByContainer}>
           <Pressable style={styles.button}>
             <Text>Filter</Text>
           </Pressable>
           <Pressable style={styles.button}>
             <Text>Sort by</Text>
           </Pressable>
-        </View>
+        </View> */}
 
-        <FlatList
-          numColumns={2}
-          data={userPlantsData}
-          renderItem={(itemData) => {
-            return (
-              <Pressable
-                style={styles.plantsListItem}
-                onPress={() => {
-                  handlePress(itemData.item.my_plant_id);
-                }}
-                onLongPress={() => {
-                  deletePlant(itemData.item.my_plant_id);
-                }}
-              >
-                <View style={styles.plantItemImage}>
-                  <Image
-                    source={{ uri: itemData.item.picture_url }}
-                    style={{ height: 50, width: 50, borderRadius: 100 }}
-                  />
-                </View>
+        {userPlantsLoading ? (
+          <View
+            style={{
+              alignSelf: "center",
+            }}
+          >
+            <Image
+              source={require("../../assets/loading.gif")}
+              style={{ height: 200, width: 200 }}
+            />
+          </View>
+        ) : (
+          <FlatList
+            style={styles.flatList}
+            numColumns={2}
+            data={userPlantsData}
+            renderItem={({ item }) => {
+              return (
+                <Pressable
+                  style={styles.plantsListItem}
+                  onPress={() => {
+                    handlePress(item.my_plant_id);
+                  }}
+                  onLongPress={() => {
+                    deletePlant(item.my_plant_id);
+                  }}
+                >
+                  <View style={styles.plantItemImage}>
+                    <Image
+                      source={{ uri: item.picture_url }}
+                      style={{ height: 55, width: 55, borderRadius: 100 }}
+                    />
+                  </View>
 
-                <View style={styles.plantItemInfo}>
-                  <Text>{itemData.item.nickname}</Text>
-                  <Text style={styles.info}>{itemData.item.common_name}</Text>
-
-                  <Text style={styles.info}>
-                    {dayjs(itemData.item.last_watered_date).fromNow()}
-                  </Text>
-                </View>
-              </Pressable>
-            );
-          }}
-          keyExtractor={(item, index) => {
-            return item.my_plant_id;
-          }}
-        />
+                  <View style={styles.plantItemInfo}>
+                    <Text style={styles.plantItemHeader}>{item.nickname}</Text>
+                    <Text style={styles.info}>{item.common_name}</Text>
+                    <LastWatered plant={item} style={styles.plantItemInfo} />
+                    <Text style={styles.lastWatered}>
+                      Watered: {dayjs(item.last_watered_date).fromNow()}
+                    </Text>
+                  </View>
+                </Pressable>
+              );
+            }}
+            keyExtractor={(item, index) => {
+              return item.my_plant_id;
+            }}
+          />
+        )}
       </View>
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
         <MyPlantModal
@@ -138,7 +155,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#D9D9D9",
     flex: 5,
   },
-
   safe: {
     width: "100%",
     flex: 0.5,
@@ -148,50 +164,67 @@ const styles = StyleSheet.create({
 
   userAreaBody: {
     flex: 1,
-    padding: 5,
-  },
-
-  filterAndSortByContainer: {
+    alignSelf: "center",
     flexDirection: "row",
-    justifyContent: "space-around",
-    marginVertical: 15,
+    marginHorizontal: 5,
+    justifyContent: "center",
+    alignContent: "center",
   },
 
   button: {
     backgroundColor: "#F1F1F2",
     flex: 1,
+    justifyContent: "center",
     alignItems: "center",
     paddingVertical: 6,
     marginHorizontal: 10,
     borderRadius: 20,
   },
 
-  plantsList: { flex: 1 },
-
   header: { flex: 1.5, color: "#F1F1F2", paddingTop: StatusBar.currentHeight },
-
-  headerText: { color: "#F1F1F2", fontSize: 40 },
-
-  subHeadingText: { color: "#F1F1F2" },
-
+  flatList: {
+    flex: 1,
+    marginVertical: 10,
+    alignContent: "center",
+    alignSelf: "auto",
+  },
   plantsListItem: {
     backgroundColor: "#F1F1F2",
     borderRadius: 20,
+    height: "95%",
+    width: "46%",
     flexDirection: "row",
-    flex: 0.5,
-    margin: 5,
     alignItems: "center",
-    paddingVertical: 10,
-    paddingRight: 5,
+
+    marginHorizontal: 8,
+    marginVertical: 5,
+
+    alignItems: "center",
+    paddingVertical: 15,
+    // paddingHorizontal: 10,
   },
 
-  plantItemImage: { alignItems: "center", paddingHorizontal: 10 },
+  plantItemImage: {
+    flex: 0.5,
 
+    paddingHorizontal: 10,
+  },
+  plantItemHeader: {
+    // width: "50%",
+    fontSize: 14,
+  },
   plantItemInfo: {
+    // width: "50%",
     flex: 1,
+    paddingHorizontal: 10,
   },
   info: {
     fontSize: 12,
+    paddingBottom: 3,
+  },
+  lastWatered: {
+    flex: 1,
+    fontSize: 11,
   },
 });
 

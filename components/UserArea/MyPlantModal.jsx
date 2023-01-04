@@ -6,19 +6,21 @@ import {
   Image,
   ScrollView,
   Dimensions,
-} from 'react-native';
-import { dateToDays } from '../../utils/utils';
+} from "react-native";
+import { countDown, dateToDays } from "../../utils/utils";
+import { useState } from "react";
+import LastWatered from "./LastWatered";
 
 const MyPlantModal = ({ singlePlantData, handleClose, modalLoading }) => {
   return modalLoading ? (
     <View style={styles.modalLoading}>
       <View
         style={{
-          alignSelf: 'center',
+          alignSelf: "center",
         }}
       >
         <Image
-          source={require('../../assets/loading.gif')}
+          source={require("../../assets/loading.gif")}
           style={{ height: 200, width: 200 }}
         />
       </View>
@@ -31,19 +33,15 @@ const MyPlantModal = ({ singlePlantData, handleClose, modalLoading }) => {
           source={{ uri: singlePlantData?.picture_url }}
         />
       </View>
-      <Text style={styles.commonName}>{singlePlantData?.common_name}</Text>
-      <Text style={styles.latinName}>{singlePlantData?.latin_name}</Text>
+      <Text style={styles.commonName}>{singlePlantData?.nickname}</Text>
+      <Text style={styles.latinName}>{singlePlantData?.common_name}</Text>
+      <LastWatered plant={singlePlantData} />
       <ScrollView
         persistentScrollbar={true}
         contentContainerStyle={styles.plantInfo}
       >
-        <Text style={styles.subHeading}>Nickname</Text>
-        <Text style={styles.infoText}>{singlePlantData?.nickname}</Text>
-
-        <Text style={styles.subHeading}>Last watered</Text>
-        <Text style={styles.infoText}>{`${dateToDays(
-          singlePlantData.last_watered_date
-        )} day(s) ago`}</Text>
+        <Text style={styles.subHeading}>Latin Name</Text>
+        <Text style={styles.infoText}>{singlePlantData?.latin_name}</Text>
 
         <Text style={styles.subHeading}>Climate</Text>
         <Text style={styles.infoText}>{singlePlantData?.climate}</Text>
@@ -80,22 +78,22 @@ const MyPlantModal = ({ singlePlantData, handleClose, modalLoading }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7F9B91',
+    backgroundColor: "#7F9B91",
   },
   safe: {
-    justifyContent: 'center',
+    justifyContent: "center",
     flex: 0.5,
-    color: '#1E2720',
+    color: "#1E2720",
   },
   modalView: {
     flex: 1,
-    marginHorizontal: Dimensions.get('window').width / 10,
-    marginVertical: Dimensions.get('window').height / 15,
-    backgroundColor: 'white',
+    marginHorizontal: Dimensions.get("window").width / 10,
+    marginVertical: Dimensions.get("window").height / 15,
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 30,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -111,50 +109,50 @@ const styles = StyleSheet.create({
   },
   plantInfo: { paddingRight: 10 },
   commonName: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 30,
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: 10,
   },
   latinName: {
     fontSize: 18,
-    fontStyle: 'italic',
-    textAlign: 'center',
+    fontStyle: "italic",
+    textAlign: "center",
     marginBottom: 10,
   },
   subHeading: {
     fontSize: 17,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   infoText: {
     fontSize: 17,
     marginBottom: 15,
   },
   buttonsContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 20,
   },
   pressable: {
-    backgroundColor: '#7F9B91',
-    width: '40%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#7F9B91",
+    width: "40%",
+    alignItems: "center",
+    justifyContent: "center",
     marginHorizontal: 8,
     padding: 10,
     borderRadius: 20,
   },
-  pressableText: { textAlign: 'center' },
+  pressableText: { textAlign: "center" },
 
   modalLoading: {
     flex: 1,
-    justifyContent: 'center',
-    marginHorizontal: Dimensions.get('window').width / 10,
-    marginVertical: Dimensions.get('window').height / 15,
-    backgroundColor: 'white',
+    justifyContent: "center",
+    marginHorizontal: Dimensions.get("window").width / 10,
+    marginVertical: Dimensions.get("window").height / 15,
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 30,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
