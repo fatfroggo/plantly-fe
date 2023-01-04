@@ -8,21 +8,12 @@ const forumApiData = axios.create({
   baseURL: 'https://plantly.cyclic.app/api/',
 });
 
-export const getPlants = climate => {
+export const getPlants = (climate, searchQuery) => {
   return plantsApi
-    .get('/plants', { params: { climate: climate } })
-    .then(plants => {
+    .get("/plants", { params: { climate: climate, common_name: searchQuery } })
+    .then((plants) => {
       return plants.data.plants;
     })
-    .catch(err => console.log(err));
-};
-
-export const getPlantsByQuery = searchquery => {
-  return plantsApi
-    .get(`/plants/?common_name=${searchquery}`)
-    .then(({ data }) => {
-      return data.plants;
-    });
 };
 
 export const getPlantById = id => {
