@@ -1,38 +1,39 @@
-import { View, Text, StyleSheet, Image, FlatList } from "react-native";
-import { useState, useEffect, useContext } from "react";
-import { getUserPlants } from "../../api/api";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  Modal,
+  Pressable,
+} from "react-native";
+import { useState, useContext } from "react";
+import { getUserPlantByMyPlantId } from "../../api/api";
 import UserPlantsContext from "../context/userPlantsContext";
 import UserContext from "../context/userContext";
-import Plantpedia from "../PlantpediaArea/Plantpedia";
-import { countDown } from "../../utils/utils";
+import MyPlantModal from "./MyPlantModal";
+import LastWatered from "./LastWatered";
 
 const Notifications = () => {
-  const { user, setUser } = useContext(UserContext);
+  const [modalLoading, setModalLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
-  // const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [singlePlantData, setSinglePlantData] = useState({});
+  const { user, setUser } = useContext(UserContext);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setTimeLeft(calculateTimeLeft());
-  //   }, 1000);
-
-  // });
-
-
-  const countDownHandler = (plant) => {
-    const days = countDown(
-      plant.time_between_watering,
-      plant.last_watered_date
-    );
+  const handlePress = (my_plant_id) => {
+    setModalLoading(true);
+    setModalVisible(true);
+    getUserPlantByMyPlantId(user, my_plant_id).then((plant) => {
+      setSinglePlantData(plant);
+      setModalLoading(false);
+    });
   };
 
-  const myItemSeparator = () => {
-    return (
-      <View
-        style={{ height: 1, backgroundColor: "gray", marginHorizontal: 10 }}
-      />
-    );
+  const handleClose = () => {
+    setModalVisible(false);
   };
+  const myItemSeparator = () => {};
 
   return (
     <View style={styles.container}>
@@ -42,20 +43,32 @@ const Notifications = () => {
           data={userPlantsData}
           ItemSeparatorComponent={myItemSeparator}
           renderItem={({ item }) => (
-            <View style={styles.plant}>
+            <Pressable
+              style={styles.plant}
+              onPress={() => {
+                handlePress(item.my_plant_id);
+              }}
+            >
               <Image
                 style={{ height: 80, width: 80, borderRadius: 30 }}
                 source={{ uri: item.picture_url }}
               />
-             
               <Text style={styles.text}>{item.nickname}</Text>
-              <Text style={styles.text}> 1 day until water</Text>
-            </View>
+              <LastWatered style={styles.watered} plant={item} />
+            </Pressable>
           )}
           keyExtractor={(item) => item.my_plant_id}
           horizontal={true}
         />
       </View>
+
+      <Modal visible={modalVisible} animationType="slide" transparent={true}>
+        <MyPlantModal
+          singlePlantData={singlePlantData}
+          handleClose={handleClose}
+          modalLoading={modalLoading}
+        />
+      </Modal>
     </View>
   );
 };
@@ -82,10 +95,9 @@ const styles = StyleSheet.create({
   },
   plant: {
     height: "100%",
-    width: 150,
-    alignItems: "center",
+    width: 130,
+    // alignItems: "center",
     padding: 10,
-    
   },
 });
 export default Notifications;
