@@ -14,7 +14,7 @@ import { countDown, dateToDays } from "../../utils/utils";
 import { useState, useContext } from "react";
 import UserContext from "../context/userContext";
 import LastWatered from "./LastWatered";
-import updatePlantLastWatered from "../../api/api";
+import {updatePlantLastWatered} from "../../api/api";
 
 const MyPlantModal = ({
   singlePlantData,

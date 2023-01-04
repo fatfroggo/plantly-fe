@@ -1,23 +1,23 @@
-import axios from "axios";
+import axios from 'axios';
 
 const plantsApi = axios.create({
-  baseURL: "https://plantly-api.onrender.com/api/",
+  baseURL: 'https://plantly-api.onrender.com/api/',
 });
 
 const forumApiData = axios.create({
-  baseURL: "https://plantly.cyclic.app/api/",
+  baseURL: 'https://plantly.cyclic.app/api/',
 });
 
-export const getPlants = (climate) => {
+export const getPlants = climate => {
   return plantsApi
-    .get("/plants", { params: { climate: climate } })
-    .then((plants) => {
+    .get('/plants', { params: { climate: climate } })
+    .then(plants => {
       return plants.data.plants;
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
 
-export const getPlantsByQuery = (searchquery) => {
+export const getPlantsByQuery = searchquery => {
   return plantsApi
     .get(`/plants/?common_name=${searchquery}`)
     .then(({ data }) => {
@@ -25,14 +25,14 @@ export const getPlantsByQuery = (searchquery) => {
     });
 };
 
-export const getPlantById = (id) => {
-  return plantsApi.get(`/plants/${id}`).then((plant) => {
+export const getPlantById = id => {
+  return plantsApi.get(`/plants/${id}`).then(plant => {
     return plant.data.plant;
   });
 };
 
-export const getUserPlants = (user) => {
-  return plantsApi.get(`/myplants/${user}`).then((myPlants) => {
+export const getUserPlants = user => {
+  return plantsApi.get(`/myplants/${user}`).then(myPlants => {
     return myPlants.data.myPlants;
   });
 };
@@ -56,13 +56,13 @@ export const deleteUserPlant = (username, my_plant_id) => {
 };
 
 export const getUserPlantByMyPlantId = (username, my_plant_id) => {
-  return plantsApi.get(`/myplants/${username}/${my_plant_id}`).then((plant) => {
+  return plantsApi.get(`/myplants/${username}/${my_plant_id}`).then(plant => {
     return plant.data.myPlant;
   });
 };
 
 export const getForum = () => {
-  return forumApiData.get("/reddit").then((reddit) => {
+  return forumApiData.get('/reddit').then(reddit => {
     return reddit.data.post_array;
   });
 };
@@ -72,9 +72,10 @@ export const updatePlantLastWatered = ({
   my_plant_id,
   last_watered_date,
 }) => {
-  const patchBody = { username, my_plant_id, last_watered_date };
   return plantsApi
-    .patch(`/api/myPlants/${username}/${plant_id}/last_watered`, patchBody)
+    .patch(`myplants/${username}/${my_plant_id}/last_watered`, {
+      last_watered_date,
+    })
     .then(({ data }) => {
       return data;
     });
