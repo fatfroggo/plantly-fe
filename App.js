@@ -10,6 +10,7 @@ import UserPlantsContext, {
   UserPlantsProvider,
 } from "./components/context/userPlantsContext";
 import ForumPage from "./components/ForumPage";
+import NotFound from "./components/NotFound";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ export default function App() {
               <Stack.Screen name="plantpedia" component={Plantpedia} />
               <Stack.Screen name="my-plants" component={UserPlants} />
               <Stack.Screen name="forum" component={ForumPage} />
+              <Stack.Screen name="error" component={NotFound} />
             </Stack.Navigator>
           </NavigationContainer>
         </UserPlantsProvider>

@@ -8,9 +8,8 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import PlantpediaNav from "../PlantpediaNav";
 import PlantPediaPlants from "./PlantpediaPlants";
-import { getPlants, getPlantById, getPlantsByQuery } from "../../api/api.js";
+import { getPlants, getPlantById } from "../../api/api.js";
 import * as ImagePicker from "expo-image-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import UserAreaHeader from "../UserArea/UserAreaHeader";
@@ -19,10 +18,12 @@ import AddToMyPlantsModal from "./Modals/AddToMyPlantsModal";
 import PlantIdModal from "./Modals/plantIdModal";
 import axios from "axios";
 import ClimateSort from "./ClimateSort";
+import Nav from "../Nav";
+import PlantpediaSearchBar from "../PlantpediaSearchBar";
 
-const Plantpedia = ({ route, navigation }) => {
+const Plantpedia = ({ navigation }) => {
   const [plantpediaLoading, setPlantpediaLoading] = useState(true);
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState(undefined);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalLoading, setModalLoading] = useState(true);
   const [addPlantButtonPressed, setAddPlantButtonPressed] = useState(false);
@@ -31,53 +32,24 @@ const Plantpedia = ({ route, navigation }) => {
 
   const [isInvalidSearch, setIsInvalidSearch] = useState(false);
   const [invalidSearchText, setInvalidSearchText] = useState("");
-  const [plantpediaSearch, setPlantpediaSearch] = useState(false);
   const [selectedClimate, setSelectedClimate] = useState(undefined);
   const [plantIdModalVisible, setPlantIdModalVisible] = useState(false);
   const [plantIdModalLoading, setPlantIdModalLoading] = useState(true);
   const [plantSuggestions, setPlantSuggestions] = useState([{}]);
 
   useEffect(() => {
-    getPlants(selectedClimate).then((fetchedPlants) => {
-      setPlantsData(fetchedPlants);
-    });
-  }, [selectedClimate]);
-
-  useEffect(() => {
-    if (route.params && !plantpediaSearch) {
-      setSearchText(route.params.searchText);
-      setIsInvalidSearch(false);
-      getPlantsByQuery(searchText)
-        .then((fetchedPlants) => {
-          setPlantsData(fetchedPlants);
-          setPlantpediaLoading(false);
-        })
-        .catch(() => {
-          setPlantpediaSearch(false);
-          setIsInvalidSearch(true);
-          setInvalidSearchText(searchText);
-          setPlantpediaLoading(false);
-        });
-    } else if (searchText.length > 0) {
-      setIsInvalidSearch(false);
-      getPlantsByQuery(searchText)
-        .then((fetchedPlants) => {
-          setPlantsData(fetchedPlants);
-          setPlantpediaLoading(false);
-        })
-        .catch(() => {
-          setIsInvalidSearch(true);
-          setInvalidSearchText(searchText);
-          setPlantpediaLoading(false);
-        });
-    } else {
-      setIsInvalidSearch(false);
-      getPlants().then((fetchedPlants) => {
+    getPlants(selectedClimate, searchText)
+      .then((fetchedPlants) => {
+        setIsInvalidSearch(false);
         setPlantsData(fetchedPlants);
         setPlantpediaLoading(false);
+      })
+      .catch(() => {
+        setIsInvalidSearch(true);
+        setInvalidSearchText(searchText);
+        setPlantpediaLoading(false);
       });
-    }
-  }, [searchText]);
+  }, [selectedClimate, searchText]);
 
   const handleAddToPlant = (plant_id) => {
     setModalVisible(true);
@@ -131,13 +103,9 @@ const Plantpedia = ({ route, navigation }) => {
           style={styles.headerText}
         />
 
-        <PlantpediaNav
-          navigation={navigation}
-          setPlantpediaSearch={setPlantpediaSearch}
-          setSearchText={setSearchText}
-          route={route}
-          setPlantpediaLoading={setPlantpediaLoading}
-        />
+        <Nav navigation={navigation} />
+
+        <PlantpediaSearchBar setSearchText={setSearchText} />
       </SafeAreaView>
 
       <View style={styles.sortAndId}>
@@ -165,10 +133,15 @@ const Plantpedia = ({ route, navigation }) => {
             style={{ height: 200, width: 200 }}
           />
         </View>
+      ) : isInvalidSearch ? (
+        <View style={styles.container}>
+          <Text style={styles.invalid}>
+            Oops! No plants found with the name '{invalidSearchText}'
+          </Text>
+        </View>
       ) : (
         <PlantPediaPlants
           plantsData={plantsData}
-          setModalVisible={setModalVisible}
           setPlantsData={setPlantsData}
           handleAddToPlant={handleAddToPlant}
           isInvalidSearch={isInvalidSearch}
@@ -213,6 +186,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#7F9B91",
+  },
+  invalid: {
+    fontSize: 25,
+    padding: 20,
+    color: "white",
   },
   sortAndId: {
     flexDirection: "row",

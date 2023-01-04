@@ -38,12 +38,6 @@ const PlantpediaNav = ({
           <Text>Forum</Text>
         </Pressable>
       </View>
-      <PlantpediaSearchBar
-        setPlantpediaSearch={setPlantpediaSearch}
-        setSearchText={setSearchText}
-        route={route}
-        setPlantpediaLoading={setPlantpediaLoading}
-      />
     </View>
   );
 };

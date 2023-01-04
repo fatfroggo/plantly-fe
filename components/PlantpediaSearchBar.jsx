@@ -3,17 +3,16 @@ import { useState, useEffect } from 'react';
 import { EvilIcons } from '@expo/vector-icons';
 import { TabRouter } from '@react-navigation/native';
 
-const PlantpediaSearchBar = ({
-  setSearchText,
-  setPlantpediaSearch,
-  setPlantpediaLoading,
-}) => {
+const PlantpediaSearchBar = ({ setSearchText }) => {
   const [plantpediaSearchText, setPlantpediaSearchText] = useState('');
 
   const handleSearch = () => {
-    setPlantpediaLoading(true);
-    setPlantpediaSearch(true);
+    if(plantpediaSearchText.length === 0){
+      setSearchText(undefined)
+    }
+    else{
     setSearchText(plantpediaSearchText);
+    }
   };
 
   return (
@@ -26,7 +25,7 @@ const PlantpediaSearchBar = ({
           onSubmitEditing={handleSearch}
         />
         <Pressable onPress={handleSearch}>
-          <EvilIcons name="search" size={24} color="#1E2720" />
+          <EvilIcons name="search" size={32} color="#1E2720" />
         </Pressable>
       </View>
     </View>

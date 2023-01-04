@@ -1,4 +1,4 @@
-import SearchBar from "./SearchBar";
+
 import { Text, Pressable, StyleSheet, View } from "react-native";
 import {
   useFonts,
@@ -17,7 +17,7 @@ const Nav = ({ navigation }) => {
         <Pressable
           style={styles.navPressable}
           onPress={() => {
-            navigation.navigate("user area");
+            navigation.navigate("user area")
           }}
         >
           <Text style={styles.text}>Home</Text>
@@ -50,7 +50,6 @@ const Nav = ({ navigation }) => {
           <Text>Forum</Text>
         </Pressable>
       </View>
-      <SearchBar />
     </View>
   );
 };
