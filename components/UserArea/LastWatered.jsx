@@ -39,13 +39,20 @@ const LastWatered = ({ plant }) => {
 };
 
 const styles = StyleSheet.create({
+  text: {
+    flex: 1,
+    paddingVertical: 1,
+  },
   timeLeft0: {
+    fontSize: 12,
     color: "red",
   },
   timeLeft2: {
+    fontSize: 12,
     color: "amber",
   },
   timeLeft3: {
+    fontSize: 12,
     color: "green",
   },
 });

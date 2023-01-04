@@ -7,19 +7,12 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-import { useState, useEffect, useContext } from "react";
-import { getUserPlants, getUserPlantByMyPlantId } from "../../api/api";
+import { useState, useContext } from "react";
+import { getUserPlantByMyPlantId } from "../../api/api";
 import UserPlantsContext from "../context/userPlantsContext";
 import UserContext from "../context/userContext";
-import Plantpedia from "../PlantpediaArea/Plantpedia";
-import { countDown } from "../../utils/utils";
 import MyPlantModal from "./MyPlantModal";
-
-const useStatusHandler = (item) => {
-  const [timeLeft, setTimeLeft] = useState(0);
-  setTimeLeft(countDown(item.time_between_watering, item.last_watered_date));
-  return timeLeft;
-};
+import LastWatered from "./LastWatered";
 
 const Notifications = () => {
   const [modalLoading, setModalLoading] = useState(true);
@@ -40,13 +33,7 @@ const Notifications = () => {
   const handleClose = () => {
     setModalVisible(false);
   };
-  const myItemSeparator = () => {
-    return (
-      <View
-        style={{ height: 1, backgroundColor: "gray", marginHorizontal: 10 }}
-      />
-    );
-  };
+  const myItemSeparator = () => {};
 
   return (
     <View style={styles.container}>
@@ -66,8 +53,8 @@ const Notifications = () => {
                 style={{ height: 80, width: 80, borderRadius: 30 }}
                 source={{ uri: item.picture_url }}
               />
-
               <Text style={styles.text}>{item.nickname}</Text>
+              <LastWatered style={styles.watered} plant={item} />
             </Pressable>
           )}
           keyExtractor={(item) => item.my_plant_id}
@@ -108,10 +95,9 @@ const styles = StyleSheet.create({
   },
   plant: {
     height: "100%",
-    width: 150,
-    alignItems: "center",
+    width: 130,
+    // alignItems: "center",
     padding: 10,
-    
   },
 });
 export default Notifications;

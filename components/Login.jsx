@@ -8,7 +8,6 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
-  Button,
   Keyboard,
 } from "react-native";
 
@@ -43,7 +42,20 @@ const Login = ({ navigation }) => {
     });
   };
 
-  return (
+  return !fontsLoaded ? (
+    <View
+      style={{
+        backgroundColor: "#2b8b30",
+        flex: 1,
+        flexDirection: "row",
+      }}
+    >
+      <Image
+        source={require("../assets/loadingLight.gif")}
+        style={{ flex: 1, alignSelf: "center", width: 50 }}
+      />
+    </View>
+  ) : (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.background}
@@ -89,10 +101,8 @@ const styles = StyleSheet.create({
   },
   container: { marginBottom: "20%", alignSelf: "center", alignItems: "center" },
   logo: {
-    borderColor: "black",
-    borderWidth: 2,
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
   },
   plantly: {
     fontSize: 40,
@@ -117,7 +127,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     backgroundColor: "#ECEBE7",
     marginTop: 5,
-    paddingVertical: 5,
+    paddingVertical: 3,
     paddingHorizontal: 50,
     marginBottom: 10,
     borderRadius: 8,
