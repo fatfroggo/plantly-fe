@@ -31,10 +31,10 @@ const PlantpediaNav = ({
         <Pressable
           style={styles.navPressable}
           onPress={() => {
-            navigation.navigate("plantpedia");
+            navigation.navigate("forum");
           }}
         >
-          <Text>Plantpedia</Text>
+          <Text>Forum</Text>
         </Pressable>
       </View>
       <PlantpediaSearchBar
