@@ -136,6 +136,7 @@ const Plantpedia = ({ route, navigation }) => {
           setPlantpediaSearch={setPlantpediaSearch}
           setSearchText={setSearchText}
           route={route}
+          setPlantpediaLoading={setPlantpediaLoading}
         />
       </SafeAreaView>
 

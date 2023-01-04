@@ -1,11 +1,12 @@
-import PlantpediaSearchBar from "./PlantpediaSearchBar";
-import { Text, Pressable, StyleSheet, View } from "react-native";
+import PlantpediaSearchBar from './PlantpediaSearchBar';
+import { Text, Pressable, StyleSheet, View } from 'react-native';
 
 const PlantpediaNav = ({
   navigation,
   route,
   setPlantpediaSearch,
   setSearchText,
+  setPlantpediaLoading,
 }) => {
   return (
     <View style={styles.container}>
@@ -13,7 +14,7 @@ const PlantpediaNav = ({
         <Pressable
           style={styles.navPressable}
           onPress={() => {
-            navigation.navigate("user area");
+            navigation.navigate('user area');
           }}
         >
           <Text>Home</Text>
@@ -22,7 +23,7 @@ const PlantpediaNav = ({
         <Pressable
           style={styles.navPressable}
           onPress={() => {
-            navigation.navigate("my-plants");
+            navigation.navigate('my-plants');
           }}
         >
           <Text>My Plants</Text>
@@ -31,7 +32,7 @@ const PlantpediaNav = ({
         <Pressable
           style={styles.navPressable}
           onPress={() => {
-            navigation.navigate("forum");
+            navigation.navigate('forum');
           }}
         >
           <Text>Forum</Text>
@@ -41,6 +42,7 @@ const PlantpediaNav = ({
         setPlantpediaSearch={setPlantpediaSearch}
         setSearchText={setSearchText}
         route={route}
+        setPlantpediaLoading={setPlantpediaLoading}
       />
     </View>
   );
@@ -48,25 +50,25 @@ const PlantpediaNav = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
-    alignitems: "center",
-    width: "100%",
+    flexDirection: 'column',
+    alignitems: 'center',
+    width: '100%',
     paddingHorizontal: 15,
   },
 
   buttons: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignContent: "stretch",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'stretch',
     marginVertical: 5,
     height: 35,
-    color: "#1E2720",
+    color: '#1E2720',
   },
   navPressable: {
-    width: "30%",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ECEBE7",
+    width: '30%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ECEBE7',
     borderRadius: 50,
   },
 });

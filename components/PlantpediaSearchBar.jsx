@@ -3,12 +3,16 @@ import { useState, useEffect } from 'react';
 import { EvilIcons } from '@expo/vector-icons';
 import { TabRouter } from '@react-navigation/native';
 
-const PlantpediaSearchBar = ({ setSearchText, setPlantpediaSearch }) => {
+const PlantpediaSearchBar = ({
+  setSearchText,
+  setPlantpediaSearch,
+  setPlantpediaLoading,
+}) => {
   const [plantpediaSearchText, setPlantpediaSearchText] = useState('');
-  
 
   const handleSearch = () => {
-    setPlantpediaSearch(true)
+    setPlantpediaLoading(true);
+    setPlantpediaSearch(true);
     setSearchText(plantpediaSearchText);
   };
 
