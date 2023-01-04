@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     color: "#1E2720",
   },
   navPressable: {
-    width: "30%",
+    width: "22%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#ECEBE7",
