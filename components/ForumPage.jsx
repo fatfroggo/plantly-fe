@@ -1,14 +1,16 @@
+import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { Text, View, StyleSheet, StatusBar, Modal, Image } from "react-native";
 import { SafeAreaView } from "react-native";
 import { getForum } from "../api/api";
 import Forum from "./Forum";
-import ForumNav from "./ForumNav";
+import Nav from "./Nav";
 import UserAreaHeader from "./UserArea/UserAreaHeader";
 
 const ForumPage = () => {
   const [forums, setForums] = useState([]);
   const [forumLoading, setForumLoading] = useState(true);
+  const navigation = useNavigation()
 
   useEffect(() => {
     getForum().then((forums) => {
@@ -31,7 +33,7 @@ const ForumPage = () => {
           subHeader="Common dilemmas for houseplants"
           style={styles.headerText}
         />
-        <ForumNav />
+        <Nav navigation={navigation} />
       </SafeAreaView>
       {forumLoading ? (
         <View
