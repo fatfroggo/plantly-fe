@@ -137,15 +137,22 @@ const Plantpedia = ({ route, navigation }) => {
           setSearchText={setSearchText}
           route={route}
         />
-        <Pressable style={styles.plantId} onPress={handlePlantId}>
-          <Text>Plant Id</Text>
-        </Pressable>
       </SafeAreaView>
 
-      <ClimateSort
-        selectedClimate={selectedClimate}
-        setSelectedClimate={setSelectedClimate}
-      />
+      <View style={styles.sortAndId}>
+        <ClimateSort
+          selectedClimate={selectedClimate}
+          setSelectedClimate={setSelectedClimate}
+        />
+        <Pressable style={styles.plantId} onPress={handlePlantId}>
+          <Image
+            source={require('../../assets/camera.jpg')}
+            style={{ height: 30, width: 35 }}
+          />
+        </Pressable>
+        <Text style={styles.plantIdText}>Plant{'\n'}ID</Text>
+      </View>
+
       {plantpediaLoading ? (
         <View
           style={{
@@ -186,7 +193,11 @@ const Plantpedia = ({ route, navigation }) => {
           />
         )}
       </Modal>
-      <Modal visible={plantIdModalVisible} animationType="slide" transparent={true}>
+      <Modal
+        visible={plantIdModalVisible}
+        animationType="slide"
+        transparent={true}
+      >
         <PlantIdModal
           plantSuggestions={plantSuggestions}
           plantIdModalLoading={plantIdModalLoading}
@@ -202,7 +213,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#7F9B91',
   },
-  plantId: { backgroundColor: 'white', margin: 20, padding: 10 },
+  sortAndId: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  plantId: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    marginVertical: 5,
+    marginHorizontal: 10,
+    padding: 10,
+    borderRadius: 200,
+    height: 50,
+    width: 50,
+  },
+  plantIdText: { textAlign: 'center', fontSize: 15 },
   safe: {
     justifyContent: 'flex-end',
     flex: 0.5,
