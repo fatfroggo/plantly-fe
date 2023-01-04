@@ -19,6 +19,7 @@ const SearchBar = () => {
           style={styles.searchInput}
           placeholder="Search plants"
           onChangeText={setSearchText}
+          onSubmitEditing={handleSearch}
         />
         <Pressable onPress={handleSearch}>
           <EvilIcons name="search" size={24} color="#1E2720" />
