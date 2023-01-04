@@ -5,7 +5,6 @@ import { TabRouter } from '@react-navigation/native';
 
 const PlantpediaSearchBar = ({ setSearchText }) => {
   const [plantpediaSearchText, setPlantpediaSearchText] = useState('');
-  
 
   const handleSearch = () => {
     if(plantpediaSearchText.length === 0){
@@ -23,6 +22,7 @@ const PlantpediaSearchBar = ({ setSearchText }) => {
           style={styles.searchInput}
           placeholder="Search plants"
           onChangeText={setPlantpediaSearchText}
+          onSubmitEditing={handleSearch}
         />
         <Pressable onPress={handleSearch}>
           <EvilIcons name="search" size={32} color="#1E2720" />

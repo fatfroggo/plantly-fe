@@ -10,16 +10,16 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { countDown, dateToDays } from "../../utils/utils";
 import { useState, useContext } from "react";
 import UserContext from "../context/userContext";
 import LastWatered from "./LastWatered";
-import {updatePlantLastWatered} from "../../api/api";
+import { updatePlantLastWatered } from "../../api/api";
 
 const MyPlantModal = ({
   singlePlantData,
   handleClose,
   modalLoading,
+  setModalLoading,
   setModalVisible,
 }) => {
   const { user, setUser } = useContext(UserContext);
@@ -31,8 +31,9 @@ const MyPlantModal = ({
   };
 
   const handleWater = () => {
-    updatePlantLastWatered(patchBody).then((plant) => {
-      console.log(plant);
+    setModalLoading(true);
+    updatePlantLastWatered(patchBody).then(() => {
+      setModalLoading(false);
       setModalVisible(false);
     });
   };
@@ -45,7 +46,7 @@ const MyPlantModal = ({
       >
         <Image
           source={require("../../assets/loading.gif")}
-          style={{ height: 200, width: 200 }}
+          style={{ height: 150, width: 150 }}
         />
       </View>
     </View>
@@ -105,13 +106,12 @@ const MyPlantModal = ({
         <View style={styles.needsContainer}>
           <Text style={styles.subHeading}>Max temperature</Text>
           <Text style={styles.infoText}>{singlePlantData?.temp_max}°C</Text>
-          {/* </View> */}
 
-          {/* <View style={styles.needsContainer}> */}
           <Text style={styles.subHeading}>Min temperature</Text>
           <Text style={styles.infoText}>{singlePlantData?.temp_min}°C</Text>
         </View>
       </ScrollView>
+
       <View style={styles.buttonsContainer}>
         <Pressable style={styles.pressable}>
           <Text style={styles.pressableText} onPress={handleWater}>

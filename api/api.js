@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 
 const plantsApi = axios.create({
-  baseURL: 'https://plantly-api.onrender.com/api/',
+  baseURL: "https://plantly-api.onrender.com/api/",
 });
 
 const forumApiData = axios.create({
-  baseURL: 'https://plantly.cyclic.app/api/',
+  baseURL: "https://plantly.cyclic.app/api/",
 });
 
 export const getPlants = (climate, searchQuery) => {
@@ -14,16 +14,16 @@ export const getPlants = (climate, searchQuery) => {
     .then((plants) => {
       return plants.data.plants;
     })
-};
+  }
 
-export const getPlantById = id => {
-  return plantsApi.get(`/plants/${id}`).then(plant => {
+export const getPlantById = (id) => {
+  return plantsApi.get(`/plants/${id}`).then((plant) => {
     return plant.data.plant;
   });
 };
 
-export const getUserPlants = user => {
-  return plantsApi.get(`/myplants/${user}`).then(myPlants => {
+export const getUserPlants = (user) => {
+  return plantsApi.get(`/myplants/${user}`).then((myPlants) => {
     return myPlants.data.myPlants;
   });
 };
@@ -47,13 +47,13 @@ export const deleteUserPlant = (username, my_plant_id) => {
 };
 
 export const getUserPlantByMyPlantId = (username, my_plant_id) => {
-  return plantsApi.get(`/myplants/${username}/${my_plant_id}`).then(plant => {
+  return plantsApi.get(`/myplants/${username}/${my_plant_id}`).then((plant) => {
     return plant.data.myPlant;
   });
 };
 
 export const getForum = () => {
-  return forumApiData.get('/reddit').then(reddit => {
+  return forumApiData.get("/reddit").then((reddit) => {
     return reddit.data.post_array;
   });
 };

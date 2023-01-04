@@ -28,9 +28,9 @@ import {
 
 const UserArea = ({ navigation }) => {
   const [pressed, setPressed] = useState(false);
+  const [modalLoading, setModalLoading] = useState(true);
   const [featuredPlant, setFeaturedPlant] = useState({});
   const [loading, setLoading] = useState(true);
-  const [notificationsLoading, setNotificationsLoading] = useState(true);
   const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
   const { user, setUser } = useContext(UserContext);
   let [fontsLoaded] = useFonts({
@@ -89,7 +89,10 @@ const UserArea = ({ navigation }) => {
 
       <View style={styles.userAreaBody}>
         <ScrollView>
-          <Notifications />
+          <Notifications
+            modalLoading={modalLoading}
+            setModalLoading={setModalLoading}
+          />
           <View style={styles.featuredPlant}>
             <Text style={styles.featuredPlantHeader}>Featured Plant</Text>
 
