@@ -45,7 +45,6 @@ const Plantpedia = ({ route, navigation }) => {
 
   useEffect(() => {
     if (route.params && !plantpediaSearch) {
-      setPlantpediaSearch(false);
       setSearchText(route.params.searchText);
       setIsInvalidSearch(false);
       getPlantsByQuery(searchText)
@@ -136,6 +135,7 @@ const Plantpedia = ({ route, navigation }) => {
           setPlantpediaSearch={setPlantpediaSearch}
           setSearchText={setSearchText}
           route={route}
+          setPlantpediaLoading={setPlantpediaLoading}
         />
       </SafeAreaView>
 
