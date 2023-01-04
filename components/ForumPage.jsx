@@ -19,6 +19,12 @@ const ForumPage = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar
+        animated={true}
+        barStyle="light-content"
+        showHideTransition="slide"
+        backgroundColor={styles.container.backgroundColor}
+      />
       <SafeAreaView style={styles.safe}>
         <UserAreaHeader
           header="Forums"
@@ -59,7 +65,6 @@ const styles = StyleSheet.create({
     color: "#1E2720",
   },
   headerText: {
-    flex: 1,
     alignItems: "center",
   },
 });
