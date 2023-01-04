@@ -44,16 +44,16 @@ const styles = StyleSheet.create({
     paddingVertical: 1,
   },
   timeLeft0: {
-    fontSize: 12,
+    // fontSize: 12,
     color: "red",
   },
   timeLeft2: {
-    fontSize: 12,
-    color: "amber",
+    // fontSize: 12,
+    color: "#d88001",
   },
   timeLeft3: {
-    fontSize: 12,
-    color: "green",
+    // fontSize: 12,
+    color: "#ECEBE7",
   },
 });
 export default LastWatered;

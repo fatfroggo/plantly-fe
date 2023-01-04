@@ -1,45 +1,48 @@
-
 import {
   StyleSheet,
   Text,
   View,
   Image,
   FlatList,
+  StatusBar,
 } from "react-native";
 
-const Forum = ({forums}) => {
-
+const Forum = ({ forums }) => {
   return (
-      <View>
-        <FlatList
-          data={forums}
-          renderItem={(itemData) => {
-            return (
-              <View style={styles.plantsListItem}>
-                <Text style={styles.postName}>{itemData.item.title}</Text>
-                <Text style={styles.authorName}>
-                  Written By: {itemData.item.author}
-                </Text>
-                <Text style={styles.infoText}>
-                  {itemData.item.link_to_reddit_post}
-                </Text>
-                <View style={styles.redditImage}>
-                  <Image
-                    style={{ height: 200, width: 200, borderRadius: 20 }}
-                    source={{ uri: itemData.item.thumbnail }}
-                  />
-                </View>
-                <Text style={styles.plantInfo}>
-                  Votes: {itemData.item.votes}
-                </Text>
-                <Text style={styles.plantInfo}>
-                  Awards Recieved: {itemData.item.total_awards_received}
-                </Text>
+    <View>
+      <StatusBar
+        animated={true}
+        barStyle="light-content"
+        showHideTransition="slide"
+        backgroundColor={styles.container.backgroundColor}
+      />
+      <FlatList
+        data={forums}
+        renderItem={(itemData) => {
+          return (
+            <View style={styles.plantsListItem}>
+              <Text style={styles.postName}>{itemData.item.title}</Text>
+              <Text style={styles.authorName}>
+                Written By: {itemData.item.author}
+              </Text>
+              <Text style={styles.infoText}>
+                {itemData.item.link_to_reddit_post}
+              </Text>
+              <View style={styles.redditImage}>
+                <Image
+                  style={{ height: 200, width: 200, borderRadius: 20 }}
+                  source={{ uri: itemData.item.thumbnail }}
+                />
               </View>
-            );
-          }}
-        />
-      </View>
+              <Text style={styles.plantInfo}>Votes: {itemData.item.votes}</Text>
+              <Text style={styles.plantInfo}>
+                Awards Recieved: {itemData.item.total_awards_received}
+              </Text>
+            </View>
+          );
+        }}
+      />
+    </View>
   );
 };
 
@@ -50,7 +53,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     flex: 1,
-    alignItems: "center"
+    alignItems: "center",
   },
   redditImage: {
     paddingHorizontal: 20,

@@ -70,7 +70,7 @@ const UserPlants = ({ navigation }) => {
           animated={true}
           barStyle="light-content"
           showHideTransition="slide"
-          backgroundColor={styles.header.backgroundColor}
+          backgroundColor={styles.safe.backgroundColor}
         />
         <View style={styles.header}>
           <UserAreaHeader header="My Plants" style={styles.header} />
@@ -141,6 +141,7 @@ const UserPlants = ({ navigation }) => {
       </View>
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
         <MyPlantModal
+          setModalVisible={setModalVisible}
           singlePlantData={singlePlantData}
           handleClose={handleClose}
           modalLoading={modalLoading}
@@ -192,38 +193,35 @@ const styles = StyleSheet.create({
     backgroundColor: "#F1F1F2",
     borderRadius: 20,
     height: "95%",
-    width: "46%",
+    width: "47%",
     flexDirection: "row",
+    alignSelf: "center",
     alignItems: "center",
-
-    marginHorizontal: 8,
+    justifyContent: "flex-start",
+    marginHorizontal: 5,
     marginVertical: 5,
-
     alignItems: "center",
     paddingVertical: 15,
-    // paddingHorizontal: 10,
   },
 
   plantItemImage: {
     flex: 0.5,
-
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
   },
   plantItemHeader: {
-    // width: "50%",
-    fontSize: 14,
+    fontWeight: "bold",
+    fontSize: 15,
   },
   plantItemInfo: {
-    // width: "50%",
     flex: 1,
     paddingHorizontal: 10,
   },
   info: {
-    fontSize: 12,
-    paddingBottom: 3,
+    fontSize: 11,
+    fontStyle: "italic",
+    marginBottom: 3,
   },
   lastWatered: {
-    flex: 1,
     fontSize: 11,
   },
 });

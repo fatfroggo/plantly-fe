@@ -2,8 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Text, Pressable, StyleSheet, View } from "react-native";
 
 const ForumNav = () => {
-
-    const navigation = useNavigation()
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.buttons}>
@@ -44,6 +43,7 @@ const styles = StyleSheet.create({
     alignitems: "center",
     width: "100%",
     paddingHorizontal: 15,
+    backgroundColor: "#7F9B91",
   },
 
   buttons: {

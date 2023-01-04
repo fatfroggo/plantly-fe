@@ -80,25 +80,27 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     borderRadius: 20,
     marginVertical: 10,
-    padding: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
     flex: 1,
+
     backgroundColor: "#ECEBE7",
   },
   title: {
     fontSize: 25,
     flex: 1,
-    paddingLeft: 5,
+    paddingLeft: 20,
     paddingBottom: 10,
   },
   notifications: {
     flex: 1,
+    textAlign: "center",
     backgroundColor: "#ECEBE7",
   },
   plant: {
     height: "100%",
-    width: 130,
-    // alignItems: "center",
-    padding: 10,
+    width: 120,
+    alignItems: "center",
   },
 });
 export default Notifications;

@@ -3,6 +3,12 @@ import { Text, View, StyleSheet, StatusBar } from "react-native";
 const UserAreaHeader = (props) => {
   return (
     <View style={styles.container}>
+      <StatusBar
+        animated={true}
+        barStyle="light-content"
+        showHideTransition="slide"
+        backgroundColor={styles.container.backgroundColor}
+      />
       <Text style={styles.userAreaHeader}>{props.header}</Text>
       <Text style={styles.subHeader}>{props.subHeader}</Text>
     </View>
