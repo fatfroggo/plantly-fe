@@ -6,7 +6,7 @@ const plantsApi = axios.create({
 
 export const getPlants = (climate) => {
   return plantsApi
-    .get("/plants", { params: { climate: climate }})
+    .get("/plants", { params: { climate: climate } })
     .then((plants) => {
       return plants.data.plants;
     })
@@ -14,9 +14,11 @@ export const getPlants = (climate) => {
 };
 
 export const getPlantsByQuery = (searchquery) => {
-  return plantsApi.get(`/plants/?common_name=${searchquery}`).then(({ data }) => {
-    return data.plants;
-  });
+  return plantsApi
+    .get(`/plants/?common_name=${searchquery}`)
+    .then(({ data }) => {
+      return data.plants;
+    });
 };
 
 export const getPlantById = (id) => {
@@ -53,4 +55,17 @@ export const getUserPlantByMyPlantId = (username, my_plant_id) => {
   return plantsApi.get(`/myplants/${username}/${my_plant_id}`).then((plant) => {
     return plant.data.myPlant;
   });
+};
+
+export const updateMyPlantLastWatered = (
+  my_plant_id,
+  username,
+  last_watered_date
+) => {
+  const patchBody = { last_watered_date };
+  return plants.api
+    .patch(`/${username}/${my_plant_id}/last_watered`, patchBody)
+    .then(({ data }) => {
+      return data;
+    });
 };
