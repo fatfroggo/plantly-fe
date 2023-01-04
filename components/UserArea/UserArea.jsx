@@ -50,7 +50,6 @@ const UserArea = ({ navigation }) => {
       const randomId = Math.floor(Math.random() * res.length);
       const randomPlant = res.filter((plant) => plant.plant_id === randomId);
       setFeaturedPlant(randomPlant[0]);
-
       setLoading(false);
     });
   }, []);
@@ -60,15 +59,14 @@ const UserArea = ({ navigation }) => {
   };
 
   return loading ? (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: "row",
-      }}
-    >
+    <View style={{ flex: 1, justifyContent: "center" }}>
       <Image
         source={require("../../assets/loading.gif")}
-        style={{ flex: 1, alignSelf: "center", width: 50 }}
+        style={{
+          alignSelf: "center",
+          width: 100,
+          height: 100,
+        }}
       />
     </View>
   ) : (

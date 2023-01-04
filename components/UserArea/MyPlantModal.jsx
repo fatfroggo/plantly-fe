@@ -1,3 +1,6 @@
+const dayjs = require("dayjs");
+const customParseFormat = require("dayjs/plugin/customParseFormat");
+
 import {
   Text,
   View,
@@ -8,10 +11,31 @@ import {
   Dimensions,
 } from "react-native";
 import { countDown, dateToDays } from "../../utils/utils";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import UserContext from "../context/userContext";
 import LastWatered from "./LastWatered";
+import updatePlantLastWatered from "../../api/api";
 
-const MyPlantModal = ({ singlePlantData, handleClose, modalLoading }) => {
+const MyPlantModal = ({
+  singlePlantData,
+  handleClose,
+  modalLoading,
+  setModalVisible,
+}) => {
+  const { user, setUser } = useContext(UserContext);
+
+  const patchBody = {
+    my_plant_id: singlePlantData.my_plant_id,
+    username: user,
+    last_watered_date: dayjs().format("YYYY/MM/DD"),
+  };
+
+  const handleWater = () => {
+    updatePlantLastWatered(patchBody).then((plant) => {
+      console.log(plant);
+      setModalVisible(false);
+    });
+  };
   return modalLoading ? (
     <View style={styles.modalLoading}>
       <View
@@ -35,36 +59,65 @@ const MyPlantModal = ({ singlePlantData, handleClose, modalLoading }) => {
       </View>
       <Text style={styles.commonName}>{singlePlantData?.nickname}</Text>
       <Text style={styles.latinName}>{singlePlantData?.common_name}</Text>
-      <LastWatered plant={singlePlantData} />
+      <View style={styles.lastWatered}>
+        <LastWatered plant={singlePlantData} />
+      </View>
       <ScrollView
         persistentScrollbar={true}
         contentContainerStyle={styles.plantInfo}
       >
-        <Text style={styles.subHeading}>Latin Name</Text>
-        <Text style={styles.infoText}>{singlePlantData?.latin_name}</Text>
+        <View style={styles.needsHeading}>
+          <Text style={styles.needsSubHeading}>Information</Text>
+        </View>
+        <View style={styles.needsContainer}>
+          <Text style={styles.subHeading}>Latin Name</Text>
+          <Text style={styles.infoText}>{singlePlantData?.latin_name}</Text>
+        </View>
 
-        <Text style={styles.subHeading}>Climate</Text>
-        <Text style={styles.infoText}>{singlePlantData?.climate}</Text>
+        <View style={styles.needsContainer}>
+          <Text style={styles.subHeading}>Climate</Text>
+          <Text style={styles.infoText}>{singlePlantData?.climate}</Text>
+        </View>
 
-        <Text style={styles.subHeading}>Origin</Text>
-        <Text style={styles.infoText}>{singlePlantData?.origin}</Text>
+        <View style={styles.needsContainer}>
+          <Text style={styles.subHeading}>Origin</Text>
+          <Text style={styles.infoText}>{singlePlantData?.origin}</Text>
+        </View>
 
-        <Text style={styles.subHeading}>Pruning</Text>
-        <Text style={styles.infoText}>{singlePlantData?.pruning}</Text>
+        <View style={styles.needsHeading}>
+          <Text style={styles.needsSubHeading}>Needs</Text>
+        </View>
+        <View style={styles.needsContainer}>
+          <Text style={styles.subHeading}>Pruning</Text>
+          <Text style={styles.infoText}>{singlePlantData?.pruning}</Text>
 
-        <Text style={styles.subHeading}>Watering</Text>
-        <Text style={styles.infoText}>{singlePlantData?.watering_advice}</Text>
+          <Text style={styles.subHeading}>Watering</Text>
+          <Text style={styles.infoText}>
+            {singlePlantData?.watering_advice}
+          </Text>
 
-        <Text style={styles.subHeading}>Light</Text>
-        <Text style={styles.infoText}>{singlePlantData?.light_preference}</Text>
+          <Text style={styles.subHeading}>Light</Text>
+          <Text style={styles.infoText}>
+            {singlePlantData?.light_preference}
+          </Text>
+        </View>
 
-        <Text style={styles.subHeading}>Max temperature</Text>
-        <Text style={styles.infoText}>{singlePlantData?.temp_max}</Text>
+        <View style={styles.needsContainer}>
+          <Text style={styles.subHeading}>Max temperature</Text>
+          <Text style={styles.infoText}>{singlePlantData?.temp_max}°C</Text>
+          {/* </View> */}
 
-        <Text style={styles.subHeading}>Min temperature</Text>
-        <Text style={styles.infoText}>{singlePlantData?.temp_min}</Text>
+          {/* <View style={styles.needsContainer}> */}
+          <Text style={styles.subHeading}>Min temperature</Text>
+          <Text style={styles.infoText}>{singlePlantData?.temp_min}°C</Text>
+        </View>
       </ScrollView>
       <View style={styles.buttonsContainer}>
+        <Pressable style={styles.pressable}>
+          <Text style={styles.pressableText} onPress={handleWater}>
+            Water today
+          </Text>
+        </Pressable>
         <Pressable style={styles.pressable}>
           <Text style={styles.pressableText} onPress={handleClose}>
             Close
@@ -91,7 +144,8 @@ const styles = StyleSheet.create({
     marginVertical: Dimensions.get("window").height / 15,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 30,
+    paddingVertical: 30,
+    paddingHorizontal: 15,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -102,30 +156,52 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-
+  mainHeading: {
+    borderColor: "red",
+    borderWidth: 2,
+    // flex: 2,
+  },
   plantImage: {
     paddingHorizontal: 20,
     borderRadius: 20,
   },
-  plantInfo: { paddingRight: 10 },
+  plantInfo: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    paddingRight: 10,
+  },
+  needsSubHeading: { fontSize: 25, marginHorizontal: 5 },
+  needsHeading: { width: "100%", paddingBottom: 10 },
+  needsContainer: {
+    width: "49%",
+  },
   commonName: {
     fontWeight: "bold",
-    fontSize: 30,
+    fontSize: 25,
     textAlign: "center",
-    marginTop: 10,
+    marginTop: 5,
   },
   latinName: {
-    fontSize: 18,
+    fontSize: 14,
     fontStyle: "italic",
     textAlign: "center",
+    // marginBottom: 10,
+  },
+  lastWatered: {
+    height: "5%",
     marginBottom: 10,
   },
+  lastWateredText: {
+    fontSize: 20,
+  },
   subHeading: {
-    fontSize: 17,
+    marginHorizontal: 5,
+    fontSize: 16,
     fontWeight: "bold",
   },
   infoText: {
-    fontSize: 17,
+    marginHorizontal: 5,
+    fontSize: 14,
     marginBottom: 15,
   },
   buttonsContainer: {
