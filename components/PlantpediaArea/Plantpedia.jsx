@@ -105,6 +105,7 @@ const Plantpedia = ({ route, navigation }) => {
       return axios
         .post('https://plant.id/api/v2/identify', {
           images: [imgBase64],
+          plant_details: ['common_names', 'wiki_image'],
           api_key: 'JfQUcSr9TXzmj6TWBtg1yOzbVWqdzEAblciBqvZmbgX6u0rbZ0',
         })
         .then(data => {
