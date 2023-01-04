@@ -1,5 +1,14 @@
 import SearchBar from "./SearchBar";
 import { Text, Pressable, StyleSheet, View } from "react-native";
+import {
+  useFonts,
+  Raleway_200ExtraLight,
+  Raleway_300Light,
+  Raleway_400Regular,
+  Raleway_500Medium,
+  Raleway_600SemiBold,
+  Raleway_700Bold,
+} from "@expo-google-fonts/raleway";
 
 const Nav = ({ navigation }) => {
   return (
@@ -11,7 +20,7 @@ const Nav = ({ navigation }) => {
             navigation.navigate("user area");
           }}
         >
-          <Text>Home</Text>
+          <Text style={styles.text}>Home</Text>
         </Pressable>
 
         <Pressable
@@ -51,7 +60,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignitems: "center",
     width: "100%",
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
   },
 
   buttons: {
@@ -60,14 +69,17 @@ const styles = StyleSheet.create({
     alignContent: "stretch",
     marginVertical: 5,
     height: 35,
-    color: "#1E2720",
+    color: "#041b27",
   },
   navPressable: {
-    width: "22%",
+    width: "24%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#ECEBE7",
+    backgroundColor: "#f8fdfb",
     borderRadius: 50,
+  },
+  text: {
+    fontFamily: "Raleway_400Regular",
   },
 });
 

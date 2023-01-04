@@ -27,7 +27,6 @@ const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   let [fontsLoaded] = useFonts({
-    Raleway_200ExtraLight,
     Raleway_300Light,
     Raleway_400Regular,
     Raleway_500Medium,
@@ -41,27 +40,17 @@ const Login = ({ navigation }) => {
       routes: [{ name: "user area" }],
     });
   };
+  if (!fontsLoaded) {
+    return null;
+  }
 
-  return !fontsLoaded ? (
-    <View
-      style={{
-        backgroundColor: "#2b8b30",
-        flex: 1,
-        flexDirection: "row",
-      }}
-    >
-      <Image
-        source={require("../assets/loadingLight.gif")}
-        style={{ flex: 1, alignSelf: "center", width: 50 }}
-      />
-    </View>
-  ) : (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.background}
-    >
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.background}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.background}
+        >
           <View style={styles.container}>
             <Image
               style={styles.logo}
@@ -82,57 +71,74 @@ const Login = ({ navigation }) => {
                 onChangeText={(text) => setPassword(text)}
               />
             </View>
-            <Pressable style={styles.loginPressable} onPress={handlePress}>
-              <Text style={styles.loginText}>Login</Text>
+            <Pressable onPress={handlePress}>
+              <Text style={styles.loginPressable}>Login</Text>
             </Pressable>
           </View>
-        </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
       </SafeAreaView>
-    </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: "#2b8b30",
+    backgroundColor: "#729d84",
     flex: 1,
     paddingTop: StatusBar.currentHeight,
     justifyContent: "center",
+    alignItems: "center",
   },
   container: { marginBottom: "20%", alignSelf: "center", alignItems: "center" },
   logo: {
     width: 150,
     height: 150,
+    justifyContent: "center",
   },
   plantly: {
-    fontSize: 40,
+    fontSize: 46,
     marginBottom: 10,
-    fontFamily: "Raleway_400Regular",
-    color: "#ECEBE7",
+    fontFamily: "Raleway_300Light",
+    color: "#f8fdfb",
+    justifyContent: "center",
   },
   loginPressable: {
-    borderColor: "#ECEBE7",
+    borderColor: "#f8fdfb",
     borderWidth: 1,
     marginTop: 5,
-    paddingVertical: 8,
+    flexDirection: "row",
+    alignSelf: "center",
+    fontFamily: "Raleway_400Regular",
+    color: "#f8fdfb",
+    fontSize: 14,
+    paddingVertical: 9,
     paddingHorizontal: 20,
     borderRadius: 10,
   },
   loginText: {
+    flexDirection: "row",
+    alignSelf: "center",
     fontFamily: "Raleway_400Regular",
-    color: "#ECEBE7",
+    color: "#f8fdfb",
     fontSize: 14,
   },
-
+  input: {
+    fontFamily: "Raleway_300Light",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+  },
   inputContainer: {
-    backgroundColor: "#ECEBE7",
+    backgroundColor: "#f8fdfb",
+    width: 150,
+
     marginTop: 5,
+
     paddingVertical: 3,
-    paddingHorizontal: 50,
+    paddingHorizontal: 20,
     marginBottom: 10,
     borderRadius: 8,
   },
-  // input: { paddingVertical: 5, paddingHorizontal: 50 },
 });
 
 export default Login;

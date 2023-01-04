@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -7,22 +7,22 @@ import {
   Modal,
   Image,
   Pressable,
-} from 'react-native';
-import PlantpediaNav from '../PlantpediaNav';
-import PlantPediaPlants from './PlantpediaPlants';
-import { getPlants, getPlantById, getPlantsByQuery } from '../../api/api.js';
-import * as ImagePicker from 'expo-image-picker';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import UserAreaHeader from '../UserArea/UserAreaHeader';
-import SinglePlantModal from './Modals/SinglePlantModal';
-import AddToMyPlantsModal from './Modals/AddToMyPlantsModal';
-import PlantIdModal from './Modals/plantIdModal';
-import axios from 'axios';
-import ClimateSort from './ClimateSort';
+} from "react-native";
+import PlantpediaNav from "../PlantpediaNav";
+import PlantPediaPlants from "./PlantpediaPlants";
+import { getPlants, getPlantById, getPlantsByQuery } from "../../api/api.js";
+import * as ImagePicker from "expo-image-picker";
+import { SafeAreaView } from "react-native-safe-area-context";
+import UserAreaHeader from "../UserArea/UserAreaHeader";
+import SinglePlantModal from "./Modals/SinglePlantModal";
+import AddToMyPlantsModal from "./Modals/AddToMyPlantsModal";
+import PlantIdModal from "./Modals/plantIdModal";
+import axios from "axios";
+import ClimateSort from "./ClimateSort";
 
 const Plantpedia = ({ route, navigation }) => {
   const [plantpediaLoading, setPlantpediaLoading] = useState(true);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [modalLoading, setModalLoading] = useState(true);
   const [addPlantButtonPressed, setAddPlantButtonPressed] = useState(false);
@@ -30,7 +30,7 @@ const Plantpedia = ({ route, navigation }) => {
   const [singlePlantData, setSinglePlantData] = useState({});
 
   const [isInvalidSearch, setIsInvalidSearch] = useState(false);
-  const [invalidSearchText, setInvalidSearchText] = useState('');
+  const [invalidSearchText, setInvalidSearchText] = useState("");
   const [plantpediaSearch, setPlantpediaSearch] = useState(false);
   const [selectedClimate, setSelectedClimate] = useState(undefined);
   const [plantIdModalVisible, setPlantIdModalVisible] = useState(false);
@@ -38,7 +38,7 @@ const Plantpedia = ({ route, navigation }) => {
   const [plantSuggestions, setPlantSuggestions] = useState([{}]);
 
   useEffect(() => {
-    getPlants(selectedClimate).then(fetchedPlants => {
+    getPlants(selectedClimate).then((fetchedPlants) => {
       setPlantsData(fetchedPlants);
     });
   }, [selectedClimate]);
@@ -48,7 +48,7 @@ const Plantpedia = ({ route, navigation }) => {
       setSearchText(route.params.searchText);
       setIsInvalidSearch(false);
       getPlantsByQuery(searchText)
-        .then(fetchedPlants => {
+        .then((fetchedPlants) => {
           setPlantsData(fetchedPlants);
           setPlantpediaLoading(false);
         })
@@ -61,7 +61,7 @@ const Plantpedia = ({ route, navigation }) => {
     } else if (searchText.length > 0) {
       setIsInvalidSearch(false);
       getPlantsByQuery(searchText)
-        .then(fetchedPlants => {
+        .then((fetchedPlants) => {
           setPlantsData(fetchedPlants);
           setPlantpediaLoading(false);
         })
@@ -72,17 +72,17 @@ const Plantpedia = ({ route, navigation }) => {
         });
     } else {
       setIsInvalidSearch(false);
-      getPlants().then(fetchedPlants => {
+      getPlants().then((fetchedPlants) => {
         setPlantsData(fetchedPlants);
         setPlantpediaLoading(false);
       });
     }
   }, [searchText]);
 
-  const handleAddToPlant = plant_id => {
+  const handleAddToPlant = (plant_id) => {
     setModalVisible(true);
     setModalLoading(true);
-    getPlantById(plant_id).then(plant => {
+    getPlantById(plant_id).then((plant) => {
       setSinglePlantData(plant);
       setModalLoading(false);
     });
@@ -100,15 +100,15 @@ const Plantpedia = ({ route, navigation }) => {
 
   const handlePlantId = () => {
     setPlantIdModalVisible(true);
-    ImagePicker.launchCameraAsync({ base64: true }).then(res => {
-      const imgBase64 = res.assets[0]['base64'];
+    ImagePicker.launchCameraAsync({ base64: true }).then((res) => {
+      const imgBase64 = res.assets[0]["base64"];
       return axios
-        .post('https://plant.id/api/v2/identify', {
+        .post("https://plant.id/api/v2/identify", {
           images: [imgBase64],
-          plant_details: ['common_names', 'wiki_image'],
-          api_key: 'JfQUcSr9TXzmj6TWBtg1yOzbVWqdzEAblciBqvZmbgX6u0rbZ0',
+          plant_details: ["common_names", "wiki_image"],
+          api_key: "JfQUcSr9TXzmj6TWBtg1yOzbVWqdzEAblciBqvZmbgX6u0rbZ0",
         })
-        .then(data => {
+        .then((data) => {
           setPlantSuggestions(data.data.suggestions);
           setPlantIdModalLoading(false);
         });
@@ -147,21 +147,21 @@ const Plantpedia = ({ route, navigation }) => {
         />
         <Pressable style={styles.plantId} onPress={handlePlantId}>
           <Image
-            source={require('../../assets/camera.jpg')}
+            source={require("../../assets/camera.jpg")}
             style={{ height: 30, width: 35 }}
           />
         </Pressable>
-        <Text style={styles.plantIdText}>Plant{'\n'}ID</Text>
+        <Text style={styles.plantIdText}>Plant{"\n"}ID</Text>
       </View>
 
       {plantpediaLoading ? (
         <View
           style={{
-            alignSelf: 'center',
+            alignSelf: "center",
           }}
         >
           <Image
-            source={require('../../assets/loadingLight.gif')}
+            source={require("../../assets/loadingLight.gif")}
             style={{ height: 200, width: 200 }}
           />
         </View>
@@ -212,18 +212,18 @@ const Plantpedia = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7F9B91',
+    backgroundColor: "#7F9B91",
   },
   sortAndId: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 20,
   },
   plantId: {
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
     marginVertical: 5,
     marginHorizontal: 10,
     padding: 10,
@@ -231,20 +231,20 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
   },
-  plantIdText: { textAlign: 'center', fontSize: 15 },
+  plantIdText: { textAlign: "center", fontSize: 15 },
   safe: {
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
     flex: 0.5,
-    color: '#1E2720',
+    color: "#1E2720",
   },
   modalView: {
     flex: 1,
     margin: 0,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 30,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -263,12 +263,12 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   commonName: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 30,
   },
   latinName: {
     fontSize: 20,
-    fontStyle: 'italic',
+    fontStyle: "italic",
   },
   infoText: {
     fontSize: 15,
@@ -276,10 +276,10 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     borderWidth: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   pressable: {
-    backgroundColor: '#7F9B91',
+    backgroundColor: "#7F9B91",
     marginHorizontal: 10,
     padding: 10,
     borderRadius: 5,
