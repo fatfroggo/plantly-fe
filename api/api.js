@@ -4,6 +4,14 @@ const plantsApi = axios.create({
   baseURL: 'https://plantly-api.onrender.com/api/',
 });
 
+const forumApiData = axios.create({
+  baseURL: "https://plantly.cyclic.app/api/",
+});
+
+const forumApiData = axios.create({
+  baseURL: "https://plantly.cyclic.app/api/",
+});
+
 export const getPlants = climate => {
   return plantsApi
     .get('/plants', { params: { climate: climate } })
@@ -57,3 +65,8 @@ export const getUserPlantByMyPlantId = (username, my_plant_id) => {
   });
 };
 
+export const getForum = () => {
+  return forumApiData.get('/reddit').then((reddit) => {
+    return reddit.data.post_array
+  })
+}
