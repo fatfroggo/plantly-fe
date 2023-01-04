@@ -1,7 +1,9 @@
-import SearchBar from "./SearchBar";
+import { useNavigation } from "@react-navigation/native";
 import { Text, Pressable, StyleSheet, View } from "react-native";
 
-const Nav = ({ navigation }) => {
+const ForumNav = () => {
+
+    const navigation = useNavigation()
   return (
     <View style={styles.container}>
       <View style={styles.buttons}>
@@ -31,17 +33,7 @@ const Nav = ({ navigation }) => {
         >
           <Text>Plantpedia</Text>
         </Pressable>
-
-        <Pressable
-          style={styles.navPressable}
-          onPress={() => {
-            navigation.navigate("forum");
-          }}
-        >
-          <Text>Forum</Text>
-        </Pressable>
       </View>
-      <SearchBar />
     </View>
   );
 };
@@ -63,7 +55,7 @@ const styles = StyleSheet.create({
     color: "#1E2720",
   },
   navPressable: {
-    width: "22%",
+    width: "30%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#ECEBE7",
@@ -71,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Nav;
+export default ForumNav;

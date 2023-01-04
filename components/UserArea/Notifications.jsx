@@ -53,6 +53,7 @@ const Notifications = () => {
                 style={{ height: 80, width: 80, borderRadius: 30 }}
                 source={{ uri: item.picture_url }}
               />
+              {/* {console.log(item, "plant")} */}
               <Text style={styles.text}>{item.nickname}</Text>
               <LastWatered style={styles.watered} plant={item} />
             </Pressable>
