@@ -1,14 +1,23 @@
 import { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, StatusBar, Modal, Image } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  StatusBar,
+  Modal,
+  Image,
+  Pressable,
+} from 'react-native';
 import PlantpediaNav from '../PlantpediaNav';
 import PlantPediaPlants from './PlantpediaPlants';
 import { getPlants, getPlantById, getPlantsByQuery } from '../../api/api.js';
-
+import * as ImagePicker from 'expo-image-picker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import UserAreaHeader from '../UserArea/UserAreaHeader';
 import SinglePlantModal from './Modals/SinglePlantModal';
 import AddToMyPlantsModal from './Modals/AddToMyPlantsModal';
-
+import PlantIdModal from './Modals/plantIdModal';
+import axios from 'axios';
 import ClimateSort from './ClimateSort';
 
 const Plantpedia = ({ route, navigation }) => {
@@ -24,6 +33,9 @@ const Plantpedia = ({ route, navigation }) => {
   const [invalidSearchText, setInvalidSearchText] = useState('');
   const [plantpediaSearch, setPlantpediaSearch] = useState(false);
   const [selectedClimate, setSelectedClimate] = useState(undefined);
+  const [plantIdModalVisible, setPlantIdModalVisible] = useState(false);
+  const [plantIdModalLoading, setPlantIdModalLoading] = useState(true);
+  const [plantSuggestions, setPlantSuggestions] = useState([{}]);
 
   useEffect(() => {
     getPlants(selectedClimate).then(fetchedPlants => {
@@ -39,31 +51,31 @@ const Plantpedia = ({ route, navigation }) => {
       getPlantsByQuery(searchText)
         .then(fetchedPlants => {
           setPlantsData(fetchedPlants);
-          setPlantpediaLoading(false)
+          setPlantpediaLoading(false);
         })
         .catch(() => {
           setPlantpediaSearch(false);
           setIsInvalidSearch(true);
           setInvalidSearchText(searchText);
-          setPlantpediaLoading(false)
+          setPlantpediaLoading(false);
         });
     } else if (searchText.length > 0) {
       setIsInvalidSearch(false);
       getPlantsByQuery(searchText)
         .then(fetchedPlants => {
           setPlantsData(fetchedPlants);
-          setPlantpediaLoading(false)
+          setPlantpediaLoading(false);
         })
         .catch(() => {
           setIsInvalidSearch(true);
           setInvalidSearchText(searchText);
-          setPlantpediaLoading(false)
+          setPlantpediaLoading(false);
         });
     } else {
       setIsInvalidSearch(false);
       getPlants().then(fetchedPlants => {
         setPlantsData(fetchedPlants);
-        setPlantpediaLoading(false)
+        setPlantpediaLoading(false);
       });
     }
   }, [searchText]);
@@ -80,6 +92,27 @@ const Plantpedia = ({ route, navigation }) => {
   const handleCancel = () => {
     setModalVisible(false);
     setAddPlantButtonPressed(false);
+  };
+
+  const handleClosePlantIdModal = () => {
+    setPlantIdModalVisible(false);
+    setPlantIdModalLoading(true);
+  };
+
+  const handlePlantId = () => {
+    setPlantIdModalVisible(true);
+    ImagePicker.launchCameraAsync({ base64: true }).then(res => {
+      const imgBase64 = res.assets[0]['base64'];
+      return axios
+        .post('https://plant.id/api/v2/identify', {
+          images: [imgBase64],
+          api_key: 'JfQUcSr9TXzmj6TWBtg1yOzbVWqdzEAblciBqvZmbgX6u0rbZ0',
+        })
+        .then(data => {
+          setPlantSuggestions(data.data.suggestions);
+          setPlantIdModalLoading(false);
+        });
+    });
   };
 
   return (
@@ -104,6 +137,9 @@ const Plantpedia = ({ route, navigation }) => {
           setSearchText={setSearchText}
           route={route}
         />
+        <Pressable style={styles.plantId} onPress={handlePlantId}>
+          <Text>Plant Id</Text>
+        </Pressable>
       </SafeAreaView>
 
       <ClimateSort
@@ -150,6 +186,13 @@ const Plantpedia = ({ route, navigation }) => {
           />
         )}
       </Modal>
+      <Modal visible={plantIdModalVisible} animationType="slide" transparent={true}>
+        <PlantIdModal
+          plantSuggestions={plantSuggestions}
+          plantIdModalLoading={plantIdModalLoading}
+          handleClosePlantIdModal={handleClosePlantIdModal}
+        />
+      </Modal>
     </View>
   );
 };
@@ -159,6 +202,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#7F9B91',
   },
+  plantId: { backgroundColor: 'white', margin: 20, padding: 10 },
   safe: {
     justifyContent: 'flex-end',
     flex: 0.5,
