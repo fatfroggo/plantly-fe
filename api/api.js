@@ -8,10 +8,6 @@ const forumApiData = axios.create({
   baseURL: "https://plantly.cyclic.app/api/",
 });
 
-const forumApiData = axios.create({
-  baseURL: "https://plantly.cyclic.app/api/",
-});
-
 export const getPlants = (climate) => {
   return plantsApi
     .get("/plants", { params: { climate: climate } })
@@ -71,14 +67,14 @@ export const getForum = () => {
   });
 };
 
-export const updateMyPlantLastWatered = (
-  my_plant_id,
+export const updatePlantLastWatered = ({
   username,
-  last_watered_date
-) => {
-  const patchBody = { last_watered_date };
-  return plants.api
-    .patch(`/${username}/${my_plant_id}/last_watered`, patchBody)
+  my_plant_id,
+  last_watered_date,
+}) => {
+  const patchBody = { username, my_plant_id, last_watered_date };
+  return plantsApi
+    .patch(`/api/myPlants/${username}/${plant_id}/last_watered`, patchBody)
     .then(({ data }) => {
       return data;
     });
