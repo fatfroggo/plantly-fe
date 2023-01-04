@@ -45,7 +45,6 @@ const Plantpedia = ({ route, navigation }) => {
 
   useEffect(() => {
     if (route.params && !plantpediaSearch) {
-      
       setSearchText(route.params.searchText);
       setIsInvalidSearch(false);
       getPlantsByQuery(searchText)
