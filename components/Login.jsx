@@ -129,6 +129,7 @@ const Login = ({ navigation }) => {
   }
 
   const handleBack = () => {
+    setUnsuccessfulLogin(false);
     setModalLoading(false);
   };
 
@@ -223,6 +224,7 @@ const Login = ({ navigation }) => {
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
+                secureTextEntry={true}
                 placeholder="Password"
                 onChangeText={text => setPassword(text)}
               />
