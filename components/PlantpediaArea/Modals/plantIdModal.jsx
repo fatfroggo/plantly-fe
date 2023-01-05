@@ -14,44 +14,48 @@ const PlantIdModal = ({
   handleClosePlantIdModal,
 }) => {
   return plantIdModalLoading ? (
-    <View style={styles.modalLoading}>
-      <View
-        style={{
-          alignSelf: 'center',
-        }}
-      >
-        <Image
-          source={require('../../../assets/loading.gif')}
-          style={{ height: 200, width: 200 }}
-        />
+    <View style={styles.modalContainer}>
+      <View style={styles.modalLoading}>
+        <View
+          style={{
+            alignSelf: 'center',
+          }}
+        >
+          <Image
+            source={require('../../../assets/loading.gif')}
+            style={{ height: 200, width: 200 }}
+          />
+        </View>
       </View>
     </View>
   ) : (
-    <View style={styles.modalView}>
-      <Text style={styles.title}>Possible matches:</Text>
-      <ScrollView style={styles.textContainer} persistentScrollbar={true}>
-        {plantSuggestions.map(suggestion => {
-          const probability = (suggestion.probability * 100).toFixed(2);
-          return (
-            <View style={styles.suggestion} key={suggestion.plant_name}>
-              <View style={styles.descriptionTextContainer}>
-                <Text style={styles.commonName}>
-                  {suggestion.plant_details.common_names[0]}
-                </Text>
-                <Text style={styles.latinName}>{suggestion.plant_name}</Text>
-                <Text style={styles.probability}>{probability}% match</Text>
+    <View style={styles.modalContainer}>
+      <View style={styles.modalView}>
+        <Text style={styles.title}>Possible matches:</Text>
+        <ScrollView style={styles.textContainer} persistentScrollbar={true}>
+          {plantSuggestions.map(suggestion => {
+            const probability = (suggestion.probability * 100).toFixed(2);
+            return (
+              <View style={styles.suggestion} key={suggestion.plant_name}>
+                <View style={styles.descriptionTextContainer}>
+                  <Text style={styles.commonName}>
+                    {suggestion.plant_details.common_names[0]}
+                  </Text>
+                  <Text style={styles.latinName}>{suggestion.plant_name}</Text>
+                  <Text style={styles.probability}>{probability}% match</Text>
+                </View>
+                <Image
+                  source={{ uri: suggestion.plant_details.wiki_image.value }}
+                  style={{ height: 100, width: 100, flex: 1 }}
+                />
               </View>
-              <Image
-                source={{ uri: suggestion.plant_details.wiki_image.value }}
-                style={{ height: 100, width: 100, flex: 1 }}
-              />
-            </View>
-          );
-        })}
-      </ScrollView>
-      <Pressable style={styles.pressable} onPress={handleClosePlantIdModal}>
-        <Text style={styles.pressableText}>Close</Text>
-      </Pressable>
+            );
+          })}
+        </ScrollView>
+        <Pressable style={styles.pressable} onPress={handleClosePlantIdModal}>
+          <Text style={styles.pressableText}>Close</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -75,13 +79,13 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 
-  textContainer: { alignSelf: 'stretch', marginVertical:10 },
+  textContainer: { alignSelf: 'stretch', marginVertical: 10 },
 
   title: { fontSize: 25, fontWeight: 'bold', marginBottom: 20 },
 
   suggestion: { flexDirection: 'row', marginBottom: 20 },
 
-  descriptionTextContainer: { flex: 1, paddingRight:5 },
+  descriptionTextContainer: { flex: 1, paddingRight: 5 },
 
   commonName: { fontSize: 18, fontWeight: 'bold' },
 
@@ -97,7 +101,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     padding: 10,
     borderRadius: 20,
-    marginTop:10
+    marginTop: 10,
   },
   pressableText: { textAlign: 'center' },
 
@@ -119,6 +123,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+
+  modalContainer: { flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)' },
 });
 
 export default PlantIdModal;
