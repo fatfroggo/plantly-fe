@@ -10,9 +10,11 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-
+import { firebase } from "../api/firebase";
+import axios from "axios";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import UserContext from "./context/userContext";
 import {
   useFonts,
   Raleway_200ExtraLight,
@@ -26,6 +28,8 @@ import {
 const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [boolean, setBoolean] = useState(false);
+    const { user, setUser } = useContext(UserContext);
   let [fontsLoaded] = useFonts({
     Raleway_200ExtraLight,
     Raleway_300Light,
@@ -35,12 +39,36 @@ const Login = ({ navigation }) => {
     Raleway_700Bold,
   });
 
-  const handlePress = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "user area" }],
-    });
-  };
+   useEffect(() => {
+     const unsuscribe = firebase.auth().onAuthStateChanged((user) => {
+       if (user) {
+         navigation.reset({
+           index: 0,
+           routes: [{ name: "user area" }],
+         });
+       }
+     });
+     return unsuscribe;
+   }, [boolean]);
+
+ const handlePress = () => {
+   axios
+     .get(`https://plantly-api.onrender.com/api/users/user/${email}`)
+     .then((res) => {
+       let Info = res.data.user;
+
+       setUser(Info.username);
+       console.log(user);
+       setBoolean(true);
+     });
+   firebase
+     .auth()
+     .signInWithEmailAndPassword(email, password)
+     .then((userCredentials) => {
+       const user = userCredentials.user;
+     })
+     .catch((error) => alert(error.message));
+ };
 
   return !fontsLoaded ? (
     <View

@@ -4,7 +4,7 @@ import { useState } from "react";
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState("fatfroggo");
+  const [user, setUser] = useState("");
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
