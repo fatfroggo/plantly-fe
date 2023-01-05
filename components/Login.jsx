@@ -327,7 +327,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 
-  unsuccessfulLogin: { fontFamily: "Raleway_400Regular", marginVertical: 10 },
+  unsuccessfulLogin: {
+    fontFamily: "Raleway_400Regular",
+    marginVertical: 10,
+    color: "#f8fdfb",
+  },
 
   input: {
     alignItems: "center",
