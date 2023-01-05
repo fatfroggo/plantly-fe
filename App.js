@@ -12,9 +12,11 @@ import UserPlantsContext, {
 import ForumPage from "./components/ForumPage";
 import NotFound from "./components/NotFound";
 import { NavProvider } from "./components/context/NavContext";
-
+console.disableYellowBox = true;
 const Stack = createNativeStackNavigator();
-
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 export default function App() {
   return (
     <>

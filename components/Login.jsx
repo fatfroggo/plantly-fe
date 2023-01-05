@@ -11,12 +11,12 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
-} from 'react-native';
-import { firebase } from '../api/firebase';
-import axios from 'axios';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useContext, useEffect, useState } from 'react';
-import UserContext from './context/userContext';
+} from "react-native";
+import { firebase } from "../api/firebase";
+import axios from "axios";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useContext, useEffect, useState } from "react";
+import UserContext from "./context/userContext";
 import {
   useFonts,
   Raleway_100Thin,
@@ -37,18 +37,19 @@ import {
   Raleway_700Bold_Italic,
   Raleway_800ExtraBold_Italic,
   Raleway_900Black_Italic,
-} from '@expo-google-fonts/raleway';
+} from "@expo-google-fonts/raleway";
 
 const Login = ({ navigation }) => {
-  const [RegisteredEmail, setRegisteredEmail] = useState('');
-  const [RegisteredUsername, setRegisteredUsername] = useState('');
-  const [RegisteredPassword, setRegisteredPassword] = useState('');
+  const [RegisteredEmail, setRegisteredEmail] = useState("");
+  const [RegisteredUsername, setRegisteredUsername] = useState("");
+  const [RegisteredPassword, setRegisteredPassword] = useState("");
   const [ConfirmedRegisteredPassword, setConfirmedRegisteredPassword] =
-    useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+    useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [boolean, setBoolean] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
+  const [unsuccessfulRegister, setUnsuccessfulRegister] = useState(false);
   const [unsuccessfulLogin, setUnsuccessfulLogin] = useState(false);
   const { user, setUser } = useContext(UserContext);
   let [fontsLoaded] = useFonts({
@@ -73,11 +74,11 @@ const Login = ({ navigation }) => {
   });
 
   useEffect(() => {
-    const unsuscribe = firebase.auth().onAuthStateChanged(user => {
+    const unsuscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         navigation.reset({
           index: 0,
-          routes: [{ name: 'user area' }],
+          routes: [{ name: "user area" }],
         });
       }
     });
@@ -87,62 +88,64 @@ const Login = ({ navigation }) => {
   const handleRegisterModal = () => {
     setModalLoading(true);
   };
+  const handleBack = () => {
+    setUnsuccessfulRegister(false)
+    setModalLoading(false);
+  };
   const handleSignUp = () => {
     const postBody = {
-      username: setRegisteredUsername,
-      email: setRegisteredEmail,
-      password: setRegisteredPassword,
+      username: RegisteredUsername,
+      email: RegisteredEmail,
+      password: RegisteredPassword,
     };
-    console.log(postBody);
     axios
-      .post(`https://plantly-api.onrender.com/api/users/users`, postBody)
-      .then(res => {});
+      .post(`https://plantly-api.onrender.com/api/users`, postBody)
+      .then((res) => {
+        let Info = res.data.user;
+
+        setUser(Info.username);
+      });
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(userCredentials => {
-        const user = userCredentials.user;
-      })
-      .catch(error => Alert.alert(error.message));
-    setModalLoading(false);
+      .createUserWithEmailAndPassword(RegisteredEmail, RegisteredPassword)
+      .catch((error) => setUnsuccessfulRegister(true));
+    if (unsuccessfulLogin === false) {
+      setModalLoading(true);
+    } else {
+      setModalLoading(false);
+    }
   };
   const handleLogin = () => {
     axios
       .get(`https://plantly-api.onrender.com/api/users/user/${email}`)
-      .then(res => {
+      .then((res) => {
         let Info = res.data.user;
 
         setUser(Info.username);
-        console.log(user);
-        setBoolean(true);
       });
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(userCredentials => {
+      .then((userCredentials) => {
         const user = userCredentials.user;
       })
-      .catch(error => setUnsuccessfulLogin(true));
+      .catch((error) => setUnsuccessfulLogin(true));
+    setBoolean(true);
   };
   if (!fontsLoaded) {
     return null;
   }
-
-  const handleBack = () => {
-    setModalLoading(false);
-  };
-
   return !fontsLoaded ? (
     <View
       style={{
-        backgroundColor: '#2b8b30',
+        backgroundColor: "#2b8b30",
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: "row",
       }}
     >
       <Image
-        source={require('../assets/loadingLight.gif')}
-        style={{ flex: 1, alignSelf: 'center', width: 50 }}
+        source={require("../assets/loadingLight.gif")}
+        style={{ flex: 1, alignSelf: "center", width: 50 }}
       />
     </View>
   ) : modalLoading ? (
@@ -150,48 +153,53 @@ const Login = ({ navigation }) => {
       <SafeAreaView style={styles.background}>
         <Pressable style={styles.backButton} onPress={handleBack}>
           <Image
-            source={require('../assets/back-arrow.png')}
+            source={require("../assets/back-arrow.png")}
             style={{ height: 30, width: 30 }}
           />
         </Pressable>
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.background}
         >
           <View style={styles.container}>
             <Image
               style={styles.logo}
-              source={require('../assets/plant-logo.png')}
+              source={require("../assets/plant-logo.png")}
             />
             <Text style={styles.plantly}>Plantly</Text>
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
                 placeholder="Email"
-                onChangeText={text => setRegisteredEmail(text)}
+                onChangeText={(text) => setRegisteredEmail(text)}
               />
             </View>
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
                 placeholder="UserName"
-                onChangeText={text => setRegisteredUsername(text)}
+                onChangeText={(text) => setRegisteredUsername(text)}
               />
             </View>
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
                 placeholder="Password"
-                onChangeText={text => setRegisteredPassword(text)}
+                onChangeText={(text) => setRegisteredPassword(text)}
               />
             </View>
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
                 placeholder="Confirm Password"
-                onChangeText={text => setConfirmedRegisteredPassword(text)}
+                onChangeText={(text) => setConfirmedRegisteredPassword(text)}
               />
             </View>
+            {unsuccessfulRegister && (
+              <Text style={styles.unsuccessfulRegister}>
+                Oops! Please make sure password is above 6 characters!
+              </Text>
+            )}
 
             <Pressable style={styles.loginPressable} onPress={handleSignUp}>
               <Text style={styles.loginText}>SignUp</Text>
@@ -204,27 +212,27 @@ const Login = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.background}>
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.background}
         >
           <View style={styles.container}>
             <Image
               style={styles.logo}
-              source={require('../assets/plant-logo.png')}
+              source={require("../assets/plant-logo.png")}
             />
             <Text style={styles.plantly}>Plantly</Text>
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
                 placeholder="Email"
-                onChangeText={text => setEmail(text)}
+                onChangeText={(text) => setEmail(text)}
               />
             </View>
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
                 placeholder="Password"
-                onChangeText={text => setPassword(text)}
+                onChangeText={(text) => setPassword(text)}
               />
             </View>
 
@@ -253,65 +261,65 @@ const Login = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#729d84',
+    backgroundColor: "#729d84",
     flex: 1,
     paddingTop: StatusBar.currentHeight,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 
-  backButton: { alignSelf: 'flex-start', marginLeft: 20 },
+  backButton: { alignSelf: "flex-start", marginLeft: 20 },
 
-  container: { marginBottom: '20%', alignSelf: 'center', alignItems: 'center' },
+  container: { marginBottom: "20%", alignSelf: "center", alignItems: "center" },
   logo: {
     width: 150,
     height: 150,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   plantly: {
     fontSize: 46,
     marginBottom: 10,
-    fontFamily: 'Raleway_300Light',
-    color: '#f8fdfb',
-    justifyContent: 'center',
+    fontFamily: "Raleway_300Light",
+    color: "#f8fdfb",
+    justifyContent: "center",
   },
   loginPressable: {
-    borderColor: '#f8fdfb',
+    borderColor: "#f8fdfb",
     borderWidth: 1,
     marginTop: 5,
-    flexDirection: 'row',
-    alignSelf: 'center',
-    fontFamily: 'Raleway_400Regular',
-    color: '#f8fdfb',
+    flexDirection: "row",
+    alignSelf: "center",
+    fontFamily: "Raleway_400Regular",
+    color: "#f8fdfb",
     fontSize: 14,
     paddingVertical: 9,
     paddingHorizontal: 20,
     borderRadius: 10,
   },
   loginText: {
-    flexDirection: 'row',
-    alignSelf: 'center',
+    flexDirection: "row",
+    alignSelf: "center",
 
-    color: '#f8fdfb',
+    color: "#f8fdfb",
     fontSize: 14,
   },
 
-  unsuccessfulLogin: { fontFamily: 'Raleway_400Regular', marginVertical: 10 },
+  unsuccessfulLogin: { fontFamily: "Raleway_400Regular", marginVertical: 10 },
 
   input: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
   },
 
   registerText: {
-    fontFamily: 'Raleway_400Regular',
-    color: '#ECEBE7',
+    fontFamily: "Raleway_400Regular",
+    color: "#ECEBE7",
     fontSize: 15,
   },
 
   inputContainer: {
-    backgroundColor: '#f8fdfb',
+    backgroundColor: "#f8fdfb",
     width: 150,
 
     marginTop: 5,
