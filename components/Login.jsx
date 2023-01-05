@@ -89,7 +89,7 @@ const Login = ({ navigation }) => {
     setModalLoading(true);
   };
   const handleBack = () => {
-    setUnsuccessfulRegister(false)
+    setUnsuccessfulRegister(false);
     setModalLoading(false);
   };
   const handleSignUp = () => {
@@ -132,12 +132,10 @@ const Login = ({ navigation }) => {
       .catch((error) => setUnsuccessfulLogin(true));
     setBoolean(true);
   };
+
   if (!fontsLoaded) {
     return null;
   }
-
-
-
   return !fontsLoaded ? (
     <View
       style={{
@@ -170,6 +168,7 @@ const Login = ({ navigation }) => {
               source={require("../assets/plant-logo.png")}
             />
             <Text style={styles.plantly}>Plantly</Text>
+            <Text style={styles.details}>Please enter your details</Text>
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
@@ -204,8 +203,8 @@ const Login = ({ navigation }) => {
               </Text>
             )}
 
-            <Pressable style={styles.loginPressable} onPress={handleSignUp}>
-              <Text style={styles.loginText}>SignUp</Text>
+            <Pressable onPress={handleSignUp}>
+              <Text style={styles.registerText}>Register</Text>
             </Pressable>
           </View>
         </KeyboardAvoidingView>
@@ -224,6 +223,7 @@ const Login = ({ navigation }) => {
               source={require("../assets/plant-logo.png")}
             />
             <Text style={styles.plantly}>Plantly</Text>
+
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
@@ -234,8 +234,8 @@ const Login = ({ navigation }) => {
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
-                secureTextEntry={true}
                 placeholder="Password"
+                secureTextEntry={true}
                 onChangeText={(text) => setPassword(text)}
               />
             </View>
@@ -246,16 +246,23 @@ const Login = ({ navigation }) => {
               </Text>
             )}
 
-            <Pressable onPress={handleLogin}>
-              <Text style={styles.loginPressable}>Login</Text>
-            </Pressable>
-
-            <Pressable
-              style={styles.loginPressable}
-              onPress={handleRegisterModal}
+            <View
+              style={{
+                flexDirection: "row",
+                width: 180,
+                marginTop: 5,
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
             >
-              <Text style={styles.registerText}>Register</Text>
-            </Pressable>
+              <Pressable onPress={handleLogin}>
+                <Text style={styles.loginPressable}>Login</Text>
+              </Pressable>
+
+              <Pressable onPress={handleRegisterModal}>
+                <Text style={styles.registerText}>Sign up</Text>
+              </Pressable>
+            </View>
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -266,44 +273,56 @@ const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   background: {
     backgroundColor: "#729d84",
+    backgroundColor: "#729d84",
     flex: 1,
     paddingTop: StatusBar.currentHeight,
+    justifyContent: "center",
+    alignItems: "center",
     justifyContent: "center",
     alignItems: "center",
   },
 
   backButton: { alignSelf: "flex-start", marginLeft: 20 },
+  backButton: { alignSelf: "flex-start", marginLeft: 20 },
 
+  container: { marginBottom: "20%", alignSelf: "center", alignItems: "center" },
   container: { marginBottom: "20%", alignSelf: "center", alignItems: "center" },
   logo: {
     width: 150,
     height: 150,
     justifyContent: "center",
+    justifyContent: "center",
   },
   plantly: {
-    fontSize: 46,
-    marginBottom: 10,
+    fontSize: 50,
+    marginBottom: 5,
+    fontFamily: "Raleway_200ExtraLight",
+    color: "#f8fdfb",
+    justifyContent: "center",
+  },
+  details: {
+    fontSize: 18,
+    marginBottom: 15,
     fontFamily: "Raleway_300Light",
     color: "#f8fdfb",
     justifyContent: "center",
   },
   loginPressable: {
     borderColor: "#f8fdfb",
+    backgroundColor: "#f8fdfb",
     borderWidth: 1,
-    marginTop: 5,
-    flexDirection: "row",
     alignSelf: "center",
-    fontFamily: "Raleway_400Regular",
-    color: "#f8fdfb",
+    fontFamily: "Raleway_500Medium",
+    color: "#729d84",
     fontSize: 14,
-    paddingVertical: 9,
+    paddingVertical: 6,
+
     paddingHorizontal: 20,
     borderRadius: 10,
   },
   loginText: {
     flexDirection: "row",
     alignSelf: "center",
-
     color: "#f8fdfb",
     fontSize: 14,
   },
@@ -313,21 +332,29 @@ const styles = StyleSheet.create({
   input: {
     alignItems: "center",
     justifyContent: "center",
+    fontSize: 12,
     textAlign: "center",
   },
 
   registerText: {
+    borderColor: "#f8fdfb",
+    borderWidth: 1,
+    flexDirection: "row",
+    alignSelf: "center",
     fontFamily: "Raleway_400Regular",
-    color: "#ECEBE7",
-    fontSize: 15,
+    color: "#f8fdfb",
+    fontSize: 14,
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    borderRadius: 10,
+  },
+  inputs: {
+    marginTop: 15,
   },
 
   inputContainer: {
     backgroundColor: "#f8fdfb",
-    width: 150,
-
-    marginTop: 5,
-
+    width: 180,
     paddingVertical: 3,
     paddingHorizontal: 20,
     marginBottom: 10,

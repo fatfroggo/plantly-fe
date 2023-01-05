@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from "react";
 import {
   Text,
   View,
@@ -9,11 +9,11 @@ import {
   Keyboard,
   Alert,
   TouchableWithoutFeedback,
-} from 'react-native';
-import UserContext from '../../context/userContext';
-import { postUserPlant } from '../../../api/api';
-import { daysToDate } from '../../../utils/utils';
-import UserPlantsContext from '../../context/userPlantsContext';
+} from "react-native";
+import UserContext from "../../context/userContext";
+import { postUserPlant } from "../../../api/api";
+import { daysToDate } from "../../../utils/utils";
+import UserPlantsContext from "../../context/userPlantsContext";
 
 const AddToMyPlantsModal = ({
   singlePlantData,
@@ -34,11 +34,11 @@ const AddToMyPlantsModal = ({
     });
   };
 
-  Keyboard.addListener('keyboardDidShow', () => {
+  Keyboard.addListener("keyboardDidShow", () => {
     setKeyboardShowing(true);
   });
 
-  Keyboard.addListener('keyboardDidHide', () => {
+  Keyboard.addListener("keyboardDidHide", () => {
     setKeyboardShowing(false);
   });
 
@@ -68,7 +68,7 @@ const AddToMyPlantsModal = ({
             <TextInput
               style={styles.textInput}
               placeholder="Plant nickname"
-              onChangeText={text => {
+              onChangeText={(text) => {
                 reqBody.nickname = text;
               }}
             />
@@ -78,8 +78,8 @@ const AddToMyPlantsModal = ({
             <TextInput
               style={styles.textInput}
               placeholder="Enter days here"
-              keyboardType={'numeric'}
-              onChangeText={text => {
+              keyboardType={"numeric"}
+              onChangeText={(text) => {
                 reqBody.last_watered_date = daysToDate(text);
               }}
             />
@@ -87,11 +87,11 @@ const AddToMyPlantsModal = ({
           {submitDisabled ? (
             <View
               style={{
-                alignSelf: 'center',
+                alignSelf: "center",
               }}
             >
               <Image
-                source={require('../../../assets/loading.gif')}
+                source={require("../../../assets/loading.gif")}
                 style={{ height: 100, width: 100 }}
               />
             </View>
@@ -103,14 +103,14 @@ const AddToMyPlantsModal = ({
                 onPress={postPlant}
               >
                 <Text
-                  style={{ color: '#f8fdfb', fontFamily: 'Raleway_400Regular' }}
+                  style={{ color: "#f8fdfb", fontFamily: "Raleway_400Regular" }}
                 >
                   Submit
                 </Text>
               </Pressable>
               <Pressable style={styles.pressable} onPress={handleCancel}>
                 <Text
-                  style={{ color: '#f8fdfb', fontFamily: 'Raleway_400Regular' }}
+                  style={{ color: "#f8fdfb", fontFamily: "Raleway_400Regular" }}
                 >
                   Cancel
                 </Text>
@@ -131,14 +131,14 @@ const styles = StyleSheet.create({
   },
   modalView: {
     flex: 1,
-    backgroundColor: 'rgba(248, 253, 251, 1)',
+    backgroundColor: "rgba(248, 253, 251, 1)",
     marginHorizontal: 40,
-    marginVertical: '40%',
-    backgroundColor: '#f8fdfb',
+    marginVertical: "40%",
+    backgroundColor: "#f8fdfb",
     borderRadius: 20,
     padding: 30,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -153,11 +153,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     marginTop: 20,
     marginBottom: 30,
-    backgroundColor: '#f8fdfb',
+    backgroundColor: "#f8fdfb",
     borderRadius: 20,
     padding: 30,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 
-  modalContainer: { flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)' },
+  modalContainer: { flex: 1, backgroundColor: "rgba(0, 0, 0, 0.5)" },
 
   plantImage: {
     paddingHorizontal: 20,
@@ -176,56 +176,56 @@ const styles = StyleSheet.create({
   },
   plantInfo: {},
   commonName: {
-    fontFamily: 'Raleway_600SemiBold',
-    color: '#041b27',
+    fontFamily: "Raleway_600SemiBold",
+    color: "#041b27",
     fontSize: 22,
-    textAlign: 'center',
+    textAlign: "center",
     // marginTop: 5,
   },
   latinName: {
     fontSize: 14,
-    fontFamily: 'Raleway_400Regular_Italic',
-    textAlign: 'center',
-    color: '#041b27',
+    fontFamily: "Raleway_400Regular_Italic",
+    textAlign: "center",
+    color: "#041b27",
     marginBottom: 10,
   },
 
   buttonsContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   pressable: {
-    backgroundColor: '#294753',
-    width: '40%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#294753",
+    width: "40%",
+    alignItems: "center",
+    justifyContent: "center",
     marginHorizontal: 8,
     paddingVertical: 10,
     paddingBottom: 12,
     borderRadius: 30,
   },
   textInputTitle: {
-    textAlign: 'center',
+    textAlign: "center",
 
-    fontFamily: 'Raleway_400Regular',
+    fontFamily: "Raleway_400Regular",
     marginTop: 10,
     paddingBottom: 5,
   },
   textInputContainer: {
     marginBottom: 5,
-    alignSelf: 'center',
-    width: '100%',
-    backgroundColor: '#d9d9d9',
+    alignSelf: "center",
+    width: "100%",
+    backgroundColor: "#d9d9d9",
     padding: 10,
     borderRadius: 20,
   },
   textInput: {
-    backgroundColor: '#f8fdfb',
+    backgroundColor: "#f8fdfb",
     padding: 5,
-    color: '#f8fdfb',
-    fontFamily: 'Raleway_300Light',
+    color: "#041b27",
+    fontFamily: "Raleway_300Light",
     borderRadius: 10,
     marginBottom: 5,
-    alignItems: 'center',
-    textAlign: 'center',
+    alignItems: "center",
+    textAlign: "center",
   },
 });

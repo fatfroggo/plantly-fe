@@ -75,13 +75,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   plantItemInfo: {
+    paddingRight: 10,
     flex: 1,
     fontFamily: "Raleway_500Medium",
   },
   commonName: {
     fontFamily: "Raleway_700Bold",
-
-    flex: 1,
+    flex: 2,
     fontSize: 20,
   },
   latinName: {

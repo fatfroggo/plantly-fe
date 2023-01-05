@@ -7,18 +7,31 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-import { useState, useContext } from "react";
-import { getUserPlantByMyPlantId } from "../../api/api";
+import { useState, useContext, useEffect } from "react";
+import { getUserPlantByMyPlantId, getUserPlants } from "../../api/api";
 import UserPlantsContext from "../context/userPlantsContext";
 import UserContext from "../context/userContext";
 import MyPlantModal from "./MyPlantModal";
+
 import LastWatered from "./LastWatered";
 
-const Notifications = ({ modalLoading, setModalLoading }) => {
+const Notifications = ({
+  modalLoading,
+  setModalLoading,
+  loading,
+  setWateredToday,
+  wateredToday,
+}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
   const [singlePlantData, setSinglePlantData] = useState({});
   const { user, setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    getUserPlants(user).then((plants) => {
+      setUserPlantsData(plants);
+    });
+  }, [singlePlantData]);
 
   const handlePress = (my_plant_id) => {
     setModalLoading(true);
@@ -32,50 +45,68 @@ const Notifications = ({ modalLoading, setModalLoading }) => {
   const handleClose = () => {
     setModalVisible(false);
   };
-  const myItemSeparator = () => {};
 
   return (
-    <>
-      <Text style={styles.title}>Notifications</Text>
-      <View style={styles.container}>
-        <View style={styles.notifications}>
-          <FlatList
-            data={userPlantsData}
-            ItemSeparatorComponent={myItemSeparator}
-            renderItem={({ item }) => (
-              <Pressable
-                style={styles.plant}
-                onPress={() => {
-                  handlePress(item.my_plant_id);
-                }}
-              >
-                <Image
-                  style={{ height: 80, width: 80, borderRadius: 40 }}
-                  source={{ uri: item.picture_url }}
-                />
-                <Text style={styles.text}>{item.nickname}</Text>
-                <View style={styles.watered}>
-                  <LastWatered plant={item} />
-                </View>
-              </Pressable>
-            )}
-            keyExtractor={(item) => item.my_plant_id}
-            horizontal={true}
-          />
-        </View>
-
-        <Modal visible={modalVisible} animationType="slide" transparent={true}>
-          <MyPlantModal
-            singlePlantData={singlePlantData}
-            setModalVisible={setModalVisible}
-            modalLoading={modalLoading}
-            setModalLoading={setModalLoading}
-            handleClose={handleClose}
-          />
-        </Modal>
+    // <View>
+    //   <Text style={styles.title}>Notifications</Text>
+    // loading ? (
+    //   <View
+    //     style={{
+    //       flex: 1,
+    //       justifyContent: "center",
+    //       backgroundColor: "#729d84",
+    //     }}
+    //   >
+    //     <Image
+    //       source={require("../../assets/loadingLight.gif")}
+    //       style={{
+    //         alignSelf: "center",
+    //         width: 200,
+    //         height: 200,
+    //       }}
+    //     />
+    //   </View>
+    // ) : (
+    <View style={styles.container}>
+      <View style={styles.notifications}>
+        <FlatList
+          data={userPlantsData}
+          renderItem={({ item }) => (
+            <Pressable
+              style={styles.plant}
+              onPress={() => {
+                handlePress(item.my_plant_id);
+              }}
+            >
+              <Image
+                style={{ height: 80, width: 80, borderRadius: 30 }}
+                source={{ uri: item.picture_url }}
+              />
+              <Text style={styles.text}>{item.nickname}</Text>
+              <View style={styles.watered}>
+                <LastWatered plant={item} />
+              </View>
+            </Pressable>
+          )}
+          keyExtractor={(item) => item.my_plant_id}
+          horizontal={true}
+        />
       </View>
-    </>
+
+      <Modal visible={modalVisible} animationType="slide" transparent={true}>
+        <MyPlantModal
+          singlePlantData={singlePlantData}
+          setModalVisible={setModalVisible}
+          modalLoading={modalLoading}
+          setModalLoading={setModalLoading}
+          handleClose={handleClose}
+          setWateredToday={setWateredToday}
+        />
+      </Modal>
+    </View>
   );
+  // </View>
+  // );
 };
 
 const styles = StyleSheet.create({
@@ -111,9 +142,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   text: {
-    paddingTop: 4,
     fontFamily: "Raleway_500Medium",
     fontSize: 16,
+    flex: 1,
   },
   watered: {
     flex: 1,
