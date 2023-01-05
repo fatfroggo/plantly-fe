@@ -12,9 +12,12 @@ const ClimateSort = ({ selectedClimate, setSelectedClimate }) => {
     { key: "4", value: "Tropical humid" },
     { key: "5", value: "Subtropical arid" },
   ];
-  return (
-    <View style={styles.dropdown}>
+    return (
       <SelectList
+        setSelected={(val) => setSelected(val)}
+        data={data}
+        fontFamily="Raleway_400Regular"
+        maxHeight='100'
         boxStyles={{
           borderRadius: 10,
           borderWidth: 0,
@@ -23,8 +26,8 @@ const ClimateSort = ({ selectedClimate, setSelectedClimate }) => {
           paddingVertical: 6,
           paddingLeft: 15,
           paddingHorizontal: 10,
+          width: 250
         }}
-        fontFamily="Raleway_400Regular"
         dropdownStyles={{
           borderRadius: 30,
           borderWidth: 0,
@@ -32,11 +35,8 @@ const ClimateSort = ({ selectedClimate, setSelectedClimate }) => {
           marginTop: 0,
           paddingVertical: 5,
         }}
-        setSelected={(val) => setSelected(val)}
-        data={data}
-        save="value"
+        sale="value"
         search={false}
-        maxHeight={100}
         placeholder="Select Climate"
         onSelect={(val) => {
           for (let i = 0; i < data.length; i++) {
@@ -46,11 +46,9 @@ const ClimateSort = ({ selectedClimate, setSelectedClimate }) => {
           }
         }}
       />
-      <View styles={{ zIndex: 50 }}></View>
-      <View styles={{ zIndex: 49 }}></View>
-    </View>
-  );
+    );
 };
+
 const styles = StyleSheet.create({
   dropdown: {
     flex: 1,
