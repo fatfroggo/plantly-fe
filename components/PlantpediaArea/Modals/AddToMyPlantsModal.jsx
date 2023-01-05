@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: "#f8fdfb",
     padding: 5,
-    color: "#f8fdfb",
+    color: "#041b27",
     fontFamily: "Raleway_300Light",
     borderRadius: 10,
     marginBottom: 5,

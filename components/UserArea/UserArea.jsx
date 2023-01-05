@@ -26,10 +26,19 @@ import {
   Raleway_600SemiBold,
   Raleway_700Bold,
 } from "@expo-google-fonts/raleway";
-import PlantpediaSearchBar from "../PlantpediaSearchBar";
 
 const UserArea = ({ navigation }) => {
+  let [fontsLoaded] = useFonts({
+    Raleway_200ExtraLight,
+    Raleway_300Light_Italic,
+    Raleway_300Light,
+    Raleway_400Regular,
+    Raleway_500Medium,
+    Raleway_600SemiBold,
+    Raleway_700Bold,
+  });
   const [pressed, setPressed] = useState(false);
+  const [wateredToday, setWateredToday] = useState(false);
   const [modalLoading, setModalLoading] = useState(true);
   const [featuredPlant, setFeaturedPlant] = useState({});
   const [loading, setLoading] = useState(true);
@@ -37,22 +46,36 @@ const UserArea = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
+    setLoading(true);
     getUserPlants(user).then((plants) => {
       setUserPlantsData(plants);
     });
-    getPlants().then((res) => {
-      const randomId = Math.floor(Math.random() * res.length);
-      const randomPlant = res.filter(
-        (plant) => plant.plant_id === randomId && plant.common_name !== "N/A"
-      );
-      setFeaturedPlant(randomPlant[0]);
-      setLoading(false);
-    });
+  }, []);
+
+  useEffect(() => {
+    getPlants()
+      .then((res) => {
+        const randomId = Math.floor(Math.random() * res.length);
+        const randomPlant = res.filter(
+          (plant) => plant.plant_id === randomId && plant.common_name !== "N/A"
+        );
+        setFeaturedPlant(randomPlant[0]);
+        return;
+      })
+      .then(() => {
+        const timer = setTimeout(() => {
+          setLoading(false);
+        }, 500);
+        return () => clearTimeout(timer);
+      });
   }, []);
 
   const toggleIsPressed = () => {
     setPressed(true);
   };
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return loading ? (
     <View
@@ -87,9 +110,13 @@ const UserArea = ({ navigation }) => {
 
       <View style={styles.userAreaBody}>
         <ScrollView>
+          <Text style={styles.notifications}>Notifications</Text>
           <Notifications
+            loading={loading}
             modalLoading={modalLoading}
             setModalLoading={setModalLoading}
+            setWateredToday={setWateredToday}
+            wateredToday={wateredToday}
           />
           <Text style={styles.featuredPlantHeader}>Featured Plant</Text>
           <View style={styles.featuredPlant}>
@@ -174,6 +201,14 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingHorizontal: 15,
     flex: 0.9,
+  },
+  notifications: {
+    fontSize: 22,
+    flex: 1,
+    fontFamily: "Raleway_400Regular",
+    paddingLeft: 10,
+    paddingTop: 15,
+    paddingBottom: 5,
   },
   commonName: {
     fontFamily: "Raleway_600SemiBold",

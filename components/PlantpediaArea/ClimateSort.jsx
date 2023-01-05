@@ -19,9 +19,10 @@ const ClimateSort = ({ selectedClimate, setSelectedClimate }) => {
           borderRadius: 10,
           borderWidth: 0,
           marginBottom: 0,
+          paddingTop: 5,
           paddingVertical: 6,
-
-          paddingHorizontal: 15,
+          paddingLeft: 15,
+          paddingHorizontal: 10,
         }}
         fontFamily="Raleway_400Regular"
         dropdownStyles={{
