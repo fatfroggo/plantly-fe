@@ -11,6 +11,7 @@ import UserPlantsContext, {
 } from "./components/context/userPlantsContext";
 import ForumPage from "./components/ForumPage";
 import NotFound from "./components/NotFound";
+import { NavProvider } from "./components/context/NavContext";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,14 +21,16 @@ export default function App() {
       <UserProvider>
         <UserPlantsProvider>
           <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="login" component={Login} />
-              <Stack.Screen name="user area" component={UserArea} />
-              <Stack.Screen name="plantpedia" component={Plantpedia} />
-              <Stack.Screen name="my-plants" component={UserPlants} />
-              <Stack.Screen name="forum" component={ForumPage} />
-              <Stack.Screen name="error" component={NotFound} />
-            </Stack.Navigator>
+            <NavProvider>
+              <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="login" component={Login} />
+                <Stack.Screen name="user area" component={UserArea} />
+                <Stack.Screen name="plantpedia" component={Plantpedia} />
+                <Stack.Screen name="my-plants" component={UserPlants} />
+                <Stack.Screen name="forum" component={ForumPage} />
+                <Stack.Screen name="error" component={NotFound} />
+              </Stack.Navigator>
+            </NavProvider>
           </NavigationContainer>
         </UserPlantsProvider>
       </UserProvider>

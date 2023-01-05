@@ -35,72 +35,89 @@ const Notifications = ({ modalLoading, setModalLoading }) => {
   const myItemSeparator = () => {};
 
   return (
-    <View style={styles.container}>
+    <>
       <Text style={styles.title}>Notifications</Text>
-      <View style={styles.notifications}>
-        <FlatList
-          data={userPlantsData}
-          ItemSeparatorComponent={myItemSeparator}
-          renderItem={({ item }) => (
-            <Pressable
-              style={styles.plant}
-              onPress={() => {
-                handlePress(item.my_plant_id);
-              }}
-            >
-              <Image
-                style={{ height: 80, width: 80, borderRadius: 30 }}
-                source={{ uri: item.picture_url }}
-              />
-              <Text style={styles.text}>{item.nickname}</Text>
-              <LastWatered style={styles.watered} plant={item} />
-            </Pressable>
-          )}
-          keyExtractor={(item) => item.my_plant_id}
-          horizontal={true}
-        />
-      </View>
+      <View style={styles.container}>
+        <View style={styles.notifications}>
+          <FlatList
+            data={userPlantsData}
+            ItemSeparatorComponent={myItemSeparator}
+            renderItem={({ item }) => (
+              <Pressable
+                style={styles.plant}
+                onPress={() => {
+                  handlePress(item.my_plant_id);
+                }}
+              >
+                <Image
+                  style={{ height: 80, width: 80, borderRadius: 40 }}
+                  source={{ uri: item.picture_url }}
+                />
+                <Text style={styles.text}>{item.nickname}</Text>
+                <View style={styles.watered}>
+                  <LastWatered plant={item} />
+                </View>
+              </Pressable>
+            )}
+            keyExtractor={(item) => item.my_plant_id}
+            horizontal={true}
+          />
+        </View>
 
-      <Modal visible={modalVisible} animationType="slide" transparent={true}>
-        <MyPlantModal
-          singlePlantData={singlePlantData}
-          setModalVisible={setModalVisible}
-          modalLoading={modalLoading}
-          setModalLoading={setModalLoading}
-          handleClose={handleClose}
-        />
-      </Modal>
-    </View>
+        <Modal visible={modalVisible} animationType="slide" transparent={true}>
+          <MyPlantModal
+            singlePlantData={singlePlantData}
+            setModalVisible={setModalVisible}
+            modalLoading={modalLoading}
+            setModalLoading={setModalLoading}
+            handleClose={handleClose}
+          />
+        </Modal>
+      </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    flexDirection: "column",
+    // flexDirection: "column",
     borderRadius: 20,
     marginVertical: 10,
     paddingVertical: 20,
     paddingHorizontal: 10,
     flex: 1,
-
-    backgroundColor: "#ECEBE7",
+    backgroundColor: "#f8fdfb",
   },
   title: {
-    fontSize: 25,
+    fontSize: 22,
     flex: 1,
-    paddingLeft: 20,
-    paddingBottom: 10,
+    fontFamily: "Raleway_400Regular",
+    paddingLeft: 10,
+    paddingTop: 15,
+    paddingBottom: 5,
   },
   notifications: {
     flex: 1,
-    textAlign: "center",
-    backgroundColor: "#ECEBE7",
+    // textAlign: "center",
+    backgroundColor: "#f8fdfb",
   },
   plant: {
     height: "100%",
+    // flex: 1,
+    paddingHorizontal: 2,
     width: 120,
     alignItems: "center",
+    justifyContent: "center",
+  },
+  text: {
+    paddingTop: 4,
+    fontFamily: "Raleway_500Medium",
+    fontSize: 16,
+  },
+  watered: {
+    flex: 1,
+    justifyContent: "flex-start",
   },
 });
 export default Notifications;

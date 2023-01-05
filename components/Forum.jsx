@@ -9,13 +9,7 @@ import {
 
 const Forum = ({ forums }) => {
   return (
-    <View>
-      <StatusBar
-        animated={true}
-        barStyle="light-content"
-        showHideTransition="slide"
-        backgroundColor={styles.container.backgroundColor}
-      />
+    <View style={styles.container}>
       <FlatList
         data={forums}
         renderItem={(itemData) => {
@@ -30,7 +24,7 @@ const Forum = ({ forums }) => {
               </Text>
               <View style={styles.redditImage}>
                 <Image
-                  style={{ height: 200, width: 200, borderRadius: 20 }}
+                  style={{ height: 200, width: 200, borderRadius: 30 }}
                   source={{ uri: itemData.item.thumbnail }}
                 />
               </View>
@@ -49,7 +43,7 @@ const Forum = ({ forums }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#7F9B91",
+    backgroundColor: "#d9d9d9",
   },
   headerText: {
     flex: 1,
@@ -62,25 +56,33 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   authorName: {
-    fontSize: 13,
-    fontStyle: "italic",
+    color: "#729d84",
+    fontSize: 12,
+    fontFamily: "Raleway_500Medium_Italic",
   },
   infoText: {
+    fontFamily: "Raleway_600SemiBold",
+    textDecorationLine: "underline",
     fontSize: 13,
+    color: "#294753",
+
     paddingVertical: 5,
   },
   postName: {
-    fontWeight: "bold",
-    fontSize: 18,
+    fontFamily: "Raleway_700Bold",
+
+    color: "#041b27",
+    fontSize: 20,
   },
   plantsListItem: {
-    backgroundColor: "#F1F1F2",
+    backgroundColor: "#f8fdfb",
     borderRadius: 20,
     flexDirection: "column",
     flex: 1,
     margin: 10,
     padding: 20,
   },
+  plantInfo: { fontFamily: "Raleway_400Regular", color: "#041b27" },
 });
 
 export default Forum;

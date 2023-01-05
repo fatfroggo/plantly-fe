@@ -81,15 +81,6 @@ const UserPlants = ({ navigation }) => {
       </SafeAreaView>
 
       <View style={styles.userAreaBody}>
-        {/* <View style={styles.filterAndSortByContainer}>
-          <Pressable style={styles.button}>
-            <Text>Filter</Text>
-          </Pressable>
-          <Pressable style={styles.button}>
-            <Text>Sort by</Text>
-          </Pressable>
-        </View> */}
-
         {userPlantsLoading ? (
           <View
             style={{
@@ -168,8 +159,8 @@ const styles = StyleSheet.create({
   safe: {
     width: "100%",
     flex: 0.5,
-    backgroundColor: "#2B8B30",
-    color: "#1E2720",
+    backgroundColor: "#729d84",
+    color: "#f8fdfb",
   },
 
   userAreaBody: {
@@ -182,7 +173,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#F1F1F2",
+    backgroundColor: "#f8fdfb",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -191,7 +182,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
 
-  header: { flex: 1.5, color: "#F1F1F2", paddingTop: StatusBar.currentHeight },
+  header: {
+    flex: 1.5,
+    // color: "#f8fdfb",
+    paddingTop: StatusBar.currentHeight,
+  },
   flatList: {
     flex: 1,
     marginVertical: 10,
@@ -199,7 +194,7 @@ const styles = StyleSheet.create({
     alignSelf: "auto",
   },
   plantsListItem: {
-    backgroundColor: "#F1F1F2",
+    backgroundColor: "#f8fdfb",
     borderRadius: 20,
     height: "95%",
     width: "47%",
@@ -214,24 +209,35 @@ const styles = StyleSheet.create({
   },
 
   plantItemImage: {
-    flex: 0.5,
-    paddingHorizontal: 8,
+    paddingHorizontal: 6,
   },
   plantItemHeader: {
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    // textAlign: "center",
+    fontFamily: "Raleway_600SemiBold",
+    color: "#041b27",
     fontSize: 15,
   },
+
   plantItemInfo: {
+    // textAlign: "center",
+    fontFamily: "Raleway_400Regular",
     flex: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 6,
+    color: "#041b27",
   },
   info: {
     fontSize: 11,
-    fontStyle: "italic",
+    // textAlign: "center",
+    fontFamily: "Raleway_400Regular_Italic",
+    color: "#041b27",
     marginBottom: 3,
   },
   lastWatered: {
-    fontSize: 11,
+    textAlign: "left",
+    fontFamily: "Raleway_400Regular",
+    color: "#041b27",
+    fontSize: 13,
   },
 });
 

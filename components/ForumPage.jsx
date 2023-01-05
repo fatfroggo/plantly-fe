@@ -10,7 +10,7 @@ import UserAreaHeader from "./UserArea/UserAreaHeader";
 const ForumPage = () => {
   const [forums, setForums] = useState([]);
   const [forumLoading, setForumLoading] = useState(true);
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   useEffect(() => {
     getForum().then((forums) => {
@@ -29,9 +29,8 @@ const ForumPage = () => {
       />
       <SafeAreaView style={styles.safe}>
         <UserAreaHeader
-          header="Forums"
+          header="Plantly Forum"
           subHeader="Common dilemmas for houseplants"
-          style={styles.headerText}
         />
         <Nav navigation={navigation} />
       </SafeAreaView>
@@ -39,12 +38,14 @@ const ForumPage = () => {
         <View
           style={{
             flex: 1,
-            flexDirection: "row",
+            // justifyContent: "center",
+            // marginTop: "20%",
+            backgroundColor: "#729d84",
           }}
         >
           <Image
             source={require("../assets/loadingLight.gif")}
-            style={{ flex: 1, alignSelf: "center", width: 40 }}
+            style={{ alignSelf: "center", height: 200, width: 200 }}
           />
         </View>
       ) : (
@@ -59,15 +60,16 @@ const ForumPage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#7F9B91",
+    backgroundColor: "#729d84",
   },
   safe: {
     justifyContent: "flex-end",
-    flex: 0.5,
-    color: "#1E2720",
+    flex: 0.6,
+    color: "#729d84",
   },
   headerText: {
     alignItems: "center",
+    paddingBottom: 5,
   },
 });
 

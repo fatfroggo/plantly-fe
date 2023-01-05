@@ -1,17 +1,16 @@
-import { View, TextInput, StyleSheet, Pressable, Text } from 'react-native';
-import { useState, useEffect } from 'react';
-import { EvilIcons } from '@expo/vector-icons';
-import { TabRouter } from '@react-navigation/native';
+import { View, TextInput, StyleSheet, Pressable, Text } from "react-native";
+import { useState, useEffect } from "react";
+import { EvilIcons } from "@expo/vector-icons";
+import { TabRouter } from "@react-navigation/native";
 
 const PlantpediaSearchBar = ({ setSearchText }) => {
-  const [plantpediaSearchText, setPlantpediaSearchText] = useState('');
+  const [plantpediaSearchText, setPlantpediaSearchText] = useState("");
 
   const handleSearch = () => {
-    if(plantpediaSearchText.length === 0){
-      setSearchText(undefined)
-    }
-    else{
-    setSearchText(plantpediaSearchText);
+    if (plantpediaSearchText.length === 0) {
+      setSearchText(undefined);
+    } else {
+      setSearchText(plantpediaSearchText);
     }
   };
 
@@ -20,7 +19,7 @@ const PlantpediaSearchBar = ({ setSearchText }) => {
       <View style={styles.search}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Search plants"
+          placeholder="Search our plant database"
           onChangeText={setPlantpediaSearchText}
           onSubmitEditing={handleSearch}
         />
@@ -34,26 +33,29 @@ const PlantpediaSearchBar = ({ setSearchText }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 5,
+    flexDirection: "column",
+    justifyContent: "center",
+    backgroundColor: "#d9d9d9",
+    alignItems: "center",
+    paddingVertical: 10,
   },
 
   search: {
-    flexDirection: 'row',
-    color: '#27242A',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
+    flexDirection: "row",
+    color: "#041b27",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "90%",
     height: 35,
     paddingHorizontal: 13,
     borderRadius: 40,
-    backgroundColor: '#ECEBE7',
+    backgroundColor: "#f8fdfb",
   },
   searchInput: {
-    width: '90%',
-    height: '100%',
+    marginHorizontal: 2,
+    fontFamily: "Raleway_400Regular",
+    width: "90%",
+    height: "100%",
   },
 });
 export default PlantpediaSearchBar;

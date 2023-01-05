@@ -19,12 +19,14 @@ import UserPlantsContext from "../context/userPlantsContext";
 import {
   useFonts,
   Raleway_200ExtraLight,
+  Raleway_300Light_Italic,
   Raleway_300Light,
   Raleway_400Regular,
   Raleway_500Medium,
   Raleway_600SemiBold,
   Raleway_700Bold,
 } from "@expo-google-fonts/raleway";
+import PlantpediaSearchBar from "../PlantpediaSearchBar";
 
 const UserArea = ({ navigation }) => {
   const [pressed, setPressed] = useState(false);
@@ -33,14 +35,6 @@ const UserArea = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
   const { user, setUser } = useContext(UserContext);
-  let [fontsLoaded] = useFonts({
-    Raleway_200ExtraLight,
-    Raleway_300Light,
-    Raleway_400Regular,
-    Raleway_500Medium,
-    Raleway_600SemiBold,
-    Raleway_700Bold,
-  });
 
   useEffect(() => {
     getUserPlants(user).then((plants) => {
@@ -48,7 +42,9 @@ const UserArea = ({ navigation }) => {
     });
     getPlants().then((res) => {
       const randomId = Math.floor(Math.random() * res.length);
-      const randomPlant = res.filter((plant) => plant.plant_id === randomId);
+      const randomPlant = res.filter(
+        (plant) => plant.plant_id === randomId && plant.common_name !== "N/A"
+      );
       setFeaturedPlant(randomPlant[0]);
       setLoading(false);
     });
@@ -59,13 +55,15 @@ const UserArea = ({ navigation }) => {
   };
 
   return loading ? (
-    <View style={{ flex: 1, justifyContent: "center" }}>
+    <View
+      style={{ flex: 1, justifyContent: "center", backgroundColor: "#729d84" }}
+    >
       <Image
-        source={require("../../assets/loading.gif")}
+        source={require("../../assets/loadingLight.gif")}
         style={{
           alignSelf: "center",
-          width: 100,
-          height: 100,
+          width: 200,
+          height: 200,
         }}
       />
     </View>
@@ -79,7 +77,7 @@ const UserArea = ({ navigation }) => {
           backgroundColor={styles.safe.backgroundColor}
         />
 
-        <UserAreaHeader header={`Welcome ${user}!`} style={styles.safe} />
+        <UserAreaHeader header={`Welcome, ${user}!`} style={styles.header} />
         <Nav
           navigation={navigation}
           style={styles.safe}
@@ -93,9 +91,8 @@ const UserArea = ({ navigation }) => {
             modalLoading={modalLoading}
             setModalLoading={setModalLoading}
           />
+          <Text style={styles.featuredPlantHeader}>Featured Plant</Text>
           <View style={styles.featuredPlant}>
-            <Text style={styles.featuredPlantHeader}>Featured Plant</Text>
-
             <Pressable onPress={toggleIsPressed} style={styles.pressable}>
               <View style={styles.textContainer}>
                 <Text style={styles.commonName}>
@@ -107,7 +104,7 @@ const UserArea = ({ navigation }) => {
                 <View style={styles?.imageContainer}>
                   <Image
                     source={{ uri: featuredPlant?.picture_url }}
-                    style={{ height: 200, width: 200 }}
+                    style={{ height: 240, width: 240 }}
                   />
                   <Text
                     style={styles.plantInfo}
@@ -124,20 +121,19 @@ const UserArea = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#D9D9D9",
-    flex: 5,
+    backgroundColor: "#d9d9d9",
+    flex: 1,
     fontFamily: "Raleway_400Regular",
   },
 
   safe: {
     width: "100%",
-    flex: 0.5,
-    backgroundColor: "#2B8B30",
-    color: "#1E2720",
+    flex: 1,
+    backgroundColor: "#729d84",
+    color: "#f8fdfb",
   },
   userAreaBody: {
-    marginVertical: 10,
-    flex: 1,
+    flex: 2,
     marginHorizontal: 15,
   },
   pressable: {
@@ -145,20 +141,20 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   featuredPlant: {
-    alignItems: "center",
-    backgroundColor: "#F1F1F2",
+    backgroundColor: "#f8fdfb",
     borderRadius: 20,
     paddingBottom: 20,
     flexDirection: "column",
-    marginTop: 10,
-    color: "black",
+    marginVertical: 10,
+    color: "#041b27",
     flex: 1,
-
     padding: 10,
   },
   featuredPlantHeader: {
-    fontFamily: "Raleway_600SemiBold",
-    fontSize: 25,
+    color: "#041b27",
+    fontFamily: "Raleway_400Regular",
+    textAlign: "left",
+    fontSize: 22,
     paddingLeft: 15,
     paddingTop: 10,
   },
@@ -169,6 +165,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   plantInfo: {
+    color: "#041b27",
+    fontFamily: "Raleway_400Regular",
     paddingTop: 5,
     textAlign: "center",
   },
@@ -178,16 +176,19 @@ const styles = StyleSheet.create({
     flex: 0.9,
   },
   commonName: {
+    fontFamily: "Raleway_600SemiBold",
+    color: "#041b27",
     textAlign: "center",
     flex: 0.8,
-    fontWeight: "bold",
     fontSize: 22,
   },
   latinName: {
+    fontFamily: "Raleway_300Light_Italic",
+    color: "#041b27",
     textAlign: "center",
     flex: 0.6,
-    fontSize: 16,
-    fontStyle: "italic",
+    paddingBottom: 12,
+    fontSize: 14,
   },
 });
 
