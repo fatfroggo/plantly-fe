@@ -12,41 +12,43 @@ const ClimateSort = ({ selectedClimate, setSelectedClimate }) => {
     { key: "4", value: "Tropical humid" },
     { key: "5", value: "Subtropical arid" },
   ];
-    return (
-      <SelectList
-        setSelected={(val) => setSelected(val)}
-        data={data}
-        fontFamily="Raleway_400Regular"
-        maxHeight='100'
-        boxStyles={{
-          borderRadius: 10,
-          borderWidth: 0,
-          marginBottom: 0,
-          paddingTop: 5,
-          paddingVertical: 6,
-          paddingLeft: 15,
-          paddingHorizontal: 10,
-          width: 250
-        }}
-        dropdownStyles={{
-          borderRadius: 30,
-          borderWidth: 0,
+  return (
+    <SelectList
+      setSelected={(val) => setSelected(val)}
+      data={data}
+      fontFamily="Raleway_400Regular"
+      maxHeight="100"
+      boxStyles={{
+        borderRadius: 20,
 
-          marginTop: 0,
-          paddingVertical: 5,
-        }}
-        sale="value"
-        search={false}
-        placeholder="Select Climate"
-        onSelect={(val) => {
-          for (let i = 0; i < data.length; i++) {
-            if (data[i].key === selected.toString()) {
-              return setSelectedClimate(data[i].value);
-            }
+        borderWidth: 0,
+        marginBottom: 0,
+        paddingTop: 8,
+        paddingVertical: 6,
+        paddingLeft: 15,
+        backgroundColor: "#f8fdfb",
+        paddingHorizontal: 10,
+        width: 250,
+      }}
+      dropdownStyles={{
+        borderRadius: 20,
+        borderWidth: 0,
+        backgroundColor: "#f8fdfb",
+        marginTop: 0,
+        paddingVertical: 5,
+      }}
+      sale="value"
+      search={false}
+      placeholder="Select Climate"
+      onSelect={(val) => {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].key === selected.toString()) {
+            return setSelectedClimate(data[i].value);
           }
-        }}
-      />
-    );
+        }
+      }}
+    />
+  );
 };
 
 const styles = StyleSheet.create({
