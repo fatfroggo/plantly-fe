@@ -43,83 +43,77 @@ const AddToMyPlantsModal = ({
   });
 
   return (
-    <View style={styles.modalContainer}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View
-          style={keyboardShowing ? styles.modalWithKeyboard : styles.modalView}
-        >
-          <View style={styles.plantImage}>
-            <Image
-              style={{ width: 100, height: 100, borderRadius: 20 }}
-              source={{ uri: singlePlantData?.picture_url }}
-            />
-          </View>
-
-          <View style={styles.plantInfo}>
-            <Text style={styles.commonName}>
-              {singlePlantData?.common_name}
-            </Text>
-            <Text style={styles.latinName}>{singlePlantData?.latin_name}</Text>
-          </View>
-          <View style={styles.textInputContainer}>
-            <Text style={styles.textInputTitle}>
-              Give your plant a nickname!
-            </Text>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Plant nickname"
-              onChangeText={(text) => {
-                reqBody.nickname = text;
-              }}
-            />
-            <Text style={styles.textInputTitle}>
-              How many days ago did you water this plant?
-            </Text>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Enter days here"
-              keyboardType={"numeric"}
-              onChangeText={(text) => {
-                reqBody.last_watered_date = daysToDate(text);
-              }}
-            />
-          </View>
-          {submitDisabled ? (
-            <View
-              style={{
-                alignSelf: "center",
-              }}
-            >
-              <Image
-                source={require("../../../assets/loading.gif")}
-                style={{ height: 100, width: 100 }}
-              />
-            </View>
-          ) : (
-            <View style={styles.buttonsContainer}>
-              <Pressable
-                style={styles.pressable}
-                disabled={submitDisabled}
-                onPress={postPlant}
-              >
-                <Text
-                  style={{ color: "#f8fdfb", fontFamily: "Raleway_400Regular" }}
-                >
-                  Submit
-                </Text>
-              </Pressable>
-              <Pressable style={styles.pressable} onPress={handleCancel}>
-                <Text
-                  style={{ color: "#f8fdfb", fontFamily: "Raleway_400Regular" }}
-                >
-                  Cancel
-                </Text>
-              </Pressable>
-            </View>
-          )}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View
+        style={keyboardShowing ? styles.modalWithKeyboard : styles.modalView}
+      >
+        <View style={styles.plantImage}>
+          <Image
+            style={{ width: 100, height: 100, borderRadius: 20 }}
+            source={{ uri: singlePlantData?.picture_url }}
+          />
         </View>
-      </TouchableWithoutFeedback>
-    </View>
+
+        <View style={styles.plantInfo}>
+          <Text style={styles.commonName}>{singlePlantData?.common_name}</Text>
+          <Text style={styles.latinName}>{singlePlantData?.latin_name}</Text>
+        </View>
+        <View style={styles.textInputContainer}>
+          <Text style={styles.textInputTitle}>Give your plant a nickname!</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Plant nickname"
+            onChangeText={(text) => {
+              reqBody.nickname = text;
+            }}
+          />
+          <Text style={styles.textInputTitle}>
+            How many days ago did you water this plant?
+          </Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter days here"
+            keyboardType={"numeric"}
+            onChangeText={(text) => {
+              reqBody.last_watered_date = daysToDate(text);
+            }}
+          />
+        </View>
+        {submitDisabled ? (
+          <View
+            style={{
+              alignSelf: "center",
+            }}
+          >
+            <Image
+              source={require("../../../assets/loading.gif")}
+              style={{ height: 100, width: 100 }}
+            />
+          </View>
+        ) : (
+          <View style={styles.buttonsContainer}>
+            <Pressable
+              style={styles.pressable}
+              disabled={submitDisabled}
+              onPress={postPlant}
+            >
+              <Text
+                style={{ color: "#f8fdfb", fontFamily: "Raleway_400Regular" }}
+              >
+                Submit
+              </Text>
+            </Pressable>
+            <Pressable style={styles.pressable} onPress={handleCancel}>
+              <Text
+                style={{ color: "#f8fdfb", fontFamily: "Raleway_400Regular" }}
+              >
+                Cancel
+              </Text>
+            </Pressable>
+          </View>
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -166,8 +160,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-
-  modalContainer: { flex: 1, backgroundColor: "rgba(0, 0, 0, 0.5)" },
 
   plantImage: {
     paddingHorizontal: 20,
@@ -221,7 +213,7 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: "#f8fdfb",
     padding: 5,
-    color: "#041b27",
+    color: "#f8fdfb",
     fontFamily: "Raleway_300Light",
     borderRadius: 10,
     marginBottom: 5,
