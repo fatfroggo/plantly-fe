@@ -14,6 +14,7 @@ import UserContext from "../context/userContext";
 import MyPlantModal from "./MyPlantModal";
 
 import LastWatered from "./LastWatered";
+import { dateToDays } from "../../utils/utils";
 
 const Notifications = ({
   modalLoading,
