@@ -9,23 +9,23 @@ import {
   Pressable,
   Modal,
   Dimensions,
-} from 'react-native';
-import Nav from '../Nav';
-import UserAreaHeader from './UserAreaHeader';
-import UserContext from '../context/userContext';
-import { useEffect, useState, useContext } from 'react';
+} from "react-native";
+import Nav from "../Nav";
+import UserAreaHeader from "./UserAreaHeader";
+import UserContext from "../context/userContext";
+import { useEffect, useState, useContext } from "react";
 import {
   getUserPlants,
   deleteUserPlant,
   getUserPlantByMyPlantId,
-} from '../../api/api';
+} from "../../api/api";
 
-import MyPlantModal from './MyPlantModal';
-import dayjs from 'dayjs';
-import UserPlantsContext from '../context/userPlantsContext';
-import LastWatered from './LastWatered';
-import { dateToDays } from '../../utils/utils';
-const relativeTime = require('dayjs/plugin/relativeTime');
+import MyPlantModal from "./MyPlantModal";
+import dayjs from "dayjs";
+import UserPlantsContext from "../context/userPlantsContext";
+import LastWatered from "./LastWatered";
+import { dateToDays } from "../../utils/utils";
+const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 
 const UserPlants = ({ navigation }) => {
@@ -38,10 +38,10 @@ const UserPlants = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
   const [wateredToday, setWateredToday] = useState(false);
 
-  const handlePress = my_plant_id => {
+  const handlePress = (my_plant_id) => {
     setModalLoading(true);
     setModalVisible(true);
-    getUserPlantByMyPlantId(user, my_plant_id).then(plant => {
+    getUserPlantByMyPlantId(user, my_plant_id).then((plant) => {
       setSinglePlantData(plant);
       setModalLoading(false);
     });
@@ -51,8 +51,8 @@ const UserPlants = ({ navigation }) => {
     setModalVisible(false);
   };
 
-  const handleLongPress = my_plant_id => {
-    getUserPlantByMyPlantId(user, my_plant_id).then(plant => {
+  const handleLongPress = (my_plant_id) => {
+    getUserPlantByMyPlantId(user, my_plant_id).then((plant) => {
       setSinglePlantData(plant);
       setDeleteModalVisible(true);
     });
@@ -63,10 +63,10 @@ const UserPlants = ({ navigation }) => {
     setDeleteModalVisible(false);
   };
 
-  const deletePlant = id => {
+  const deletePlant = (id) => {
     deleteUserPlant(user, id).then(() => {
-      setUserPlantsData(currPlants => {
-        const newPlants = currPlants.filter(plant => {
+      setUserPlantsData((currPlants) => {
+        const newPlants = currPlants.filter((plant) => {
           return plant.my_plant_id !== id;
         });
         return newPlants;
@@ -74,7 +74,7 @@ const UserPlants = ({ navigation }) => {
     });
   };
   useEffect(() => {
-    getUserPlants(user).then(plants => {
+    getUserPlants(user).then((plants) => {
       setUserPlantsData(plants);
       setUserPlantsLoading(false);
     });
@@ -98,11 +98,11 @@ const UserPlants = ({ navigation }) => {
         {userPlantsLoading ? (
           <View
             style={{
-              alignSelf: 'center',
+              alignSelf: "center",
             }}
           >
             <Image
-              source={require('../../assets/loading.gif')}
+              source={require("../../assets/loading.gif")}
               style={{ height: 200, width: 200 }}
             />
           </View>
@@ -198,30 +198,30 @@ const UserPlants = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#D9D9D9',
+    backgroundColor: "#D9D9D9",
     flex: 5,
   },
   safe: {
-    width: '100%',
+    width: "100%",
     flex: 0.5,
-    backgroundColor: '#729d84',
-    color: '#f8fdfb',
+    backgroundColor: "#729d84",
+    color: "#f8fdfb",
   },
 
   userAreaBody: {
     flex: 1,
-    alignSelf: 'center',
-    flexDirection: 'row',
+    alignSelf: "center",
+    flexDirection: "row",
     marginHorizontal: 5,
-    justifyContent: 'center',
-    alignContent: 'center',
+    justifyContent: "center",
+    alignContent: "center",
   },
 
   button: {
-    backgroundColor: '#f8fdfb',
+    backgroundColor: "#f8fdfb",
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingVertical: 6,
     marginHorizontal: 10,
     borderRadius: 20,
@@ -235,21 +235,21 @@ const styles = StyleSheet.create({
   flatList: {
     flex: 1,
     marginVertical: 10,
-    alignContent: 'center',
-    alignSelf: 'auto',
+    alignContent: "center",
+    alignSelf: "auto",
   },
   plantsListItem: {
-    backgroundColor: '#f8fdfb',
+    backgroundColor: "#f8fdfb",
     borderRadius: 20,
-    height: '95%',
-    width: '47%',
-    flexDirection: 'row',
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    height: "95%",
+    width: "47%",
+    flexDirection: "row",
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "flex-start",
     marginHorizontal: 5,
     marginVertical: 5,
-    alignItems: 'center',
+    alignItems: "center",
     paddingVertical: 15,
   },
 
@@ -259,41 +259,41 @@ const styles = StyleSheet.create({
   plantItemHeader: {
     // fontWeight: "bold",
     // textAlign: "center",
-    fontFamily: 'Raleway_600SemiBold',
-    color: '#041b27',
+    fontFamily: "Raleway_600SemiBold",
+    color: "#041b27",
     fontSize: 15,
   },
 
   plantItemInfo: {
     // textAlign: "center",
-    fontFamily: 'Raleway_400Regular',
+    fontFamily: "Raleway_400Regular",
     flex: 1,
     paddingHorizontal: 6,
-    color: '#041b27',
+    color: "#041b27",
   },
   info: {
     fontSize: 11,
     // textAlign: "center",
-    fontFamily: 'Raleway_400Regular_Italic',
-    color: '#041b27',
+    fontFamily: "Raleway_400Regular_Italic",
+    color: "#041b27",
     marginBottom: 3,
   },
   lastWatered: {
-    textAlign: 'left',
-    fontFamily: 'Raleway_400Regular',
-    color: '#041b27',
+    textAlign: "left",
+    fontFamily: "Raleway_400Regular",
+    color: "#041b27",
     fontSize: 13,
   },
 
   modalView: {
     flex: 1,
-    marginHorizontal: '10%',
-    marginVertical: '60%',
-    backgroundColor: 'white',
+    marginHorizontal: "10%",
+    marginVertical: "60%",
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 30,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -303,42 +303,42 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 
-  textContainer: { alignSelf: 'stretch', marginVertical: 10 },
+  textContainer: { alignSelf: "stretch", marginVertical: 10 },
 
-  title: { fontSize: 25, fontWeight: 'bold', marginBottom: 20 },
+  title: { fontSize: 25, fontWeight: "bold", marginBottom: 20 },
 
-  suggestion: { flexDirection: 'row', marginBottom: 20 },
+  suggestion: { flexDirection: "row", marginBottom: 20 },
 
   descriptionTextContainer: { flex: 1, paddingRight: 5 },
 
-  commonName: { fontSize: 18, fontWeight: 'bold' },
+  commonName: { fontSize: 18, fontWeight: "bold" },
 
-  latinName: { fontSize: 15, fontStyle: 'italic' },
+  latinName: { fontSize: 15, fontStyle: "italic" },
 
   probability: { fontSize: 15 },
 
   pressable: {
-    backgroundColor: '#7F9B91',
-    width: '40%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#7F9B91",
+    width: "40%",
+    alignItems: "center",
+    justifyContent: "center",
     marginHorizontal: 8,
     padding: 10,
     borderRadius: 20,
     marginTop: 10,
   },
-  pressableText: { textAlign: 'center' },
+  pressableText: { textAlign: "center" },
 
   modalLoading: {
     flex: 1,
-    justifyContent: 'center',
-    marginHorizontal: Dimensions.get('window').width / 10,
-    marginVertical: Dimensions.get('window').height / 15,
-    backgroundColor: 'white',
+    justifyContent: "center",
+    marginHorizontal: Dimensions.get("window").width / 10,
+    marginVertical: Dimensions.get("window").height / 15,
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 30,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -348,16 +348,16 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 
-  modalContainer: { flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)' },
+  modalContainer: { flex: 1, backgroundColor: "rgba(0, 0, 0, 0.5)" },
 
   deleteMessage: {
-    textAlign: 'left',
-    fontFamily: 'Raleway_400Regular',
-    color: '#041b27',
+    textAlign: "left",
+    fontFamily: "Raleway_400Regular",
+    color: "#041b27",
     fontSize: 25,
   },
 
-  pressablesContainer: { flexDirection: 'row' },
+  pressablesContainer: { flexDirection: "row" },
 });
 
 export default UserPlants;

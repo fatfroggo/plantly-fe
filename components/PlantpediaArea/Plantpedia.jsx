@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   },
   safe: {
     width: "100%",
-    flex: 1,
+    flex: 0.9,
     backgroundColor: "#729d84",
     color: "#f8fdfb",
     marginTop: 10,

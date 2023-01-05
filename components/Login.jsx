@@ -17,12 +17,6 @@ import axios from "axios";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useContext, useEffect, useState } from "react";
 import UserContext from "./context/userContext";
-} from "react-native";
-import { firebase } from "../api/firebase";
-import axios from "axios";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useContext, useEffect, useState } from "react";
-import UserContext from "./context/userContext";
 import {
   useFonts,
   Raleway_100Thin,
@@ -44,19 +38,12 @@ import {
   Raleway_800ExtraBold_Italic,
   Raleway_900Black_Italic,
 } from "@expo-google-fonts/raleway";
-} from "@expo-google-fonts/raleway";
 
 const Login = ({ navigation }) => {
   const [RegisteredEmail, setRegisteredEmail] = useState("");
   const [RegisteredUsername, setRegisteredUsername] = useState("");
   const [RegisteredPassword, setRegisteredPassword] = useState("");
-  const [RegisteredEmail, setRegisteredEmail] = useState("");
-  const [RegisteredUsername, setRegisteredUsername] = useState("");
-  const [RegisteredPassword, setRegisteredPassword] = useState("");
   const [ConfirmedRegisteredPassword, setConfirmedRegisteredPassword] =
-    useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
     useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -88,11 +75,9 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     const unsuscribe = firebase.auth().onAuthStateChanged((user) => {
-    const unsuscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         navigation.reset({
           index: 0,
-          routes: [{ name: "user area" }],
           routes: [{ name: "user area" }],
         });
       }
@@ -104,7 +89,7 @@ const Login = ({ navigation }) => {
     setModalLoading(true);
   };
   const handleBack = () => {
-    setUnsuccessfulRegister(false)
+    setUnsuccessfulRegister(false);
     setModalLoading(false);
   };
   const handleSignUp = () => {
@@ -120,21 +105,19 @@ const Login = ({ navigation }) => {
 
         setUser(Info.username);
       });
-      .post(`https://plantly-api.onrender.com/api/users/users`, postBody)
-      .then((res) => {});
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-      })
-      .catch((error) => Alert.alert(error.message));
-    setModalLoading(false);
+      .createUserWithEmailAndPassword(RegisteredEmail, RegisteredPassword)
+      .catch((error) => setUnsuccessfulRegister(true));
+    if (unsuccessfulLogin === false) {
+      setModalLoading(true);
+    } else {
+      setModalLoading(false);
+    }
   };
   const handleLogin = () => {
     axios
       .get(`https://plantly-api.onrender.com/api/users/user/${email}`)
-      .then((res) => {
       .then((res) => {
         let Info = res.data.user;
 
@@ -144,32 +127,24 @@ const Login = ({ navigation }) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((userCredentials) => {
-      .then((userCredentials) => {
         const user = userCredentials.user;
       })
       .catch((error) => setUnsuccessfulLogin(true));
     setBoolean(true);
-      .catch((error) => setUnsuccessfulLogin(true));
   };
+
   if (!fontsLoaded) {
     return null;
   }
-
-
-
   return !fontsLoaded ? (
     <View
       style={{
         backgroundColor: "#2b8b30",
-        backgroundColor: "#2b8b30",
         flex: 1,
-        flexDirection: "row",
         flexDirection: "row",
       }}
     >
       <Image
-        source={require("../assets/loadingLight.gif")}
-        style={{ flex: 1, alignSelf: "center", width: 50 }}
         source={require("../assets/loadingLight.gif")}
         style={{ flex: 1, alignSelf: "center", width: 50 }}
       />
@@ -180,12 +155,10 @@ const Login = ({ navigation }) => {
         <Pressable style={styles.backButton} onPress={handleBack}>
           <Image
             source={require("../assets/back-arrow.png")}
-            source={require("../assets/back-arrow.png")}
             style={{ height: 30, width: 30 }}
           />
         </Pressable>
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.background}
         >
@@ -193,21 +166,20 @@ const Login = ({ navigation }) => {
             <Image
               style={styles.logo}
               source={require("../assets/plant-logo.png")}
-              source={require("../assets/plant-logo.png")}
             />
             <Text style={styles.plantly}>Plantly</Text>
             <Text style={styles.details}>Please enter your details</Text>
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
-                placeholder="Email Address"
+                placeholder="Email"
                 onChangeText={(text) => setRegisteredEmail(text)}
               />
             </View>
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
-                placeholder="Username"
+                placeholder="UserName"
                 onChangeText={(text) => setRegisteredUsername(text)}
               />
             </View>
@@ -216,14 +188,12 @@ const Login = ({ navigation }) => {
                 style={styles.input}
                 placeholder="Password"
                 onChangeText={(text) => setRegisteredPassword(text)}
-                onChangeText={(text) => setRegisteredPassword(text)}
               />
             </View>
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
                 placeholder="Confirm Password"
-                onChangeText={(text) => setConfirmedRegisteredPassword(text)}
                 onChangeText={(text) => setConfirmedRegisteredPassword(text)}
               />
             </View>
@@ -245,16 +215,15 @@ const Login = ({ navigation }) => {
       <SafeAreaView style={styles.background}>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.background}
         >
           <View style={styles.container}>
             <Image
               style={styles.logo}
               source={require("../assets/plant-logo.png")}
-              source={require("../assets/plant-logo.png")}
             />
             <Text style={styles.plantly}>Plantly</Text>
+
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
@@ -265,27 +234,10 @@ const Login = ({ navigation }) => {
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
-                secureTextEntry={true}
                 placeholder="Password"
+                secureTextEntry={true}
                 onChangeText={(text) => setPassword(text)}
               />
-            </View>
-            <View style={styles.inputs}>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Email"
-                  onChangeText={(text) => setEmail(text)}
-                />
-              </View>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  secureTextEntry={true}
-                  placeholder="Password"
-                  onChangeText={(text) => setPassword(text)}
-                />
-              </View>
             </View>
 
             {unsuccessfulLogin && (
@@ -293,6 +245,7 @@ const Login = ({ navigation }) => {
                 Oops! Wrong email or password!
               </Text>
             )}
+
             <View
               style={{
                 flexDirection: "row",
@@ -374,7 +327,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 
-  unsuccessfulLogin: { fontFamily: "Raleway_400Regular", marginVertical: 10 },
   unsuccessfulLogin: { fontFamily: "Raleway_400Regular", marginVertical: 10 },
 
   input: {

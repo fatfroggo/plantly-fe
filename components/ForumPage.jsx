@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   safe: {
     justifyContent: "flex-end",
-    flex: 0.6,
+    flex: 0.5,
     color: "#729d84",
   },
   headerText: {
