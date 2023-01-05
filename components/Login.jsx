@@ -283,9 +283,7 @@ const styles = StyleSheet.create({
   },
 
   backButton: { alignSelf: "flex-start", marginLeft: 20 },
-  backButton: { alignSelf: "flex-start", marginLeft: 20 },
 
-  container: { marginBottom: "20%", alignSelf: "center", alignItems: "center" },
   container: { marginBottom: "20%", alignSelf: "center", alignItems: "center" },
   logo: {
     width: 150,
