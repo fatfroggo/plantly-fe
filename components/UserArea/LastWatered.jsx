@@ -23,7 +23,7 @@ const LastWatered = ({ plant }) => {
     return (
       <>
         <View style={styles.text}>
-          <Text style={styles.timeLeft2}>{timeLeft} days until next water</Text>
+          <Text style={styles.timeLeft2}>{timeLeft} days until water</Text>
         </View>
       </>
     );
@@ -31,7 +31,7 @@ const LastWatered = ({ plant }) => {
     return (
       <>
         <View style={styles.text}>
-          <Text style={styles.timeLeft3}>{timeLeft} days until next water</Text>
+          <Text style={styles.timeLeft3}>{timeLeft} days until water</Text>
         </View>
       </>
     );
@@ -40,19 +40,32 @@ const LastWatered = ({ plant }) => {
 
 const styles = StyleSheet.create({
   text: {
+    // textAlignVertical: "center",
+    // justifyContent: "flex-start",
     flex: 1,
-    paddingVertical: 1,
+    // paddingVertical: 1,
+    // alignItems: "center",
+    justifyContent: "flex-start",
   },
   timeLeft0: {
-    // fontSize: 12,
+    // textAlign: "center",
+    fontFamily: "Raleway_600SemiBold",
+    // fontSize: 16,
+    // alignSelf: "center",
     color: "red",
   },
   timeLeft2: {
+    // textAlign: "center",
+    fontFamily: "Raleway_500Medium",
     // fontSize: 12,
     color: "#d88001",
   },
   timeLeft3: {
+    // textAlign: "center",
+    fontFamily: "Raleway_500Medium",
+    // textAlignVertical: "center",
     // fontSize: 12,
+    flex: 1,
     color: "#2b8b30",
   },
 });

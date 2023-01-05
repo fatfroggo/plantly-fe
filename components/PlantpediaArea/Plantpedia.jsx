@@ -100,31 +100,33 @@ const Plantpedia = ({ navigation }) => {
         <UserAreaHeader
           header="Plantpedia"
           subHeader="The encyclopedia of plants"
-          style={styles.headerText}
         />
 
         <Nav navigation={navigation} />
-
-        <PlantpediaSearchBar setSearchText={setSearchText} />
-      </SafeAreaView>
-
-      <View style={styles.sortAndId}>
-        <ClimateSort
-          selectedClimate={selectedClimate}
-          setSelectedClimate={setSelectedClimate}
+        <PlantpediaSearchBar
+          setSearchText={setSearchText}
+          // style={{ marginTop: 10 }}
         />
-        <Pressable style={styles.plantId} onPress={handlePlantId}>
-          <Image
-            source={require("../../assets/camera.jpg")}
-            style={{ height: 30, width: 35 }}
+        <View style={styles.sortAndId}>
+          <ClimateSort
+            selectedClimate={selectedClimate}
+            setSelectedClimate={setSelectedClimate}
           />
-        </Pressable>
-        <Text style={styles.plantIdText}>Plant{"\n"}ID</Text>
-      </View>
-
+          <Pressable style={styles.plantId} onPress={handlePlantId}>
+            <Image
+              source={require("../../assets/camera.jpg")}
+              style={{ height: 25, width: 30 }}
+            />
+          </Pressable>
+          <Text style={styles.plantIdText}>Plant{"\n"}ID</Text>
+        </View>
+      </SafeAreaView>
       {plantpediaLoading ? (
         <View
           style={{
+            flex: 1,
+            // marginTop: "20%",
+            alignItems: "center",
             alignSelf: "center",
           }}
         >
@@ -140,13 +142,18 @@ const Plantpedia = ({ navigation }) => {
           </Text>
         </View>
       ) : (
-        <PlantPediaPlants
-          plantsData={plantsData}
-          setPlantsData={setPlantsData}
-          handleAddToPlant={handleAddToPlant}
-          isInvalidSearch={isInvalidSearch}
-          invalidSearchText={invalidSearchText}
-        />
+        <View style={{ flex: 1 }}>
+          <Text style={styles.learnMore}>
+            Tap a plant for more information!
+          </Text>
+          <PlantPediaPlants
+            plantsData={plantsData}
+            setPlantsData={setPlantsData}
+            handleAddToPlant={handleAddToPlant}
+            isInvalidSearch={isInvalidSearch}
+            invalidSearchText={invalidSearchText}
+          />
+        </View>
       )}
 
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
@@ -185,36 +192,63 @@ const Plantpedia = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#7F9B91",
+    backgroundColor: "#729d84",
   },
+  safe: {
+    width: "100%",
+    flex: 1,
+    backgroundColor: "#729d84",
+    color: "#f8fdfb",
+    marginTop: 10,
+  },
+
   invalid: {
+    fontFamily: "Raleway_400Regular",
     fontSize: 25,
     padding: 20,
-    color: "white",
+    color: "#f8fdfb",
   },
   sortAndId: {
+    // flex: 0.2,
+    // overflow: "visible",
     flexDirection: "row",
+    // height: 40,
     alignItems: "center",
+    backgroundColor: "#d9d9d9",
     paddingHorizontal: 20,
+    paddingBottom: 5,
+  },
+  learnMore: {
+    paddingHorizontal: 20,
+    textAlign: "center",
+    backgroundColor: "#d9d9d9",
+    paddingTop: 15,
+    paddingBottom: 5,
+    fontSize: 18,
+    marginBottom: 0,
+    // marginTop: 10,
+    fontFamily: "Raleway_400Regular",
   },
   plantId: {
+    fontFamily: "Raleway_400Regular",
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "white",
-    marginVertical: 5,
-    marginHorizontal: 10,
-    padding: 10,
+    marginVertical: 3,
+    marginLeft: 10,
+    marginRight: 5,
+    // padding: 10,
     borderRadius: 200,
-    height: 50,
-    width: 50,
+    height: 45,
+    width: 45,
   },
-  plantIdText: { textAlign: "center", fontSize: 15 },
-  safe: {
-    justifyContent: "flex-end",
-    flex: 0.5,
-    color: "#1E2720",
+  plantIdText: {
+    // textAlign: "center",
+    fontSize: 15,
+    fontFamily: "Raleway_400Regular",
   },
+
   modalView: {
     flex: 1,
     margin: 0,
@@ -232,36 +266,39 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 
-  plantImage: {
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    flex: 1,
-  },
-  plantInfo: {
-    flex: 2,
-  },
-  commonName: {
-    fontWeight: "bold",
-    fontSize: 30,
-  },
-  latinName: {
-    fontSize: 20,
-    fontStyle: "italic",
-  },
-  infoText: {
-    fontSize: 15,
-    paddingVertical: 5,
-  },
-  buttonsContainer: {
-    borderWidth: 1,
-    flexDirection: "row",
-  },
-  pressable: {
-    backgroundColor: "#7F9B91",
-    marginHorizontal: 10,
-    padding: 10,
-    borderRadius: 5,
-  },
+  // plantImage: {
+  //   paddingHorizontal: 20,
+  //   borderRadius: 20,
+  //   flex: 1,
+  // },
+  // plantInfo: {
+  //   fontFamily: "Raleway_400Regular",
+  //   flex: 2,
+  // },
+  // commonName: {
+  //   fontFamily: "Raleway_500Medium",
+
+  //   fontSize: 30,
+  // },
+  // latinName: {
+  //   fontFamily: "Raleway_500Medium",
+
+  //   fontSize: 20,
+  // },
+  // infoText: {
+  //   fontSize: 15,
+  //   paddingVertical: 5,
+  // // },
+  // buttonsContainer: {
+  //   borderWidth: 1,
+  //   flexDirection: "row",
+  // // },
+  // pressable: {
+  //   backgroundColor: "#7F9B91",
+  //   marginHorizontal: 10,
+  //   padding: 10,
+  //   borderRadius: 5,
+  // },
 });
 
 export default Plantpedia;

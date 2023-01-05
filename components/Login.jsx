@@ -15,23 +15,48 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 import {
   useFonts,
+  Raleway_100Thin,
   Raleway_200ExtraLight,
   Raleway_300Light,
   Raleway_400Regular,
   Raleway_500Medium,
   Raleway_600SemiBold,
   Raleway_700Bold,
+  Raleway_800ExtraBold,
+  Raleway_900Black,
+  Raleway_100Thin_Italic,
+  Raleway_200ExtraLight_Italic,
+  Raleway_300Light_Italic,
+  Raleway_400Regular_Italic,
+  Raleway_500Medium_Italic,
+  Raleway_600SemiBold_Italic,
+  Raleway_700Bold_Italic,
+  Raleway_800ExtraBold_Italic,
+  Raleway_900Black_Italic,
 } from "@expo-google-fonts/raleway";
 
 const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   let [fontsLoaded] = useFonts({
+    Raleway_100Thin,
+    Raleway_200ExtraLight,
     Raleway_300Light,
     Raleway_400Regular,
     Raleway_500Medium,
     Raleway_600SemiBold,
     Raleway_700Bold,
+    Raleway_800ExtraBold,
+    Raleway_900Black,
+    Raleway_100Thin_Italic,
+    Raleway_200ExtraLight_Italic,
+    Raleway_300Light_Italic,
+    Raleway_400Regular_Italic,
+    Raleway_500Medium_Italic,
+    Raleway_600SemiBold_Italic,
+    Raleway_700Bold_Italic,
+    Raleway_800ExtraBold_Italic,
+    Raleway_900Black_Italic,
   });
 
   const handlePress = () => {
@@ -118,12 +143,11 @@ const styles = StyleSheet.create({
   loginText: {
     flexDirection: "row",
     alignSelf: "center",
-    fontFamily: "Raleway_400Regular",
+
     color: "#f8fdfb",
     fontSize: 14,
   },
   input: {
-    fontFamily: "Raleway_300Light",
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",

@@ -7,54 +7,53 @@ import {
   Pressable,
 } from "react-native";
 
-const PlantpediaPlants = ({
-  handleAddToPlant,
-  plantsData,
-}) => {
+const PlantpediaPlants = ({ handleAddToPlant, plantsData }) => {
   return (
-        <View style={styles.container}>
-          <FlatList
-            data={plantsData}
-            renderItem={(itemData) => {
-              return (
-                <Pressable
-                  onPress={() => {
-                    handleAddToPlant(itemData.item.plant_id);
-                  }}
-                  style={styles.plantsListItem}
-                >
-                  <View style={styles.plantItemInfo}>
-                    <View style={styles.namesContainer}>
-                      <Text style={styles.commonName}>
-                        {itemData.item.common_name}
-                      </Text>
-                      <Text style={styles.latinName}>
-                        {itemData.item.latin_name}
-                      </Text>
-                    </View>
-                    <Text>{`Climate: ${itemData.item.climate}`}</Text>
-                  </View>
-                  <View style={styles.plantItemImage}>
-                    <Image
-                      source={{ uri: itemData.item.picture_url }}
-                      style={{ height: "100%", width: "100%" }}
-                    />
-                  </View>
-                </Pressable>
-              );
-            }}
-            keyExtractor={(item, index) => {
-              return item.plant_id;
-            }}
-          />
-        </View>
-      )
+    <View style={styles.container}>
+      <FlatList
+        data={plantsData}
+        renderItem={(itemData) => {
+          return (
+            <Pressable
+              onPress={() => {
+                handleAddToPlant(itemData.item.plant_id);
+              }}
+              style={styles.plantsListItem}
+            >
+              <View style={styles.plantItemInfo}>
+                <View style={styles.namesContainer}>
+                  <Text style={styles.commonName}>
+                    {itemData.item.common_name}
+                  </Text>
+                  <Text style={styles.latinName}>
+                    {itemData.item.latin_name}
+                  </Text>
+                </View>
+                <Text
+                  style={{ fontFamily: "Raleway_400Regular" }}
+                >{`Climate: ${itemData.item.climate}`}</Text>
+              </View>
+              <View style={styles.plantItemImage}>
+                <Image
+                  source={{ uri: itemData.item.picture_url }}
+                  style={{ height: "100%", width: "100%" }}
+                />
+              </View>
+            </Pressable>
+          );
+        }}
+        keyExtractor={(item, index) => {
+          return item.plant_id;
+        }}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#7F9B91",
+    backgroundColor: "#d9d9d9",
     flexDirection: "row",
   },
   plantsListItem: {
@@ -77,16 +76,18 @@ const styles = StyleSheet.create({
   },
   plantItemInfo: {
     flex: 1,
+    fontFamily: "Raleway_500Medium",
   },
   commonName: {
-    flex: 2,
-    fontWeight: "bold",
+    fontFamily: "Raleway_700Bold",
+
+    flex: 1,
     fontSize: 20,
   },
   latinName: {
+    fontFamily: "Raleway_300Light_Italic",
     flex: 1,
     fontSize: 15,
-    fontStyle: "italic",
   },
 });
 

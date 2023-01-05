@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: Dimensions.get("window").width / 10,
     marginVertical: Dimensions.get("window").height / 15,
-    backgroundColor: "white",
+    backgroundColor: "#f8fdfb",
     borderRadius: 20,
     paddingVertical: 30,
     paddingHorizontal: 15,
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   mainHeading: {
-    borderColor: "red",
+    // borderColor: "red",
     borderWidth: 2,
     // flex: 2,
   },
@@ -170,38 +170,51 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     paddingRight: 10,
   },
-  needsSubHeading: { fontSize: 25, marginHorizontal: 5 },
-  needsHeading: { width: "100%", paddingBottom: 10 },
+  needsSubHeading: {
+    fontSize: 25,
+    fontFamily: "Raleway_600SemiBold",
+    color: "#294753",
+    marginHorizontal: 5,
+  },
+  needsHeading: {
+    width: "100%",
+
+    paddingBottom: 6,
+  },
+
   needsContainer: {
     width: "49%",
   },
   commonName: {
-    fontWeight: "bold",
+    fontFamily: "Raleway_700Bold",
+    color: "#041b27",
     fontSize: 25,
     textAlign: "center",
     marginTop: 5,
   },
   latinName: {
-    fontSize: 14,
-    fontStyle: "italic",
+    fontSize: 16,
+    fontFamily: "Raleway_400Regular_Italic",
     textAlign: "center",
+    color: "#041b27",
     // marginBottom: 10,
   },
   lastWatered: {
     height: "5%",
     marginBottom: 10,
   },
-  lastWateredText: {
-    fontSize: 20,
-  },
+
   subHeading: {
     marginHorizontal: 5,
-    fontSize: 16,
-    fontWeight: "bold",
+    color: "#041b27",
+    fontSize: 18,
+    fontFamily: "Raleway_500Medium",
   },
   infoText: {
     marginHorizontal: 5,
-    fontSize: 14,
+    color: "#041b27",
+    fontSize: 16,
+    fontFamily: "Raleway_300Light",
     marginBottom: 15,
   },
   buttonsContainer: {
@@ -209,7 +222,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   pressable: {
-    backgroundColor: "#7F9B91",
+    backgroundColor: "#294753",
     width: "40%",
     alignItems: "center",
     justifyContent: "center",
@@ -217,7 +230,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
   },
-  pressableText: { textAlign: "center" },
+  pressableText: { textAlign: "center", color: "#f8fdfb" },
 
   modalLoading: {
     flex: 1,

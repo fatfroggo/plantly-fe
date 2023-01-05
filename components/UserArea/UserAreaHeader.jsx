@@ -1,4 +1,13 @@
 import { Text, View, StyleSheet, StatusBar } from "react-native";
+import {
+  useFonts,
+  Raleway_200ExtraLight,
+  Raleway_300Light,
+  Raleway_400Regular,
+  Raleway_500Medium,
+  Raleway_600SemiBold,
+  Raleway_700Bold,
+} from "@expo-google-fonts/raleway";
 
 const UserAreaHeader = (props) => {
   return (
@@ -24,13 +33,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   userAreaHeader: {
-    fontSize: 43,
-    color: "#ecebe7",
+    fontFamily: "Raleway_400Regular",
+    fontSize: 44,
+    color: "#f8fdfb",
     fontWeight: "300",
   },
   subHeader: {
+    fontFamily: "Raleway_300Light_Italic",
     fontSize: 20,
-    color: "#ecebe7",
+    color: "#f8fdfb",
+    paddingBottom: 10,
   },
 });
 
