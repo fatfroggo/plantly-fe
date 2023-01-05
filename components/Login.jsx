@@ -135,6 +135,9 @@ const Login = ({ navigation }) => {
   if (!fontsLoaded) {
     return null;
   }
+
+
+
   return !fontsLoaded ? (
     <View
       style={{
@@ -231,6 +234,7 @@ const Login = ({ navigation }) => {
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
+                secureTextEntry={true}
                 placeholder="Password"
                 onChangeText={(text) => setPassword(text)}
               />
