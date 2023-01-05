@@ -5,6 +5,7 @@ import {
   View,
   Pressable,
   Image,
+  ScrollView,
   TextInput,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
@@ -26,10 +27,16 @@ import {
 } from "@expo-google-fonts/raleway";
 
 const Login = ({ navigation }) => {
-  const [username, setUsername] = useState("");
+  const [RegisteredEmail, setRegisteredEmail] = useState("");
+  const [RegisteredUsername, setRegisteredUsername] = useState("");
+  const [RegisteredPassword, setRegisteredPassword] = useState("");
+  const [ConfirmedRegisteredPassword, setConfirmedRegisteredPassword] =
+    useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [boolean, setBoolean] = useState(false);
-    const { user, setUser } = useContext(UserContext);
+  const [modalLoading, setModalLoading] = useState(false);
+  const { user, setUser } = useContext(UserContext);
   let [fontsLoaded] = useFonts({
     Raleway_200ExtraLight,
     Raleway_300Light,
@@ -39,36 +46,60 @@ const Login = ({ navigation }) => {
     Raleway_700Bold,
   });
 
-   useEffect(() => {
-     const unsuscribe = firebase.auth().onAuthStateChanged((user) => {
-       if (user) {
-         navigation.reset({
-           index: 0,
-           routes: [{ name: "user area" }],
-         });
-       }
-     });
-     return unsuscribe;
-   }, [boolean]);
+  useEffect(() => {
+    const unsuscribe = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "user area" }],
+        });
+      }
+    });
+    return unsuscribe;
+  }, [boolean]);
 
- const handlePress = () => {
-   axios
-     .get(`https://plantly-api.onrender.com/api/users/user/${email}`)
-     .then((res) => {
-       let Info = res.data.user;
+  const handleRegisterModal = () => {
+    setModalLoading(true);
+  };
+  const handleSignUp = () => {
+    const postBody = {
+      username: setRegisteredUsername,
+      email: setRegisteredEmail,
+      password: setRegisteredPassword,
+    };
+    console.log(postBody);
+    axios
+      .post(`https://plantly-api.onrender.com/api/users/users`, postBody)
+      .then((res) => {
+        
+      });
+    firebase.auth()
+    .createUserWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        
+      })
+      .catch((error) => alert(error.message));
+       setModalLoading(false);
+  };
+  const handleLogin = () => {
+    axios
+      .get(`https://plantly-api.onrender.com/api/users/user/${email}`)
+      .then((res) => {
+        let Info = res.data.user;
 
-       setUser(Info.username);
-       console.log(user);
-       setBoolean(true);
-     });
-   firebase
-     .auth()
-     .signInWithEmailAndPassword(email, password)
-     .then((userCredentials) => {
-       const user = userCredentials.user;
-     })
-     .catch((error) => alert(error.message));
- };
+        setUser(Info.username);
+        console.log(user);
+        setBoolean(true);
+      });
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+      })
+      .catch((error) => alert(error.message));
+  };
 
   return !fontsLoaded ? (
     <View
@@ -83,6 +114,55 @@ const Login = ({ navigation }) => {
         style={{ flex: 1, alignSelf: "center", width: 50 }}
       />
     </View>
+  ) : modalLoading ? (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.background}
+    >
+      <SafeAreaView style={styles.background}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.container}>
+            <Image
+              style={styles.logo}
+              source={require("../assets/plant-logo.png")}
+            />
+            <Text style={styles.plantly}>Plantly</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Email"
+                onChangeText={(text) => setRegisteredEmail(text)}
+              />
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="UserName"
+                onChangeText={(text) => setRegisteredUsername(text)}
+              />
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+                onChangeText={(text) => setRegisteredPassword(text)}
+              />
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Confirm Password"
+                onChangeText={(text) => setConfirmedRegisteredPassword(text)}
+              />
+            </View>
+
+            <Pressable style={styles.loginPressable} onPress={handleSignUp}>
+              <Text style={styles.loginText}>SignUp</Text>
+            </Pressable>
+          </View>
+        </TouchableWithoutFeedback>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   ) : (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -99,8 +179,8 @@ const Login = ({ navigation }) => {
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
-                placeholder="Username"
-                onChangeText={(text) => setUsername(text)}
+                placeholder="Email"
+                onChangeText={(text) => setEmail(text)}
               />
             </View>
             <View style={styles.inputContainer}>
@@ -110,8 +190,14 @@ const Login = ({ navigation }) => {
                 onChangeText={(text) => setPassword(text)}
               />
             </View>
-            <Pressable style={styles.loginPressable} onPress={handlePress}>
+            <Pressable style={styles.loginPressable} onPress={handleLogin}>
               <Text style={styles.loginText}>Login</Text>
+            </Pressable>
+            <Pressable
+              style={styles.loginPressable}
+              onPress={handleRegisterModal}
+            >
+              <Text style={styles.registerText}>Register</Text>
             </Pressable>
           </View>
         </TouchableWithoutFeedback>
@@ -150,6 +236,11 @@ const styles = StyleSheet.create({
     fontFamily: "Raleway_400Regular",
     color: "#ECEBE7",
     fontSize: 14,
+  },
+  registerText: {
+    fontFamily: "Raleway_400Regular",
+    color: "#ECEBE7",
+    fontSize: 15,
   },
 
   inputContainer: {
