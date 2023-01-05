@@ -169,23 +169,22 @@ const UserPlants = ({ navigation }) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalView}>
             <Text style={styles.deleteMessage}>
-              Are you sure you want to delete the plant '
-              {singlePlantData.nickname}'?
+              Are you sure you want to delete '{singlePlantData.nickname}'?
             </Text>
-            <View style={styles.pressablesContainer}>
-              <Pressable style={styles.pressable}>
-                <Text style={styles.deleteMessage} onPress={handleDelete}>
-                  Yes
+            <View style={styles.deletePressablesContainer}>
+              <Pressable style={styles.deletePressable}>
+                <Text style={styles.deletePressableText} onPress={handleDelete}>
+                  Yes, delete
                 </Text>
               </Pressable>
-              <Pressable style={styles.pressable}>
+              <Pressable style={styles.deletePressable}>
                 <Text
-                  style={styles.deleteMessage}
+                  style={styles.deletePressableText}
                   onPress={() => {
                     setDeleteModalVisible(false);
                   }}
                 >
-                  Go back
+                  No, go back
                 </Text>
               </Pressable>
             </View>
@@ -289,9 +288,10 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: "10%",
     marginVertical: "60%",
-    backgroundColor: "white",
+    backgroundColor: "#f8fdfb",
     borderRadius: 20,
     padding: 30,
+    justifyContent: "center",
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -322,6 +322,7 @@ const styles = StyleSheet.create({
     width: "40%",
     alignItems: "center",
     justifyContent: "center",
+
     marginHorizontal: 8,
     padding: 10,
     borderRadius: 20,
@@ -350,11 +351,33 @@ const styles = StyleSheet.create({
 
   modalContainer: { flex: 1, backgroundColor: "rgba(0, 0, 0, 0.5)" },
 
+  deletePressablesContainer: { flexDirection: "row" },
   deleteMessage: {
-    textAlign: "left",
+    textAlign: "center",
     fontFamily: "Raleway_400Regular",
     color: "#041b27",
-    fontSize: 25,
+    paddingBottom: 15,
+    fontSize: 18,
+  },
+
+  deletePressable: {
+    backgroundColor: "#294753",
+    width: "45%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: 8,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginTop: 10,
+  },
+
+  deletePressableText: {
+    textAlign: "center",
+    color: "#f8fdfb",
+    fontSize: 14,
+    paddingBottom: 1,
+    textAlignVertical: "center",
+    fontFamily: "Raleway_400Regular",
   },
 
   pressablesContainer: { flexDirection: "row" },

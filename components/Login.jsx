@@ -283,9 +283,7 @@ const styles = StyleSheet.create({
   },
 
   backButton: { alignSelf: "flex-start", marginLeft: 20 },
-  backButton: { alignSelf: "flex-start", marginLeft: 20 },
 
-  container: { marginBottom: "20%", alignSelf: "center", alignItems: "center" },
   container: { marginBottom: "20%", alignSelf: "center", alignItems: "center" },
   logo: {
     width: 150,
@@ -295,14 +293,14 @@ const styles = StyleSheet.create({
   },
   plantly: {
     fontSize: 50,
-    marginBottom: 5,
+    marginBottom: 10,
     fontFamily: "Raleway_200ExtraLight",
     color: "#f8fdfb",
     justifyContent: "center",
   },
   details: {
     fontSize: 18,
-    marginBottom: 15,
+    marginBottom: 20,
     fontFamily: "Raleway_300Light",
     color: "#f8fdfb",
     justifyContent: "center",
@@ -327,7 +325,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 
-  unsuccessfulLogin: { fontFamily: "Raleway_400Regular", marginVertical: 10 },
+  unsuccessfulLogin: {
+    fontFamily: "Raleway_400Regular",
+    marginVertical: 10,
+    color: "#f8fdfb",
+  },
 
   input: {
     alignItems: "center",
@@ -340,6 +342,7 @@ const styles = StyleSheet.create({
     borderColor: "#f8fdfb",
     borderWidth: 1,
     flexDirection: "row",
+    justifyContent: "center",
     alignSelf: "center",
     fontFamily: "Raleway_400Regular",
     color: "#f8fdfb",

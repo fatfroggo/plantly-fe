@@ -1,5 +1,5 @@
-const dayjs = require('dayjs');
-const customParseFormat = require('dayjs/plugin/customParseFormat');
+const dayjs = require("dayjs");
+const customParseFormat = require("dayjs/plugin/customParseFormat");
 
 import {
   Text,
@@ -9,11 +9,11 @@ import {
   Image,
   ScrollView,
   Dimensions,
-} from 'react-native';
-import { useState, useContext } from 'react';
-import UserContext from '../context/userContext';
-import LastWatered from './LastWatered';
-import { updatePlantLastWatered } from '../../api/api';
+} from "react-native";
+import { useState, useContext } from "react";
+import UserContext from "../context/userContext";
+import LastWatered from "./LastWatered";
+import { updatePlantLastWatered } from "../../api/api";
 
 const MyPlantModal = ({
   singlePlantData,
@@ -28,7 +28,7 @@ const MyPlantModal = ({
   const patchBody = {
     my_plant_id: singlePlantData.my_plant_id,
     username: user,
-    last_watered_date: dayjs().format('YYYY/MM/DD'),
+    last_watered_date: dayjs().format("YYYY/MM/DD"),
   };
 
   const handleWater = () => {
@@ -40,18 +40,19 @@ const MyPlantModal = ({
   };
   return modalLoading ? (
     <View style={styles.modalContainer}>
-    <View style={styles.modalLoading}>
-      <View
-        style={{
-          alignSelf: 'center',
-        }}
-      >
-        <Image
-          source={require('../../assets/loading.gif')}
-          style={{ height: 150, width: 150 }}
-        />
+      <View style={styles.modalLoading}>
+        <View
+          style={{
+            alignSelf: "center",
+          }}
+        >
+          <Image
+            source={require("../../assets/loading.gif")}
+            style={{ height: 150, width: 150 }}
+          />
+        </View>
       </View>
-    </View></View>
+    </View>
   ) : (
     <View style={styles.modalContainer}>
       <View style={styles.modalView}>
@@ -135,24 +136,24 @@ const MyPlantModal = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7F9B91',
+    backgroundColor: "#7F9B91",
   },
   safe: {
-    justifyContent: 'center',
+    justifyContent: "center",
     flex: 0.5,
-    color: '#1E2720',
+    color: "#1E2720",
   },
-  modalContainer: { flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)' },
+  modalContainer: { flex: 1, backgroundColor: "rgba(0, 0, 0, 0.5)" },
   modalView: {
     flex: 1,
-    marginHorizontal: Dimensions.get('window').width / 10,
-    marginVertical: Dimensions.get('window').height / 15,
-    backgroundColor: '#f8fdfb',
+    marginHorizontal: Dimensions.get("window").width / 10,
+    marginVertical: Dimensions.get("window").height / 15,
+    backgroundColor: "#f8fdfb",
     borderRadius: 20,
     paddingVertical: 30,
     paddingHorizontal: 15,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -171,82 +172,88 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   plantInfo: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     paddingRight: 10,
   },
   needsSubHeading: {
     fontSize: 25,
-    fontFamily: 'Raleway_600SemiBold',
-    color: '#294753',
+    fontFamily: "Raleway_600SemiBold",
+    color: "#294753",
     marginHorizontal: 5,
   },
   needsHeading: {
-    width: '100%',
+    width: "100%",
 
     paddingBottom: 6,
   },
 
   needsContainer: {
-    width: '49%',
+    width: "49%",
   },
   commonName: {
-    fontFamily: 'Raleway_700Bold',
-    color: '#041b27',
+    fontFamily: "Raleway_700Bold",
+    color: "#041b27",
     fontSize: 25,
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: 5,
   },
   latinName: {
     fontSize: 16,
-    fontFamily: 'Raleway_400Regular_Italic',
-    textAlign: 'center',
-    color: '#041b27',
+    fontFamily: "Raleway_400Regular_Italic",
+    textAlign: "center",
+    color: "#041b27",
     // marginBottom: 10,
   },
   lastWatered: {
-    height: '5%',
+    height: "5%",
     marginBottom: 10,
   },
 
   subHeading: {
     marginHorizontal: 5,
-    color: '#041b27',
+    color: "#041b27",
     fontSize: 18,
-    fontFamily: 'Raleway_500Medium',
+    fontFamily: "Raleway_500Medium",
   },
   infoText: {
     marginHorizontal: 5,
-    color: '#041b27',
+    color: "#041b27",
     fontSize: 16,
-    fontFamily: 'Raleway_300Light',
+    fontFamily: "Raleway_300Light",
     marginBottom: 15,
   },
   buttonsContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 20,
   },
   pressable: {
-    backgroundColor: '#294753',
-    width: '40%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#294753",
+    width: "40%",
+    alignItems: "center",
+    justifyContent: "center",
     marginHorizontal: 8,
     padding: 10,
     borderRadius: 20,
   },
-  pressableText: { textAlign: 'center', color: '#f8fdfb' },
+  pressableText: {
+    textAlign: "center",
+    color: "#f8fdfb",
+    paddingBottom: 1,
+    textAlignVertical: "center",
+    fontFamily: "Raleway_400Regular",
+  },
 
   modalLoading: {
     flex: 1,
-    justifyContent: 'center',
-    marginHorizontal: Dimensions.get('window').width / 10,
-    marginVertical: Dimensions.get('window').height / 15,
-    backgroundColor: 'white',
+    justifyContent: "center",
+    marginHorizontal: Dimensions.get("window").width / 10,
+    marginVertical: Dimensions.get("window").height / 15,
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 30,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
