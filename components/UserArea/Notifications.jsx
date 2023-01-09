@@ -12,16 +12,13 @@ import { getUserPlantByMyPlantId, getUserPlants } from "../../api/api";
 import UserPlantsContext from "../context/userPlantsContext";
 import UserContext from "../context/userContext";
 import MyPlantModal from "./MyPlantModal";
-
 import LastWatered from "./LastWatered";
-import { dateToDays } from "../../utils/utils";
 
 const Notifications = ({
   modalLoading,
   setModalLoading,
-  loading,
-  setWateredToday,
-  wateredToday,
+  notificationsLoading,
+  setNotificationsLoading,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
@@ -31,8 +28,9 @@ const Notifications = ({
   useEffect(() => {
     getUserPlants(user).then((plants) => {
       setUserPlantsData(plants);
+      setNotificationsLoading(false);
     });
-  }, [singlePlantData]);
+  }, [modalVisible]);
 
   const handlePress = (my_plant_id) => {
     setModalLoading(true);
@@ -47,27 +45,24 @@ const Notifications = ({
     setModalVisible(false);
   };
 
-  return (
-    // <View>
-    //   <Text style={styles.title}>Notifications</Text>
-    // loading ? (
-    //   <View
-    //     style={{
-    //       flex: 1,
-    //       justifyContent: "center",
-    //       backgroundColor: "#729d84",
-    //     }}
-    //   >
-    //     <Image
-    //       source={require("../../assets/loadingLight.gif")}
-    //       style={{
-    //         alignSelf: "center",
-    //         width: 200,
-    //         height: 200,
-    //       }}
-    //     />
-    //   </View>
-    // ) : (
+  return notificationsLoading ? (
+    <View
+      style={{
+        flex: 0.5,
+        justifyContent: "center",
+        backgroundColor: "#f8fdfb",
+      }}
+    >
+      <Image
+        source={require("../../assets/loading.gif")}
+        style={{
+          alignSelf: "center",
+          width: 100,
+          height: 100,
+        }}
+      />
+    </View>
+  ) : (
     <View style={styles.container}>
       <View style={styles.notifications}>
         <FlatList
@@ -85,7 +80,7 @@ const Notifications = ({
               />
               <Text style={styles.text}>{item.nickname}</Text>
               <View style={styles.watered}>
-                <LastWatered plant={item} />
+                <LastWatered plant={item} modalVisible={modalVisible} />
               </View>
             </Pressable>
           )}
@@ -101,7 +96,6 @@ const Notifications = ({
           modalLoading={modalLoading}
           setModalLoading={setModalLoading}
           handleClose={handleClose}
-          setWateredToday={setWateredToday}
         />
       </Modal>
     </View>

@@ -38,15 +38,14 @@ const UserArea = ({ navigation }) => {
     Raleway_700Bold,
   });
   const [pressed, setPressed] = useState(false);
-  const [wateredToday, setWateredToday] = useState(false);
   const [modalLoading, setModalLoading] = useState(true);
   const [featuredPlant, setFeaturedPlant] = useState({});
+  const [notificationsLoading, setNotificationsLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
-    setLoading(true);
     getUserPlants(user).then((plants) => {
       setUserPlantsData(plants);
     });
@@ -65,7 +64,7 @@ const UserArea = ({ navigation }) => {
       .then(() => {
         const timer = setTimeout(() => {
           setLoading(false);
-        }, 500);
+        }, 1000);
         return () => clearTimeout(timer);
       });
   }, []);
@@ -104,7 +103,7 @@ const UserArea = ({ navigation }) => {
         <Nav
           navigation={navigation}
           style={styles.safe}
-          userPlantsData={{ userPlantsData, setUserPlantsData }}
+          setLoading={setLoading}
         />
       </SafeAreaView>
 
@@ -112,11 +111,10 @@ const UserArea = ({ navigation }) => {
         <ScrollView>
           <Text style={styles.notifications}>Notifications</Text>
           <Notifications
-            loading={loading}
+            notificationsLoading={notificationsLoading}
+            setNotificationsLoading={setNotificationsLoading}
             modalLoading={modalLoading}
             setModalLoading={setModalLoading}
-            setWateredToday={setWateredToday}
-            wateredToday={wateredToday}
           />
           <Text style={styles.featuredPlantHeader}>Featured Plant</Text>
           <View style={styles.featuredPlant}>

@@ -155,7 +155,7 @@ const Login = ({ navigation }) => {
         <Pressable style={styles.backButton} onPress={handleBack}>
           <Image
             source={require("../assets/back-arrow.png")}
-            style={{ height: 30, width: 30 }}
+            style={{ height: 20, width: 20 }}
           />
         </Pressable>
         <KeyboardAvoidingView
@@ -286,8 +286,8 @@ const styles = StyleSheet.create({
 
   container: { marginBottom: "20%", alignSelf: "center", alignItems: "center" },
   logo: {
-    width: 150,
-    height: 150,
+    width: 130,
+    height: 130,
     justifyContent: "center",
     justifyContent: "center",
   },

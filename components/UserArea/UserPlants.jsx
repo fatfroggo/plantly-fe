@@ -36,7 +36,13 @@ const UserPlants = ({ navigation }) => {
   const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
   const [singlePlantData, setSinglePlantData] = useState({});
   const { user, setUser } = useContext(UserContext);
-  const [wateredToday, setWateredToday] = useState(false);
+
+  useEffect(() => {
+    getUserPlants(user).then((plants) => {
+      setUserPlantsData(plants);
+      setUserPlantsLoading(false);
+    });
+  }, [modalVisible]);
 
   const handlePress = (my_plant_id) => {
     setModalLoading(true);
@@ -73,12 +79,7 @@ const UserPlants = ({ navigation }) => {
       });
     });
   };
-  useEffect(() => {
-    getUserPlants(user).then((plants) => {
-      setUserPlantsData(plants);
-      setUserPlantsLoading(false);
-    });
-  }, [singlePlantData.last_watered_date]);
+
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safe}>
@@ -158,7 +159,6 @@ const UserPlants = ({ navigation }) => {
           handleClose={handleClose}
           modalLoading={modalLoading}
           setModalLoading={setModalLoading}
-          setWateredToday={setWateredToday}
         />
       </Modal>
       <Modal

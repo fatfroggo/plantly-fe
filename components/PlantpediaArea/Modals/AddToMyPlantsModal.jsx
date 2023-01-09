@@ -21,7 +21,6 @@ const AddToMyPlantsModal = ({
   setModalVisible,
 }) => {
   const { user, setUser } = useContext(UserContext);
-  const { userPlantsData, setUserPlantsData } = useContext(UserPlantsContext);
   const [submitDisabled, setSubmitDisabled] = useState(false);
   const [keyboardShowing, setKeyboardShowing] = useState(false);
 
@@ -29,7 +28,7 @@ const AddToMyPlantsModal = ({
 
   const postPlant = () => {
     setSubmitDisabled(true);
-    postUserPlant(reqBody).then(() => {
+    postUserPlant(reqBody).then((plant) => {
       setModalVisible(false);
     });
   };

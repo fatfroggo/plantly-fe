@@ -13,8 +13,8 @@ export const getPlants = (climate, searchQuery) => {
     .get("/plants", { params: { climate: climate, common_name: searchQuery } })
     .then((plants) => {
       return plants.data.plants;
-    })
-  }
+    });
+};
 
 export const getPlantById = (id) => {
   return plantsApi.get(`/plants/${id}`).then((plant) => {
@@ -38,7 +38,7 @@ export const postUserPlant = ({
   return plantsApi
     .post(`/myplants/${username}/${plant_id}`, postBody)
     .then(({ data }) => {
-      return data;
+      return data.myPlant;
     });
 };
 

@@ -94,7 +94,7 @@ const Plantpedia = ({ navigation }) => {
           animated={true}
           barStyle="light-content"
           showHideTransition="slide"
-          backgroundColor={styles.container.backgroundColor}
+          backgroundColor="#729d84"
         />
 
         <UserAreaHeader
@@ -125,14 +125,14 @@ const Plantpedia = ({ navigation }) => {
         <View
           style={{
             flex: 1,
-            // marginTop: "20%",
+
             alignItems: "center",
             alignSelf: "center",
           }}
         >
           <Image
-            source={require("../../assets/loadingLight.gif")}
-            style={{ height: 200, width: 200 }}
+            source={require("../../assets/loading.gif")}
+            style={{ marginTop: "20%", height: 200, width: 200 }}
           />
         </View>
       ) : isInvalidSearch ? (
@@ -192,14 +192,13 @@ const Plantpedia = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#729d84",
+    backgroundColor: "#d9d9d9",
   },
   safe: {
     width: "100%",
     flex: 0.9,
     backgroundColor: "#729d84",
     color: "#f8fdfb",
-    marginTop: 10,
   },
 
   invalid: {
