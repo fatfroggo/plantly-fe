@@ -25,7 +25,7 @@ const ForumPage = () => {
         animated={true}
         barStyle="light-content"
         showHideTransition="slide"
-        backgroundColor={styles.container.backgroundColor}
+        backgroundColor="#729d84"
       />
       <SafeAreaView style={styles.safe}>
         <UserAreaHeader
@@ -39,13 +39,18 @@ const ForumPage = () => {
           style={{
             flex: 1,
             // justifyContent: "center",
-            // marginTop: "20%",
-            backgroundColor: "#729d84",
+            // paddingTop: "20%",
+            backgroundColor: "#d9d9d9",
           }}
         >
           <Image
-            source={require("../assets/loadingLight.gif")}
-            style={{ alignSelf: "center", height: 200, width: 200 }}
+            source={require("../assets/loading.gif")}
+            style={{
+              marginTop: "20%",
+              alignSelf: "center",
+              height: 200,
+              width: 200,
+            }}
           />
         </View>
       ) : (

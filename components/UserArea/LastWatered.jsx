@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { countDown } from "../../utils/utils";
 
-const LastWatered = ({ plant, wateredToday }) => {
+const LastWatered = ({ plant }) => {
   const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {
     setTimeLeft(
       countDown(plant.time_between_watering, plant.last_watered_date)
     );
-  }, [wateredToday]);
+  }, [plant.last_watered_date]);
 
   if (timeLeft === 0) {
     return (

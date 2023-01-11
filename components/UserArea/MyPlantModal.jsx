@@ -21,7 +21,6 @@ const MyPlantModal = ({
   modalLoading,
   setModalLoading,
   setModalVisible,
-  setWatered,
 }) => {
   const { user, setUser } = useContext(UserContext);
 
