@@ -8,9 +8,17 @@ Designed to help you keep track of the plants that you own, their watering sched
 
 ## Setup
 
-To run the app, simply clone the repo, open it and run command 'npm start' in the terminal. This will give you the option to run however you would like, using an emulator, on the web or using your phone.
+First, install dependencies:
 
-To run on your phone download the expo app and scan the QR code in the terminal.
+`npm install`
+
+Then to run the app:
+
+`npm start`
+
+Download the [Expo Go](https://expo.dev/client) mobile app and scan the QR code in the terminal for the best experience.
+
+Alternatively, you can run using an emulator or on the web.
 
 At the login page, enter the following details:
 
